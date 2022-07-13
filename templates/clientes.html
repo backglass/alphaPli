@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container">
+<div class = "container">
+<br>
+
+<table class="table table-primary table-striped">
+    <thead>
+      <tr>
+        <th scope="col">NIF</th>
+        <th scope="col">Nombre</th>
+        
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for cliente in clientes %}
+      <tr>
+        <th scope="row">{{ cliente.nif }}</th>
+        <td>{{ cliente.nombre }}</td>
+       
+        <td><a href="{{ url_for ('ver', nif = cliente.nif)  }}"><span class="badge bg-info text-dark">Editar</span></a></td>
+      </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+
+
+
+
+</div>
+{% endblock %}

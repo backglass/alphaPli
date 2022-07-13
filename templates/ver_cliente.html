@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-md">
+<br>
+  <div class="card text-dark bg-light mb-3" >
+    <div class="card-header">{{ cliente.nombre }}</div>
+    <div class="card-body">
+      <h5 class="card-title">Light card title</h5>
+      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    </div>
+  </div>
+  <br>
+{{ cliente.nif }}
+{{ cliente.nombre }}
+{{ cliente.telefono}}
+{{ cliente.telefono_movil }}
+{{ cliente.email }}
+{{ cliente.direccion }}
+{{ cliente.notas }}
+
+
+
+
+  {% endblock %}
