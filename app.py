@@ -65,8 +65,8 @@ def clientes():
 
 
 @app.route('/clientes/<ver_cliente>') # Ruta para la pagina de ver cliente es dinamica porque se le pasa el nif del cliente 
-def ver(ver_cliente):
-    return render_template('ver_cliente.html', cliente=Clientes.query.filter_by(nif=ver_cliente).first()) # Muestra el cliente en la base de datos con el nif que se le pasa
+def ver_cliente(ver_cliente):
+    return render_template('ver_cliente.html', cliente=Clientes.query.filter_by(nif=ver_cliente).first()) # Muestra el cliente que se le pasa por parametro
 
 
 
