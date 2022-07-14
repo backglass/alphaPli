@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<!-- <div class="container">
+    <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label">Email address</label>
+        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+    </div>
+    <div class="mb-3">
+        <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+    </div>
+    <div> -->
+<div class="container">
+        <form method="post">
+        {{ form.hidden_tag() }}
+        {{ form.nif.label (class_="form-label") }} {{ form.nif (class_="form-control" )}}
+        {{ form.nombre.label (class_="form-label") }} {{ form.nombre (class_="form-control")}}
+        {{ form.telefono.label (class_="form-label") }} {{ form.telefono (class_="form-control")}}
+        {{ form.telefono_movil.label (class_="form-label") }} {{ form.telefono_movil (class_="form-control")}}
+        {{ form.email.label (class_="form-label") }} {{ form.email (class_="form-control")}}
+        {{ form.direccion.label (class_="form-label") }} {{ form.direccion (class_="form-control")}}
+        {{ form.notas.label (class_="form-label") }} {{ form.notas (class_="form-control",rows="5") }}
+        <div class="">
+            <br>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+        </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
