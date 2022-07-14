@@ -21,7 +21,7 @@
         <th scope="row">{{ cliente.nif }}</th>
         <td>{{ cliente.nombre }}</td>
        
-        <td><a href="{{ url_for ('ver', ver_cliente = cliente.nif)  }}"><span class="badge bg-info text-dark">Editar</span></a></td>
+        <td><a href="{{ url_for ('eliminar_cliente', nif = cliente.nif)  }}"><span class="badge bg-info text-dark">Borrar</span></a></td>
       </tr>
         {% endfor %}
     </tbody>
