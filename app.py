@@ -91,10 +91,12 @@ def crear_cliente():
         
     return render_template('crear_cliente.html',form=form)
 
+
 @app.route("/clientes/editar/<nif>", methods=["GET", "POST"]) # Ruta para la pagina de editar cliente
 def editar_cliente(nif):
-    cliente = Clientes.query.filter_by(nif=nif).first()
-    form = Insertar_cliente()
+    
+    cliente = Clientes.query.filter_by(nif=nif).first() # Busca el cliente en la base de datos con el nif que se le pasa en la ruta
+    form = Insertar_cliente() # Crea el formulario de crear cliente objeto form que trae los datos del cliente que se quiere editar
     if form.validate_on_submit():
         cliente.nombre = form.nombre.data
         cliente.telefono = form.telefono.data
@@ -105,15 +107,18 @@ def editar_cliente(nif):
         db.session.commit()
         flash("Cliente editado correctamente")
         return redirect(url_for('clientes'))
-    return render_template('editar_cliente.html', form=form, cliente=cliente)
+    return render_template('editar_cliente.html', form=form, cliente=cliente) # manda form y cliente a la pagina de editar cliente
 
 @app.route("/clientes/eliminar/<nif>", methods=["GET", "POST"]) # Ruta para la pagina de eliminar cliente
 def eliminar_cliente(nif):
-    cliente = Clientes.query.filter_by(nif=nif).first()
+    
+    cliente = Clientes.query.filter_by(nif=nif).first()   # Busca el cliente en la base de datos con el nif que se le pasa por la ruta
     db.session.delete(cliente)
     db.session.commit()
     flash("Cliente eliminado correctamente")
     return redirect(url_for('clientes'))
+
+
 if __name__ == '__main__':
     app.run(debug=True)
     
