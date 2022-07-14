@@ -64,7 +64,7 @@ def clientes():
 
 
 
-@app.route('/<ver_cliente>') # Ruta para la pagina de ver cliente es dinamica porque se le pasa el nif del cliente 
+@app.route('/clientes/<ver_cliente>') # Ruta para la pagina de ver cliente es dinamica porque se le pasa el nif del cliente 
 def ver(ver_cliente):
     return render_template('ver_cliente.html', cliente=Clientes.query.filter_by(nif=ver_cliente).first()) # Muestra el cliente en la base de datos con el nif que se le pasa
 
@@ -91,6 +91,29 @@ def crear_cliente():
         
     return render_template('crear_cliente.html',form=form)
 
+@app.route("/clientes/editar/<nif>", methods=["GET", "POST"]) # Ruta para la pagina de editar cliente
+def editar_cliente(nif):
+    cliente = Clientes.query.filter_by(nif=nif).first()
+    form = Insertar_cliente()
+    if form.validate_on_submit():
+        cliente.nombre = form.nombre.data
+        cliente.telefono = form.telefono.data
+        cliente.teledono_movil = form.telefono_movil.data
+        cliente.email = form.email.data
+        cliente.direccion = form.direccion.data
+        cliente.notas = form.notas.data
+        db.session.commit()
+        flash("Cliente editado correctamente")
+        return redirect(url_for('clientes'))
+    return render_template('editar_cliente.html', form=form, cliente=cliente)
+
+@app.route("/clientes/eliminar/<nif>", methods=["GET", "POST"]) # Ruta para la pagina de eliminar cliente
+def eliminar_cliente(nif):
+    cliente = Clientes.query.filter_by(nif=nif).first()
+    db.session.delete(cliente)
+    db.session.commit()
+    flash("Cliente eliminado correctamente")
+    return redirect(url_for('clientes'))
 if __name__ == '__main__':
     app.run(debug=True)
     
