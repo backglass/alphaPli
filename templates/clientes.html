@@ -3,8 +3,8 @@
 {% block content %}
 
 <div class="container">
-<div class = "container">
-<br>
+
+
 
 <table class="table table-primary table-striped">
     <thead>
@@ -21,14 +21,24 @@
         <th scope="row">{{ cliente.nif }}</th>
         <td>{{ cliente.nombre }}</td>
        
-        <td><a href="{{ url_for ('eliminar_cliente', nif = cliente.nif)  }}"><span class="badge bg-info text-dark">Borrar</span></a></td>
+        <td><a href="{{ url_for ('ver_cliente', ver_cliente = cliente.nif)  }}">
+          <span class="badge bg-success text-dark">Ver</span></a><a href="{{ url_for ('editar_cliente', nif = cliente.nif)  }}">
+           <span class="badge bg-info text-dark">Editar</span></a><a href="{{ url_for ('eliminar_cliente', nif = cliente.nif) }}">
+           <span class="badge bg-danger text-dark">Borrar</span></a></td>
       </tr>
         {% endfor %}
-    </tbody>
+    </tbody> 
+  
   </table>
 
 
 
 
+   {% endblock %}
+   
+    
+
+
+
+
 </div>
-{% endblock %}
