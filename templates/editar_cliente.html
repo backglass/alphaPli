@@ -19,7 +19,9 @@
         {{ form.telefono_movil.label (class_="form-label") }} {{ form.telefono_movil (class_="form-control", value_= cliente.telefono_movil )}}
         {{ form.email.label (class_="form-label") }} {{ form.email (class_="form-control", value_= cliente.email) }}
         {{ form.direccion.label (class_="form-label") }} {{ form.direccion (class_="form-control", value_= cliente.direccion) }}
-        {{ form.notas.label (class_="form-label") }} {{ form.notas (class_="form-control",rows="5", value_= cliente.notas ) }}
+        {{ form.precio_metro.label (class_="form-label") }} {{ form.precio_metro (class_="form-control", value_= cliente.precio_metro) }}
+        <textarea id="notas" name="body">{{ cliente.precio }}</textarea>
+        {{ form.notas.label (class_="form-label") }} {{ form.notas (class_="form-control",rows="5") }}
         <div class="">
             <br>
             <button type="submit" class="btn btn-primary">Guardar</button>
@@ -27,4 +29,7 @@
         </form>
     </div>
 </div>
+
+
 {% endblock %}
+
