@@ -24,7 +24,10 @@
         <td><a href="{{ url_for ('ver_cliente', ver_cliente = cliente.nif)  }}">
           <span class="badge bg-success text-dark">Ver</span></a><a href="{{ url_for ('editar_cliente', nif = cliente.nif)  }}">
            <span class="badge bg-info text-dark">Editar</span></a><a href="{{ url_for ('eliminar_cliente', nif = cliente.nif) }}">
-           <span class="badge bg-danger text-dark">Borrar</span></a></td>
+           <span class="badge bg-danger text-dark">Borrar</span></a>
+           <a href="{{ url_for ('nueva_factura', nif = cliente.nif) }}">
+            <span class="badge bg-danger text-dark">Nueva</span></a>
+          </td>
       </tr>
         {% endfor %}
     </tbody> 
