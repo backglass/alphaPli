@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container">
+    <form method="post">
+    {{ form.hidden_tag() }}
+    {{ form.nif.label (class_="form-label") }} {{ form.nif (class_="form-control", value_= cliente.nif )}}
+    {{ form.fecha.label (class_="form-label") }} {{ form.fecha (class_="form-control")}}
+    {{ form.precio.label (class_="form-label") }} {{ form.precio (class_="form-control")}}
+    {{ form.concepto.label (class_="form-label") }} {{ form.concepto (class_="form-control")}}
+    {{ form.metros.label (class_="form-label") }} {{ form.metros (class_="form-control")}}
+    {{ form.faldas.label (class_="form-label") }} {{ form.faldas (class_="form-control")}}
+    {{ form.importe.label (class_="form-label") }} {{ form.importe (class_="form-control")}}
+    {{ form.precio_metro.label (class_="form-label") }} {{ form.precio_metro (class_="form-control", value_= cliente.precio_metro) }}
+    {{ form.notas.label (class_="form-label") }} {{ form.notas (class_="form-control",rows="5") }}
+    {{ form.notas.label (class_="form-label") }} {{ form.notas (class_="form-control",rows="5") }}
+    <div class="">
+        <br>
+        <button type="submit" class="btn btn-primary">Guardar</button>
+    </div>
+    </form>
+</div>
+</div>
+{% endblock %}
