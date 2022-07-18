@@ -4,22 +4,35 @@
 <div class="container-md">
 <br>
   <div class="card text-dark bg-light mb-3" >
-    <div class="card-header">{{ cliente.nombre }}</div>
+    <div class="card-header"><h5><strong>{{ cliente.nombre }}</strong></h5></div>
     <div class="card-body">
-      <h5 class="card-title">Light card title</h5>
-      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+      <p class="card-text"><b>Nif: </b>{{ cliente.nif }} </p>
+      <p class="card-text"><b>nombre: </b>{{ cliente.nombre }}</p>
+      <p class="card-text"><b>Teléfono: </b>{{ cliente.telefono}}</p>
+      <p class="card-text"><b>Teléfono 2: </b>{{ cliente.telefono_movil }}</p>
+      <p class="card-text"><b>Email: </b>{{ cliente.email }}</p>
+      <p class="card-text"><b>Direccíon: </b>{{ cliente.direccion }}</p>
+      <p class="card-text"><b>Precio m: </b>{{ cliente.precio_metro }}</p>
+      <p class="card-text"><b>Notas: </b>{{ cliente.notas }}</p>
     </div>
   </div>
   <br>
-{{ cliente.nif }}
-{{ cliente.nombre }}
-{{ cliente.telefono}}
-{{ cliente.telefono_movil }}
-{{ cliente.email }}
-{{ cliente.direccion }}
-{{ cliente.notas }}
+
+<table class="table table-primary table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Fecha</th>
+      <th scope="col">Concepto</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for factura in facturas %}
+    <tr>
+      <th scope="row">{{ factura.fecha }}</th>
+      <td>{{ factura.concepto }}</td>
+    </tr>
+    
+    {% endfor %}
 
 
-
-
-  {% endblock %}
+{% endblock %}
