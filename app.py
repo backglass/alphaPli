@@ -1,5 +1,8 @@
+from datetime import datetime
+import time
 from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import Date, DateTime, Integer, String, Column, ForeignKey
 from wtforms import Form, StringField, TextAreaField, PasswordField, validators
 from flask_wtf import FlaskForm
 app = Flask(__name__)
@@ -26,14 +29,58 @@ class Insertar_cliente(FlaskForm):
 
 # Clase para crear formulario facturas 
 class Nueva_factura(FlaskForm):
+    numero = StringField("Numero")
     nif = StringField("NIF")
-    fecha = StringField("Fecha", validators=[validators.DataRequired()])
-    precio = StringField("Precio", validators=[validators.DataRequired()])
-    concepto = StringField("Concepto", validators=[validators.DataRequired()])
-    metros = StringField("Metros")
-    faldas = StringField("Faldas")
-    importe = StringField("Importe", validators=[validators.DataRequired()])
+    fecha = StringField("Fecha")
+
+    precio1 = StringField("Precio1")
+    precio2 = StringField("Precio2")
+    precio3 = StringField("Precio3")
+    precio4 = StringField("Precio4")
+    precio5 = StringField("Precio5")
+    precio6 = StringField("Precio6")
+    precio7 = StringField("Precio7")
+    precio8 = StringField("Precio8")
+
+    descripcion1 = StringField("Descripcion1")
+    descripcion2 = StringField("Descripción2")
+    descripcion3 = StringField("Descripción3")
+    descripcion4 = StringField("Descripción4")
+    descripcion5 = StringField("Descripción5")
+    descripcion6 = StringField("Descripción6")
+    descripcion7 = StringField("Descripción7")
+    descripcion8 = StringField("Descripción8")
+    
+    metros1 = StringField("Metros1")
+    metros2 = StringField("Metros2")
+    metros3 = StringField("Metros3")
+    metros4 = StringField("Metros4")
+    metros5 = StringField("Metros5")
+    metros6 = StringField("Metros6")
+    metros7 = StringField("Metros7")
+    metros8 = StringField("Metros8")
+
+    faldas1 = StringField("Faldas1")
+    faldas2 = StringField("Faldas2")
+    faldas3 = StringField("Faldas3")
+    faldas4 = StringField("Faldas4")
+    faldas5 = StringField("Faldas5")
+    faldas6 = StringField("Faldas6")
+    faldas7 = StringField("Faldas7")
+    faldas8 = StringField("Faldas8")
+
+    importe1 = StringField("Importe1")
+    importe2 = StringField("Importe2")
+    importe3 = StringField("Importe3")
+    importe4 = StringField("Importe4")
+    importe5 = StringField("Importe5")
+    importe6 = StringField("Importe6")
+    importe7 = StringField("Importe7")
+    importe8 = StringField("Importe8")
+
     precio_metro = StringField("Precio Metro")
+    subtotal = StringField("Subtotal")
+    total = StringField("Total")
     notas = TextAreaField("Notas")
 
 
@@ -64,35 +111,170 @@ class Clientes(db.Model):
     def __repr__(self):
         return f"Cliente('{self.nif}', '{self.nombre}', '{self.telefono}', '{self.teledono_movil}', '{self.email}', '{self.direccion}','{self.precio_metro} '{self.notas}')"
  
+
+
+    
 class Facturas(db.Model): # Clase Facturas hereda de db.Model, servira para crear la tabla en la base de datos y usar sus datos
 
     __tablename__ = "factura"
 
-    id = db.Column(db.Integer, primary_key=True)
+    num = db.Column(db.Integer, primary_key=True)
     nif = db.Column(db.String(30), db.ForeignKey("cliente.nif"))
-    fecha = db.Column(db.String(15), nullable=False)
-    precio = db.Column(db.String(10), nullable=False)
-    concepto = db.Column(db.String(100), nullable=False)
-    metros = db.Column(db.String(10))
-    faldas = db.Column(db.String(10))
-    importe = db.Column(db.String(10))
-    notas = db.Column(db.String(10000))
+    fecha = db.Column(db.DateTime(timezone = True))
+    
+    precio1 = db.Column(db.String(10))
+    precio2 = db.Column(db.String(10))
+    precio3 = db.Column(db.String(10))
+    precio4 = db.Column(db.String(10))
+    precio5 = db.Column(db.String(10))
+    precio6 = db.Column(db.String(10))
+    precio7 = db.Column(db.String(10))
+    precio8 = db.Column(db.String(10))
+    
+    descripcion1 = db.Column(db.String(100))
+    descripcion2 = db.Column(db.String(100))
+    descripcion3 = db.Column(db.String(100))
+    descripcion4 = db.Column(db.String(100))
+    descripcion5 = db.Column(db.String(100))
+    descripcion6 = db.Column(db.String(100))
+    descripcion7 = db.Column(db.String(100))
+    descripcion8 = db.Column(db.String(100))
 
-    def __init__(self, nif, fecha, precio, concepto,metros,faldas,importe, notas):
+    metros1 = db.Column(db.String(10))
+    metros2 = db.Column(db.String(10))
+    metros3 = db.Column(db.String(10))
+    metros4 = db.Column(db.String(10))
+    metros5 = db.Column(db.String(10))
+    metros6 = db.Column(db.String(10))
+    metros7 = db.Column(db.String(10))
+    metros8 = db.Column(db.String(10))
+
+    faldas1 = db.Column(db.String(10))
+    faldas2 = db.Column(db.String(10))
+    faldas3 = db.Column(db.String(10))
+    faldas4 = db.Column(db.String(10))
+    faldas5 = db.Column(db.String(10))
+    faldas6 = db.Column(db.String(10))
+    faldas7 = db.Column(db.String(10))
+    faldas8 = db.Column(db.String(10))
+
+    importe1 = db.Column(db.String(10))
+    importe2 = db.Column(db.String(10))
+    importe3 = db.Column(db.String(10))
+    importe4 = db.Column(db.String(10))
+    importe5 = db.Column(db.String(10))
+    importe6 = db.Column(db.String(10))
+    importe7 = db.Column(db.String(10))
+    importe8 = db.Column(db.String(10))
+
+    pagada = db.Column(db.String(1))
+    subtotal = db.Column(db.String(10))
+    total = db.Column(db.String(10))
+    precio_metro = db.Column(db.String(10))
+    notas = db.Column(db.String(1000))
+
+    def __init__(self, nif, fecha,
+                 precio1,precio2,precio3,precio4,precio5,precio6,precio7,precio8,
+                 descripcion1,descripcion2,descripcion3,descripcion4,descripcion5,descripcion6,descripcion7,descripcion8,
+                 metros1,metros2,metros3,metros4,metros5,metros6,metros7,metros8,
+                 faldas1,faldas2,faldas3,faldas4,faldas5,faldas6,faldas7,faldas8,
+                 importe1,importe2,importe3,importe4,importe5,importe6,importe7,importe8,
+                 pagada,subtotal,total,precio_metro,notas):
+
         self.nif = nif
         self.fecha = fecha
-        self.precio = precio
-        self.concepto = concepto
-        self.metros = metros
-        self.faldas = faldas
-        self.importe = importe
+        self.precio1 = precio1
+        self.precio2 = precio2
+        self.precio3 = precio3
+        self.precio4 = precio4
+        self.precio5 = precio5
+        self.precio6 = precio6
+        self.precio7 = precio7
+        self.precio8 = precio8
+
+        self.descripcion1 = descripcion1
+        self.descripcion2 = descripcion2
+        self.descripcion3 = descripcion3
+        self.descripcion4 = descripcion4
+        self.descripcion5 = descripcion5
+        self.descripcion6 = descripcion6
+        self.descripcion7 = descripcion7
+        self.descripcion8 = descripcion8
+        
+        self.metros1 = metros1
+        self.metros2 = metros2
+        self.metros3 = metros3
+        self.metros4 = metros4
+        self.metros5 = metros5
+        self.metros6 = metros6
+        self.metros7 = metros7
+        self.metros8 = metros8
+
+        self.faldas1 = faldas1
+        self.faldas2 = faldas2
+        self.faldas3 = faldas3
+        self.faldas4 = faldas4
+        self.faldas5 = faldas5
+        self.faldas6 = faldas6
+        self.faldas7 = faldas7
+        self.faldas8 = faldas8
+        
+        self.importe1 = importe1
+        self.importe2 = importe2
+        self.importe3 = importe3
+        self.importe4 = importe4
+        self.importe5 = importe5
+        self.importe6 = importe6
+        self.importe7 = importe7
+        self.importe8 = importe8
+        
+        self.pagada = pagada
+        self.subtotal = subtotal
+        self.total = total
+        self.precio_metro = precio_metro
+        self.notas = notas
+        
+ 
+        self.pagada = pagada
+        subtotal = subtotal
+        total = total
+        precio_metro = precio_metro
         self.notas = notas
     def __repr__(self):
         return f"Factura('{self.nif}', '{self.fecha}', '{self.importe}', '{self.concepto}', '{self.notas}')"
 
+class Borrar(db.Model):
+
+    __tablename__ = "borrar"
+
+    id = db.Column(db.Integer, primary_key=True)
+    numero = db.Column(db.Integer)
+    date = db.Column(db.DateTime(timezone = True) )
+    nombre = db.Column(db.String(100))
+
+
+    def __init__(self,numero,date,nombre):
+        
+        self.numero = numero
+        self.date = date
+        self.nombre = nombre
+    
+    
+    def __repr__(self):
+        return f"Cliente('{self.nif}', '{self.nombre}')"
+
 
 db.create_all()  # Crea la tabla en la base de datos
 
+@app.route('/borrar', methods=['GET', 'POST'])
+def borrar():
+    p1 = Borrar(2,time.strftime("%d/%m/%y"), "Juan")
+    db.session.add(p1)
+    db.session.commit()
+    p2 = Borrar.query.filter_by(id=1).first()
+    fec = datetime.date(p2.date)    ## Recupera la fecha de la base de datos esta en formato estados unidos
+    print(fec.strftime("%d/%m/%y")) ## La formatea en formato europeo
+    return redirect(url_for('index'))
 
 @app.route('/')  # Ruta raiz
 def index():
@@ -108,7 +290,9 @@ def clientes():
 
 @app.route('/clientes/<ver_cliente>') # Ruta para la pagina de ver un cliente es dinamica porque se le pasa el nif del cliente 
 def ver_cliente(ver_cliente):
-    return render_template('ver_cliente.html', cliente=Clientes.query.filter_by(nif=ver_cliente).first()) # Devuelve la variable cliente con los datos del nif pasado por parametro
+    cliente = Clientes.query.filter_by(nif=ver_cliente).first() # Busca el cliente en la base de datos
+    factura = Facturas.query.filter_by(nif=ver_cliente).all() # Busca las facturas del cliente en la base de datos
+    return render_template('ver_cliente.html',cliente=cliente, facturas=factura) # Devuelve la variable cliente con los datos del nif pasado por parametro
 
 
 
@@ -167,19 +351,110 @@ def eliminar_cliente(nif):
     flash("Cliente eliminado correctamente")
     return redirect(url_for('clientes'))
 
-@app.route("/facturas/nueva/<nif>", methods = ["GET","POST"]) # Ruta para la pagina de crear factura
+
+@app.route("/facturas") # Ruta para ver la lista de todas las facturas
+def facturas():
+    return render_template('facturas.html', facturas=Facturas.query.all())
 
 
-def nueva_factura(nif): # Funcion para crear una nueva factura
+# @app.route("/facturas/nueva/<nif>", methods = ["GET","POST"]) # Ruta para la pagina de crear factura
+
+
+# def nueva_factura(nif): # Funcion para crear una nueva factura
     
-    cliente = Clientes.query.filter_by(nif=nif).first()      # Usaos el nif que se le pasa por la ruta para buscar el cliente en la base de datos
-    form = Nueva_factura()                                   # Crea una instancia del formulario de crear factura
+#     cliente = Clientes.query.filter_by(nif=nif).first()      # Usaos el nif que se le pasa por la ruta para buscar el cliente en la base de datos
+#     form = Nueva_factura()                                   # Crea una instancia del formulario de crear factura
 
+#     if form.validate_on_submit():
+        
+#         factura = Facturas(nif, form.fecha.data, form.precio.data, form.concepto.data, form.metros.data, form.faldas.data, form.importe.data, form.notas.data)
+#         db.session.add(factura)
+        
+#         try:
+#             db.session.commit()
+#             flash("Factura creada correctamente")
+#             return redirect(url_for('clientes'))
+#         except Exception as e:
+#             print("Error al crear la factura ", e)
+#             return redirect(url_for('clientes'))
+
+#     return render_template('nueva_factura.html', form=form, cliente=cliente) #cliente se usa para enviar algunos datos del cliente al formulario de crear factura(nif,nombre, etc)
+    
+
+@app.route("/ver_factura/<nif>", methods = ["GET","POST"]) # Ruta para la pagina de ver factura
+def ver_factura(nif):
+    factura = Facturas.query.filter_by(nif=nif).first()
+    cliente = Clientes.query.filter_by(nif=nif).first()
+    return render_template('ver_factura.html', factura=factura, cliente=cliente)
+
+
+
+@app.route("/facturas/crear/<nif>", methods = ["GET","POST"]) # Ruta para la pagina de crear factura
+def crear_factura(nif):
+    print(nif)
+
+    form = Nueva_factura()
+    cliente = Clientes.query.filter_by(nif=nif).first()
+    a = form.validate_on_submit()
+    print(a)
     if form.validate_on_submit():
-        
-        factura = Facturas(nif, form.fecha.data, form.precio.data, form.concepto.data, form.metros.data, form.faldas.data, form.importe.data, form.notas.data)
+        print("Entro")
+       
+        factura = Facturas( cliente.nif, time.strftime("%d/%m/%y"),
+                            form.precio1.data,
+                            form.precio2.data,
+                            form.precio3.data,
+                            form.precio4.data,
+                            form.precio5.data,
+                            form.precio6.data,
+                            form.precio7.data,
+                            form.precio8.data,
+
+                            form.descripcion1.data,
+                            form.descripcion2.data,
+                            form.descripcion3.data,
+                            form.descripcion4.data,
+                            form.descripcion5.data,
+                            form.descripcion6.data,
+                            form.descripcion7.data,
+                            form.descripcion8.data,
+
+                            form.metros1.data,
+                            form.metros2.data,
+                            form.metros3.data,
+                            form.metros4.data,
+                            form.metros5.data,
+                            form.metros6.data,
+                            form.metros7.data,
+                            form.metros8.data,
+
+                            form.faldas1.data,
+                            form.faldas2.data,
+                            form.faldas3.data,
+                            form.faldas4.data,
+                            form.faldas5.data,
+                            form.faldas6.data,
+                            form.faldas7.data,
+                            form.faldas8.data,
+
+                            form.importe1.data,
+                            form.importe2.data,
+                            form.importe3.data,
+                            form.importe4.data,
+                            form.importe5.data,
+                            form.importe6.data,
+                            form.importe7.data,
+                            form.importe8.data,
+
+                            pagada = 0,
+                            subtotal="0",
+                            total="0",
+                            precio_metro="0",
+                            notas="0")
+                            
+
+         
         db.session.add(factura)
-        
         try:
             db.session.commit()
             flash("Factura creada correctamente")
@@ -187,9 +462,8 @@ def nueva_factura(nif): # Funcion para crear una nueva factura
         except Exception as e:
             print("Error al crear la factura ", e)
             return redirect(url_for('clientes'))
-
-    return render_template('nueva_factura.html', form=form, cliente=cliente) #cliente se usa para enviar algunos datos del cliente al formulario de crear factura(nif,nombre, etc)
     
+    return render_template('crear_factura.html', form = form, cliente = cliente)
 
 if __name__ == '__main__':
     app.run(debug=True)
