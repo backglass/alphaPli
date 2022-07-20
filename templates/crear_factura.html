@@ -1,29 +1,153 @@
+<html>
 
 
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" />
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.css" rel="stylesheet" />
+<link href="/static/bootstrap.min.css" rel="stylesheet" />
+
+
+<style>
+.outlinenone {
+    outline: none;
+    background-color: #dfe;
+    border: 0;
+  }
+.sinbordefondo {
+    background-color: #eee;
+    border: 0;
+
+  }
+  body{
+    margin-top:20px;
+    color: #484b51;
+}
+.text-secondary-d1 {
+    color: #728299!important;
+}
+.page-header {
+    margin: 0 0 1rem;
+    padding-bottom: 1rem;
+    padding-top: .5rem;
+    border-bottom: 1px dotted #e2e2e2;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -ms-flex-align: center;
+    align-items: center;
+}
+.page-title {
+    padding: 0;
+    margin: 0;
+    font-size: 1.75rem;
+    font-weight: 300;
+}
+.brc-default-l1 {
+    border-color: #dce9f0!important;
+}
+
+.ml-n1, .mx-n1 {
+    margin-left: -.25rem!important;
+}
+.mr-n1, .mx-n1 {
+    margin-right: -.25rem!important;
+}
+.mb-4, .my-4 {
+    margin-bottom: 1.5rem!important;
+}
+
+hr {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border: 0;
+    border-top: 1px solid rgba(0,0,0,.1);
+}
+
+.text-grey-m2 {
+    color: #888a8d!important;
+}
+
+.text-success-m2 {
+    color: #86bd68!important;
+}
+
+.font-bolder, .text-600 {
+    font-weight: 600!important;
+}
+
+.text-110 {
+    font-size: 110%!important;
+}
+.text-blue {
+    color: #478fcc!important;
+}
+.pb-25, .py-25 {
+    padding-bottom: .75rem!important;
+}
+
+.pt-25, .py-25 {
+    padding-top: .75rem!important;
+}
+.bgc-default-tp1 {
+    background-color: rgba(121,169,197,.92)!important;
+}
+.bgc-default-l4, .bgc-h-default-l4:hover {
+    background-color: #f3f8fa!important;
+}
+.page-header .page-tools {
+    -ms-flex-item-align: end;
+    align-self: flex-end;
+}
+
+.btn-light {
+    color: #757984;
+    background-color: #f5f6f9;
+    border-color: #dddfe4;
+}
+.w-2 {
+    width: 1rem;
+}
+
+.text-120 {
+    font-size: 120%!important;
+}
+.text-primary-m1 {
+    color: #4087d4!important;
+}
+
+.text-danger-m1 {
+    color: #dd4949!important;
+}
+.text-blue-m2 {
+    color: #68a3d5!important;
+}
+.text-150 {
+    font-size: 150%!important;
+}
+.text-60 {
+    font-size: 60%!important;
+}
+.text-grey-m1 {
+    color: #7b7d81!important;
+}
+.align-bottom {
+    vertical-align: bottom!important;
+}
+
+
+</style>
+
+<body>
 <div class="page-content container">
     <div class="page-header text-blue-d2">
-        <h1 class="page-title text-secondary-d1">
-            Invoice
+        <h1>
+            Plisafor
             <small class="page-info">
                 <i class="fa fa-angle-double-right text-80"></i>
-                ID: #111-222
+                
             </small>
         </h1>
 
         <div class="page-tools">
-            <div class="action-buttons">
-                <a class="btn bg-white btn-light mx-1px text-95" href="#" data-title="Print">
-                    <i class="mr-1 fa fa-print text-primary-m1 text-120 w-2"></i>
-                    Print
-                </a>
-                <a class="btn bg-white btn-light mx-1px text-95" href="#" data-title="PDF">
-                    <i class="mr-1 fa fa-file-pdf-o text-danger-m1 text-120 w-2"></i>
-                    Export
-                </a>
-            </div>
+
         </div>
     </div>
 
@@ -32,30 +156,27 @@
             <div class="col-12 col-lg-12">
                 <div class="row">
                     <div class="col-12">
-                        <div class="text-center text-150">
-                            <i class="fa fa-book fa-2x text-success-m2 mr-1"></i>
-                            <span class="text-default-d3">Bootdey.com</span>
-                        </div>
+                        
                     </div>
                 </div>
                 <!-- .row -->
 
-                <hr class="row brc-default-l1 mx-n1 mb-4" />
+                
 
                 <div class="row">
                     <div class="col-sm-6">
                         <div>
-                            <span class="text-sm text-grey-m2 align-middle">To:</span>
-                            <span class="text-600 text-110 text-blue align-middle">Alex Doe</span>
+                            
+                            <span class="text-600 text-110 text-blue align-middle">{{ cliente.nombre }}</span>
                         </div>
                         <div class="text-grey-m2">
                             <div class="my-1">
-                                Street, City
+                                {{ cliente.nif }}
                             </div>
                             <div class="my-1">
-                                State, Country
+                                {{ cliente.direccion }}
                             </div>
-                            <div class="my-1"><i class="fa fa-phone fa-flip-horizontal text-secondary"></i> <b class="text-600">111-111-111</b></div>
+                            <div class="my-1"></div>
                         </div>
                     </div>
                     <!-- /.col -->
@@ -64,14 +185,15 @@
                         <hr class="d-sm-none" />
                         <div class="text-grey-m2">
                             <div class="mt-1 mb-2 text-secondary-m1 text-600 text-125">
-                                Invoice
+                                Factura
                             </div>
+                            <form method="post">
+                            {{ form.hidden_tag() }}
+                            <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">Número</span>{{ form.numero (class_="form-control", value_= num ,style_="border:none") }} </div>
 
-                            <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">ID:</span> #111-222</div>
+                            <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">Fecha</span> {{ form.fecha (class_="form-control", value_= fecha ,style_="border:none") }}</div>
 
-                            <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">Issue Date:</span> Oct 12, 2019</div>
-
-                            <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">Status:</span> <span class="badge badge-warning badge-pill px-25">Unpaid</span></div>
+                            <div class="my-2"><i></i></div>
                         </div>
                     </div>
                     <!-- /.col -->
@@ -85,67 +207,66 @@
                         <div class="d-none d-sm-block col-sm-2">Faldas</div>
                         <div class="col-2">Total</div>
                     </div>
-                    <form method="post">
-                    {{ form.hidden_tag() }}
+                    
                     <div class="text-95 text-secondary-d3">
                         <div class="row mb-2 mb-sm-0 py-25">
-                            <div class="d-none d-sm-block col-1"> {{ form.precio1 (class_="form-control")}}</div>
+                            <div class="d-none d-sm-block col-1"> {{ form.precio1 (class_="form-control", onchange="sumar1(this.value);")}}</div>
                             <div class="col-9 col-sm-5">{{ form.descripcion1 (class_="form-control")}}</div>
-                            <div class="d-none d-sm-block col-2">{{ form.metros1 (class_="form-control")}}</div>
-                            <div class="d-none d-sm-block col-2 text-95">{{ form.faldas1 (class_="form-control")}}</div>
+                            <div class="d-none d-sm-block col-2">{{ form.metros1 (class_="form-control" , onchange="sumar1(this.value);")}}</div>
+                            <div class="d-none d-sm-block col-2 text-95">{{ form.faldas1 (class_="form-control", onchange="sumar1(this.value);")}}</div>
                             <div class="col-2 text-secondary-d2">{{ form.importe1 (class_="form-control")}}</div>
                         </div>
 
                         <div class="row mb-2 mb-sm-0 py-25 bgc-default-l4">
-                            <div class="d-none d-sm-block col-1"> {{ form.precio2 (class_="form-control")}}</div>
+                            <div class="d-none d-sm-block col-1"> {{ form.precio2 (class_="form-control", onchange="sumar2(this.value);")}}</div>
                             <div class="col-9 col-sm-5">{{ form.descripcion2 (class_="form-control")}}</div>
-                            <div class="d-none d-sm-block col-2">{{ form.metros2 (class_="form-control")}}</div>
-                            <div class="d-none d-sm-block col-2 text-95">{{ form.faldas2 (class_="form-control")}}</div>
+                            <div class="d-none d-sm-block col-2">{{ form.metros2 (class_="form-control", onchange="sumar2(this.value);")}}</div>
+                            <div class="d-none d-sm-block col-2 text-95">{{ form.faldas2 (class_="form-control", onchange="sumar2(this.value);")}}</div>
                             <div class="col-2 text-secondary-d2">{{ form.importe2 (class_="form-control")}}</div>
                         </div>
 
                         <div class="row mb-2 mb-sm-0 py-25">
-                            <div class="d-none d-sm-block col-1"> {{ form.precio3 (class_="form-control")}}</div>
+                            <div class="d-none d-sm-block col-1"> {{ form.precio3 (class_="form-control", onchange="sumar3(this.value);")}}</div>
                             <div class="col-9 col-sm-5">{{ form.descripcion3 (class_="form-control")}}</div>
-                            <div class="d-none d-sm-block col-2">{{ form.metros3 (class_="form-control")}}</div>
-                            <div class="d-none d-sm-block col-2 text-95">{{ form.faldas3 (class_="form-control")}}</div>
+                            <div class="d-none d-sm-block col-2">{{ form.metros3 (class_="form-control", onchange="sumar3(this.value);")}}</div>
+                            <div class="d-none d-sm-block col-2 text-95">{{ form.faldas3 (class_="form-control", onchange="sumar3(this.value);")}}</div>
                             <div class="col-2 text-secondary-d2">{{ form.importe3 (class_="form-control")}}</div>
                         </div>
 
                         <div class="row mb-2 mb-sm-0 py-25 bgc-default-l4">
-                            <div class="d-none d-sm-block col-1"> {{ form.precio4 (class_="form-control")}}</div>
+                            <div class="d-none d-sm-block col-1"> {{ form.precio4 (class_="form-control", onchange="sumar4(this.value);")}}</div>
                             <div class="col-9 col-sm-5">{{ form.descripcion4 (class_="form-control")}}</div>
-                            <div class="d-none d-sm-block col-2">{{ form.metros4 (class_="form-control")}}</div>
-                            <div class="d-none d-sm-block col-2 text-95">{{ form.faldas4 (class_="form-control")}}</div>
+                            <div class="d-none d-sm-block col-2">{{ form.metros4 (class_="form-control", onchange="sumar4(this.value);")}}</div>
+                            <div class="d-none d-sm-block col-2 text-95">{{ form.faldas4 (class_="form-control", onchange="sumar4(this.value);")}}</div>
                             <div class="col-2 text-secondary-d2">{{ form.importe4 (class_="form-control")}}</div>
                         </div>
 
                         <div class="row mb-2 mb-sm-0 py-25 bgc-default-l4">
-                            <div class="d-none d-sm-block col-1"> {{ form.precio5 (class_="form-control")}}</div>
+                            <div class="d-none d-sm-block col-1"> {{ form.precio5 (class_="form-control", onchange="sumar5(this.value);")}}</div>
                             <div class="col-9 col-sm-5">{{ form.descripcion5 (class_="form-control")}}</div>
-                            <div class="d-none d-sm-block col-2">{{ form.metros5 (class_="form-control")}}</div>
-                            <div class="d-none d-sm-block col-2 text-95">{{ form.faldas5 (class_="form-control")}}</div>
+                            <div class="d-none d-sm-block col-2">{{ form.metros5 (class_="form-control", onchange="sumar5(this.value);")}}</div>
+                            <div class="d-none d-sm-block col-2 text-95">{{ form.faldas5 (class_="form-control", onchange="sumar5(this.value);")}}</div>
                             <div class="col-2 text-secondary-d2">{{ form.importe5 (class_="form-control")}}</div>
                         </div>
                         <div class="row mb-2 mb-sm-0 py-25 bgc-default-l4">
-                            <div class="d-none d-sm-block col-1"> {{ form.precio6 (class_="form-control")}}</div>
+                            <div class="d-none d-sm-block col-1"> {{ form.precio6 (class_="form-control", onchange="sumar6(this.value);")}}</div>
                             <div class="col-9 col-sm-5">{{ form.descripcion6 (class_="form-control")}}</div>
-                            <div class="d-none d-sm-block col-2">{{ form.metros6 (class_="form-control")}}</div>
-                            <div class="d-none d-sm-block col-2 text-95">{{ form.faldas6 (class_="form-control")}}</div>
+                            <div class="d-none d-sm-block col-2">{{ form.metros6 (class_="form-control", onchange="sumar6(this.value);")}}</div>
+                            <div class="d-none d-sm-block col-2 text-95">{{ form.faldas6 (class_="form-control", onchange="sumar6(this.value);")}}</div>
                             <div class="col-2 text-secondary-d2">{{ form.importe6 (class_="form-control")}}</div>
                         </div>
                         <div class="row mb-2 mb-sm-0 py-25 bgc-default-l4">
-                            <div class="d-none d-sm-block col-1"> {{ form.precio7 (class_="form-control")}}</div>
+                            <div class="d-none d-sm-block col-1"> {{ form.precio7 (class_="form-control", onchange="sumar7(this.value);")}}</div>
                             <div class="col-9 col-sm-5">{{ form.descripcion7 (class_="form-control")}}</div>
-                            <div class="d-none d-sm-block col-2">{{ form.metros7 (class_="form-control")}}</div>
-                            <div class="d-none d-sm-block col-2 text-95">{{ form.faldas7 (class_="form-control")}}</div>
+                            <div class="d-none d-sm-block col-2">{{ form.metros7 (class_="form-control", onchange="sumar7(this.value);")}}</div>
+                            <div class="d-none d-sm-block col-2 text-95">{{ form.faldas7 (class_="form-control", onchange="sumar7(this.value);")}}</div>
                             <div class="col-2 text-secondary-d2">{{ form.importe7 (class_="form-control")}}</div>
                         </div>
                         <div class="row mb-2 mb-sm-0 py-25 bgc-default-l4">
-                            <div class="d-none d-sm-block col-1"> {{ form.precio8 (class_="form-control")}}</div>
+                            <div class="d-none d-sm-block col-1"> {{ form.precio8 (class_="form-control", onchange="sumar8(this.value);")}}</div>
                             <div class="col-9 col-sm-5">{{ form.descripcion8 (class_="form-control")}}</div>
-                            <div class="d-none d-sm-block col-2">{{ form.metros8 (class_="form-control")}}</div>
-                            <div class="d-none d-sm-block col-2 text-95">{{ form.faldas8 (class_="form-control")}}</div>
+                            <div class="d-none d-sm-block col-2">{{ form.metros8 (class_="form-control", onchange="sumar8(this.value);")}}</div>
+                            <div class="d-none d-sm-block col-2 text-95">{{ form.faldas8 (class_="form-control", onchange="sumar8(this.value);")}}</div>
                             <div class="col-2 text-secondary-d2">{{ form.importe8 (class_="form-control")}}</div>
                         </div>
                     </div>
@@ -182,50 +303,281 @@
                 
                     <div class="row mt-3">
                         <div class="col-12 col-sm-7 text-grey-d2 text-95 mt-2 mt-lg-0">
-                            aaaaaaaa
+                            {{ form.notas (class_="form-control", placeholder="Notas", style_="border:none") }}
                         </div>
 
                         <div class="col-12 col-sm-5 text-grey text-90 order-first order-sm-last">
                             <div class="row my-2">
                                 <div class="col-7 text-right">
-                                    SubTotal
+                                    Total
+                                    
                                 </div>
+                                
                                 <div class="col-5">
-                                    <span class="text-120 text-secondary-d1">$2,250</span>
+                                    <span class="text-120 text-secondary-d1" id="subtotal_text">{{ form.sub_total_sin_iva (class_="text-80 text-success-d3 opacity-2", style_="border:none") }}</span>
                                 </div>
+                            
                             </div>
 
                             <div class="row my-2">
                                 <div class="col-7 text-right">
                                     IVA (21%)
+                                    
                                 </div>
+                                
                                 <div class="col-5">
-                                    <span class="text-110 text-secondary-d1">$225</span>
+                                    <span class="text-110 text-secondary-d1" id = "iva_text"><input class="form-control" id="iva_input" style="border:none" type="text"></span>
                                 </div>
                             </div>
 
                             <div class="row my-2 align-items-center bgc-primary-l3 p-2">
                                 <div class="col-7 text-right">
-                                    Precio final
+                                    Precio final <span class="text-100 text-success-d3 opacity-2">€</span>
                                 </div>
                                 <div class="col-5">
-                                    <span class="text-150 text-success-d3 opacity-2">$2,475</span>
+                                    <span class="text-150 text-success-d3 opacity-2" id ="total_factura_text">{{ form.total_con_iva (class_="text-100 text-success-d3 opacity-2", style_= "border:none") }}</span>
                                 </div>
                             </div>
                         </div>
                     </div>
+                   
+
 
                     <hr />
 
                     <div>
-                        <span class="text-secondary-d1 text-105">Thank you for your business</span>
-                        
-                        <a href="#" type ="submit" class="btn btn-info btn-bold px-4 float-right mt-3 mt-lg-0">Pay Now</a>
+                                                                        
                         <button type="submit" class="btn btn-info btn-bold px-4 float-right mt-3 mt-lg-0">Guardar</button>
                         </form>
+                        <br>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script>
+    
+    // Calcula el importe de cada producto, o por metros o por faldas y lo muestra en input importe
+function sumar1 (valor) {
+    /* TODAS LAS FUNCIONES SUMAR SIGUIENTES HACEN LO MISMO ******* ESTA REPETiCIÓN DE CODIGO ES HORRIBLE xD **********.
+       Función para calcular el importe de cada producto, lo calculará o por el valor de metros o el valor de faldas(los dos no se puede)
+       Básicamente multiplica el valor de la de la "precio" por el valor de la columna "metros" o "faldas" y lo muestra en el input "importe" */
+
+    var total = 0;	    // Variable para acumular el total
+    total = parseFloat(valor); // Se convierte el valor de entrada a float
+    precio1 = Number(document.getElementById("precio1").value);  // Se obtiene el valor del precio con id precio1
+    metros1 = Number(document.getElementById("metros1").value);  // Se obtiene el valor del metros con id metros1
+    faldas1 = Number(document.getElementById("faldas1").value);  // Se obtiene el valor de las faldas con id faldas1
+    
+    // Aquí valido si hay un valor previo, si no hay datos, le pongo un cero "0".
+
+        if (faldas1 > 0 && metros1 > 0){      // Verifica si campo faldas y campo metros son mayores que 0,si lo son entonces no realiza los calculos
+            console.log("Ambos estan llenos");
+        }
+        else if (faldas1 == 0) {
+            total = (parseFloat(precio1) * parseFloat(metros1));        // Multiplica el precio por los metros. cuando no hay faldas.
+           
+            sumar_total()
+        }else if (metros1 == 0) {
+            total = (parseFloat(precio1) * parseFloat(faldas1));        // Multiplica el precio por las faldas. cuando no hay metros.
+            sumar_total()
+        }
+        document.getElementById('importe1').value = total;              // Se muestra el total en el input con id importe1
+        sumar_total();  // Llamo a la función para sumar el total de todos los inputs "importe".
+    }
+       
+    function sumar2 (valor) {
+
+            var total = 0;	    // Variable para acumular el total
+            var sub_total = 0;  // Variable para acumular la suma de todos los productos
+            total = parseFloat(valor);
+            sub_total = parseFloat(sub_total);
+            precio2 = Number(document.getElementById("precio2").value);
+            metros2 = Number(document.getElementById("metros2").value);
+            faldas2 = Number(document.getElementById("faldas2").value);
+            console.log("Faldas2",typeof (faldas2), faldas2);
+            // Aquí valido si hay un valor previo, si no hay datos, le pongo un cero "0".
+                
+            console.log(faldas2);
+                if (faldas2 > 0 && metros2 > 0){      // Verifica si campo faldas y campo metros son mayores que 0, entonces no realiza los calculos
+                    console.log("Ambos estan llenos");
+                }
+                else if (faldas2 == 0) {
+                    total = (parseFloat(precio2) * parseFloat(metros2));        // Multiplica el precio por los metros. cuando no hay faldas.
+                   
+                    sumar_total()
+                }else if (metros2 == 0) {
+                    total = (parseFloat(precio2) * parseFloat(faldas2));        // Multiplica el precio por las faldas. cuando no hay metros.
+                    sumar_total()
+                }
+    // Colocar el resultado de la suma en el control "span".
+    document.getElementById('importe2').value = total;
+    sumar_total();
+   }
+   function sumar3 (valor) {
+
+    var total = 0;	    // Variable para acumular el total
+    total = parseFloat(valor); // Se convierte el valor de entrada a float
+    precio3 = Number(document.getElementById("precio3").value);  // Se obtiene el valor del precio con id precio1
+    metros3 = Number(document.getElementById("metros3").value);  // Se obtiene el valor del metros con id metros1
+    faldas3 = Number(document.getElementById("faldas3").value);  // Se obtiene el valor de las faldas con id faldas1
+    
+    // Aquí valido si hay un valor previo, si no hay datos, le pongo un cero "0".
+
+        if (faldas3 > 0 && metros3 > 0){      // Verifica si campo faldas y campo metros son mayores que 0,si lo son entonces no realiza los calculos
+            console.log("Ambos estan llenos");
+        }
+        else if (faldas3 == 0) {
+            total = (parseFloat(precio3) * parseFloat(metros3));        // Multiplica el precio por los metros. cuando no hay faldas.
+            sumar_total()
+        }else if (metros3 == 0) {
+            total = (parseFloat(precio3) * parseFloat(faldas3));        // Multiplica el precio por las faldas. cuando no hay metros.
+            sumar_total()
+        }
+        document.getElementById('importe3').value = total;
+        sumar_total();  // Llamo a la función para sumar el total de todos los inputs "importe".
+    }
+    function sumar4 (valor) {
+
+        var total = 0;	    // Variable para acumular el total
+        total = parseFloat(valor); // Se convierte el valor de entrada a float
+        precio4 = Number(document.getElementById("precio4").value);  // Se obtiene el valor del precio con id precio1
+        metros4 = Number(document.getElementById("metros4").value);  // Se obtiene el valor del metros con id metros1
+        faldas4 = Number(document.getElementById("faldas4").value);  // Se obtiene el valor de las faldas con id faldas1
+        
+        // Aquí valido si hay un valor previo, si no hay datos, le pongo un cero "0".
+    
+            if (faldas4 > 0 && metros4 > 0){      // Verifica si campo faldas y campo metros son mayores que 0,si lo son entonces no realiza los calculos
+                console.log("Ambos estan llenos");
+            }
+            else if (faldas4 == 0) {
+                total = (parseFloat(precio4) * parseFloat(metros4));        // Multiplica el precio por los metros. cuando no hay faldas.
+                sumar_total()
+            }else if (metros4 == 0) {
+                total = (parseFloat(precio4) * parseFloat(faldas4));        // Multiplica el precio por las faldas. cuando no hay metros.
+                sumar_total()
+            }
+            document.getElementById('importe4').value = total;
+            sumar_total();  // Llamo a la función para sumar el total de todos los inputs "importe".
+        }
+        function sumar5 (valor) {
+
+            var total = 0;	    // Variable para acumular el total
+            total = parseFloat(valor); // Se convierte el valor de entrada a float
+            precio5 = Number(document.getElementById("precio5").value);  // Se obtiene el valor del precio con id precio1
+            metros5 = Number(document.getElementById("metros5").value);  // Se obtiene el valor del metros con id metros1
+            faldas5 = Number(document.getElementById("faldas5").value);  // Se obtiene el valor de las faldas con id faldas1
+            
+            // Aquí valido si hay un valor previo, si no hay datos, le pongo un cero "0".
+        
+                if (faldas5 > 0 && metros5 > 0){      // Verifica si campo faldas y campo metros son mayores que 0,si lo son entonces no realiza los calculos
+                    console.log("Ambos estan llenos");
+                }
+                else if (faldas5 == 0) {
+                    total = (parseFloat(precio5) * parseFloat(metros5));        // Multiplica el precio por los metros. cuando no hay faldas.
+                    sumar_total()
+                }else if (metros5 == 0) {
+                    total = (parseFloat(precio5) * parseFloat(faldas5));        // Multiplica el precio por las faldas. cuando no hay metros.
+                    sumar_total()
+                }
+                document.getElementById('importe5').value = total;
+                sumar_total();  // Llamo a la función para sumar el total de todos los inputs "importe".
+            }
+            function sumar6 (valor) {
+
+                var total = 0;	    // Variable para acumular el total
+                total = parseFloat(valor); // Se convierte el valor de entrada a float
+                precio6 = Number(document.getElementById("precio6").value);  // Se obtiene el valor del precio con id precio1
+                metros6 = Number(document.getElementById("metros6").value);  // Se obtiene el valor del metros con id metros1
+                faldas6 = Number(document.getElementById("faldas6").value);  // Se obtiene el valor de las faldas con id faldas1
+                
+                // Aquí valido si hay un valor previo, si no hay datos, le pongo un cero "0".
+            
+                    if (faldas6 > 0 && metros6 > 0){      // Verifica si campo faldas y campo metros son mayores que 0,si lo son entonces no realiza los calculos
+                        console.log("Ambos estan llenos");
+                    }
+                    else if (faldas6 == 0) {
+                        total = (parseFloat(precio6) * parseFloat(metros6));        // Multiplica el precio por los metros. cuando no hay faldas.
+                        sumar_total()
+                    }else if (metros6 == 0) {
+                        total = (parseFloat(precio6) * parseFloat(faldas6));        // Multiplica el precio por las faldas. cuando no hay metros.
+                        sumar_total()
+                    }
+                    document.getElementById('importe6').value = total;
+                    sumar_total();  // Llamo a la función para sumar el total de todos los inputs "importe".
+                }
+                function sumar7 (valor) {
+
+                    var total = 0;	    // Variable para acumular el total
+                    total = parseFloat(valor); // Se convierte el valor de entrada a float
+                    precio7 = Number(document.getElementById("precio7").value);  // Se obtiene el valor del precio con id precio1
+                    metros7 = Number(document.getElementById("metros7").value);  // Se obtiene el valor del metros con id metros1
+                    faldas7 = Number(document.getElementById("faldas7").value);  // Se obtiene el valor de las faldas con id faldas1
+                    
+                    // Aquí valido si hay un valor previo, si no hay datos, le pongo un cero "0".
+                
+                        if (faldas7 > 0 && metros7 > 0){      // Verifica si campo faldas y campo metros son mayores que 0,si lo son entonces no realiza los calculos
+                            console.log("Ambos estan llenos");
+                        }
+                        else if (faldas7 == 0) {
+                            total = (parseFloat(precio7) * parseFloat(metros7));        // Multiplica el precio por los metros. cuando no hay faldas.
+                            sumar_total()
+                        }else if (metros7 == 0) {
+                            total = (parseFloat(precio7) * parseFloat(faldas7));        // Multiplica el precio por las faldas. cuando no hay metros.
+                            sumar_total()
+                        }
+                        document.getElementById('importe7').value = total;
+                        sumar_total();  // Llamo a la función para sumar el total de todos los inputs "importe".
+                    }
+                    
+                    function sumar8 (valor) {
+
+                        var total = 0;	    // Variable para acumular el total
+                        total = parseFloat(valor); // Se convierte el valor de entrada a float
+                        precio8 = Number(document.getElementById("precio8").value);  // Se obtiene el valor del precio con id precio1
+                        metros8 = Number(document.getElementById("metros8").value);  // Se obtiene el valor del metros con id metros1
+                        faldas8 = Number(document.getElementById("faldas8").value);  // Se obtiene el valor de las faldas con id faldas1
+                        
+                        // Aquí valido si hay un valor previo, si no hay datos, le pongo un cero "0".
+                    
+                            if (faldas8 > 0 && metros8 > 0){      // Verifica si campo faldas y campo metros son mayores que 0,si lo son entonces no realiza los calculos
+                                console.log("Ambos estan llenos");
+                            }
+                            else if (faldas8 == 0) {
+                                total = (parseFloat(precio8) * parseFloat(metros8));        // Multiplica el precio por los metros. cuando no hay faldas.
+                                sumar_total()
+                            }else if (metros3 == 0) {
+                                total = (parseFloat(precio8) * parseFloat(faldas8));        // Multiplica el precio por las faldas. cuando no hay metros.
+                                sumar_total()
+                            }
+                            document.getElementById('importe8').value = total;
+                            sumar_total();  // Llamo a la función para sumar el total de todos los inputs "importe".
+                        }
+
+function sumar_total(){
+    /* Este código primero sumara todos los valores de la columna "total".
+       Tambien pondra la suma en el input del texto "total", el valor para el input de iva y el total con el valor de iva.*/arguments
+
+    total1 = Number(document.getElementById("importe1").value);
+    total2 = Number(document.getElementById("importe2").value);
+    total3 = Number(document.getElementById("importe3").value);
+    total4 = Number(document.getElementById("importe4").value);
+    total5 = Number(document.getElementById("importe5").value);
+    total6 = Number(document.getElementById("importe6").value);
+    total7 = Number(document.getElementById("importe7").value);
+    total8 = Number(document.getElementById("importe8").value);
+
+    total = parseFloat(total1) + parseFloat(total2) + parseFloat(total3) + parseFloat(total4) + parseFloat(total5) + parseFloat(total6) + parseFloat(total7) + parseFloat(total8);
+    document.getElementById('sub_total_sin_iva').value = total.toFixed(2);    // Añadido limete 2 de numeros decimales para que no se vuelva loco a la hora de hacer los cálculos
+    document.getElementById("iva_input").value=  total * 0.21;                  
+    iva = total * 0.21;
+    document.getElementById("total_con_iva").value = total + iva ;
+
+
+
+ 
+}
+</script>
+</body>
+</html>
