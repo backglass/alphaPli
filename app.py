@@ -79,8 +79,8 @@ class Nueva_factura(FlaskForm):
     importe8 = StringField("Importe8")
 
     precio_metro = StringField("Precio Metro")
-    subtotal = StringField("Subtotal")
-    total = StringField("Total")
+    sub_total_sin_iva  = StringField("Subtotal")
+    total_con_iva = StringField("Total")
     notas = TextAreaField("Notas")
 
 
@@ -165,12 +165,12 @@ class Facturas(db.Model): # Clase Facturas hereda de db.Model, servira para crea
     importe5 = db.Column(db.String(10))
     importe6 = db.Column(db.String(10))
     importe7 = db.Column(db.String(10))
-    importe8 = db.Column(db.String(10))
+    importe8 = db.Column(db.String())
 
-    pagada = db.Column(db.String(1))
-    subtotal = db.Column(db.String(10))
+    pagada = db.Column(db.Boolean())
+    subtotal  = db.Column(db.String(10))
     total = db.Column(db.String(10))
-    precio_metro = db.Column(db.String(10))
+    precio_metro = db.Column(db.Float())
     notas = db.Column(db.String(1000))
 
     def __init__(self, nif, fecha,
@@ -234,14 +234,9 @@ class Facturas(db.Model): # Clase Facturas hereda de db.Model, servira para crea
         self.precio_metro = precio_metro
         self.notas = notas
         
- 
-        self.pagada = pagada
-        subtotal = subtotal
-        total = total
-        precio_metro = precio_metro
-        self.notas = notas
+
     def __repr__(self):
-        return f"Factura('{self.nif}', '{self.fecha}', '{self.importe}', '{self.concepto}', '{self.notas}')"
+        return '<Factura %r>' % self.id 
 
 class Borrar(db.Model):
 
@@ -393,13 +388,15 @@ def ver_factura(nif):
 def crear_factura(nif):
     print(nif)
 
-    form = Nueva_factura()
+    fecha = time.strftime("%d/%m/%y")     # Obtiene la fecha actual y la guarda en la variable fecha que se le pasa al template para que se muestre en el formulario
+    form = Nueva_factura()                # Crea una instancia del formulario de crear factura
     cliente = Clientes.query.filter_by(nif=nif).first()
-    a = form.validate_on_submit()
-    print(a)
+
+    num = Facturas.query.count()          # Cuenta el numero de facturas que hay en la base de datos para poner el numero de factura correcto en el formulario
+    num = num + 1  
+    
     if form.validate_on_submit():
-        print("Entro")
-       
+                           # Aumenta el numero de factura en 1    
         factura = Facturas( cliente.nif, time.strftime("%d/%m/%y"),
                             form.precio1.data,
                             form.precio2.data,
@@ -446,12 +443,11 @@ def crear_factura(nif):
                             form.importe7.data,
                             form.importe8.data,
 
-                            pagada = 0,
-                            subtotal="0",
-                            total="0",
-                            precio_metro="0",
-                            notas="0")
-                            
+                            False,
+                            form.sub_total_sin_iva.data,
+                            form.total_con_iva.data,
+                            cliente.precio_metro,
+                            notas = "")                    
 
          
         db.session.add(factura)
@@ -463,7 +459,7 @@ def crear_factura(nif):
             print("Error al crear la factura ", e)
             return redirect(url_for('clientes'))
     
-    return render_template('crear_factura.html', form = form, cliente = cliente)
+    return render_template('crear_factura.html', form = form, cliente = cliente,fecha=fecha,num=num)
 
 if __name__ == '__main__':
     app.run(debug=True)
