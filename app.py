@@ -235,8 +235,7 @@ class Facturas(db.Model): # Clase Facturas hereda de db.Model, servira para crea
         self.notas = notas
         
 
-    def __repr__(self):
-        return '<Factura %r>' % self.id 
+
 
 class Borrar(db.Model):
 
@@ -321,7 +320,7 @@ def editar_cliente(nif):
     form = Insertar_cliente()                           # Crea una instancia del formulario de cr
     
     if form.validate_on_submit():
-        
+                
         cliente.nombre = form.nombre.data
         cliente.telefono = form.telefono.data
         cliente.teledono_movil = form.telefono_movil.data
@@ -349,7 +348,9 @@ def eliminar_cliente(nif):
 
 @app.route("/facturas") # Ruta para ver la lista de todas las facturas
 def facturas():
-    return render_template('facturas.html', facturas=Facturas.query.all())
+    facturas1=Facturas.query.all()# Busca todas las facturas en la base de datos
+    print (facturas1[1].nif)
+    return render_template('facturas.html', facturas = Facturas.query.all()) # Muestra todas las facturas en la base de datos
 
 
 # @app.route("/facturas/nueva/<nif>", methods = ["GET","POST"]) # Ruta para la pagina de crear factura
@@ -393,10 +394,10 @@ def crear_factura(nif):
     cliente = Clientes.query.filter_by(nif=nif).first()
 
     num = Facturas.query.count()          # Cuenta el numero de facturas que hay en la base de datos para poner el numero de factura correcto en el formulario
-    num = num + 1  
+    num = num + 1                        # Aumenta el numero de factura en 1, para así ser el numero de la ultima factura que se crea
     
     if form.validate_on_submit():
-                           # Aumenta el numero de factura en 1    
+                               
         factura = Facturas( cliente.nif, time.strftime("%d/%m/%y"),
                             form.precio1.data,
                             form.precio2.data,
@@ -447,7 +448,7 @@ def crear_factura(nif):
                             form.sub_total_sin_iva.data,
                             form.total_con_iva.data,
                             cliente.precio_metro,
-                            notas = "")                    
+                            form.notas.data)                  
 
          
         db.session.add(factura)
@@ -461,6 +462,140 @@ def crear_factura(nif):
     
     return render_template('crear_factura.html', form = form, cliente = cliente,fecha=fecha,num=num)
 
+
+@app.route("/facturas/editar/<num>", methods=["GET", "POST"]) # Ruta para la pagina de editar factura
+def editar_factura(num):
+
+   
+    ##cliente = Clientes.query.filter_by(nif=nif).first() # Busca el cliente en la base de datos con el nif que se le pasa en la ruta
+    factura = Facturas.query.filter_by(num=num).first()
+    cliente = Clientes.query.filter_by(nif=factura.nif).first()
+    form = Nueva_factura()                           # Crea una instancia del formulario de cr
+
+
+
+
+    if form.validate_on_submit():
+
+        factura.precio1 = form.precio1.data
+        factura.precio2 = form.precio2.data
+        factura.precio3 = form.precio3.data
+        factura.precio4 = form.precio4.data
+        factura.precio5 = form.precio5.data
+        factura.precio6 = form.precio6.data
+        factura.precio7 = form.precio7.data
+        factura.precio8 = form.precio8.data
+
+        factura.descripcion1 = form.descripcion1.data
+        factura.descripcion2 = form.descripcion2.data
+        factura.descripcion3 = form.descripcion3.data
+        factura.descripcion4 = form.descripcion4.data
+        factura.descripcion5 = form.descripcion5.data
+        factura.descripcion6 = form.descripcion6.data
+        factura.descripcion7 = form.descripcion7.data
+        factura.descripcion8 = form.descripcion8.data
+
+        factura.metros1 = form.metros1.data
+        factura.metros2 = form.metros2.data
+        factura.metros3 = form.metros3.data
+        factura.metros4 = form.metros4.data
+        factura.metros5 = form.metros5.data
+        factura.metros6 = form.metros6.data
+        factura.metros7 = form.metros7.data
+        factura.metros8 = form.metros8.data
+
+        factura.faldas1 = form.faldas1.data
+        factura.faldas2 = form.faldas2.data
+        factura.faldas3 = form.faldas3.data
+        factura.faldas4 = form.faldas4.data
+        factura.faldas5 = form.faldas5.data
+        factura.faldas6 = form.faldas6.data
+        factura.faldas7 = form.faldas7.data
+        factura.faldas8 = form.faldas8.data
+
+        factura.importe1 = form.importe1.data
+        factura.importe2 = form.importe2.data
+        factura.importe3 = form.importe3.data
+        factura.importe4 = form.importe4.data
+        factura.importe5 = form.importe5.data
+        factura.importe6 = form.importe6.data
+        factura.importe7 = form.importe7.data
+        factura.importe8 = form.importe8.data
+
+        factura.sub_total_sin_iva = form.sub_total_sin_iva.data
+        factura.total_con_iva = form.total_con_iva.data
+        factura.precio_metro = form.precio_metro.data
+        factura.notas = form.notas.data
+
+        db.session.commit()
+        flash("Factura actualizada correctamente")
+        return redirect(url_for('clientes'))
+
+    return render_template('editar_factura.html', form = form,factura=factura,cliente = cliente) 
+@app.route("/facturas/ver/<num>", methods=["GET", "POST"])  
+def vista_factura(num):
+
+    factura = Facturas.query.filter_by(num=num).first()
+    cliente = Clientes.query.filter_by(nif=factura.nif).first()
+    form = Nueva_factura()   
+   
+
+    if form.validate_on_submit():
+
+        factura.precio1 = form.precio1.data
+        factura.precio2 = form.precio2.data
+        factura.precio3 = form.precio3.data
+        factura.precio4 = form.precio4.data
+        factura.precio5 = form.precio5.data
+        factura.precio6 = form.precio6.data
+        factura.precio7 = form.precio7.data
+        factura.precio8 = form.precio8.data
+
+        factura.descripcion1 = form.descripcion1.data
+        factura.descripcion2 = form.descripcion2.data
+        factura.descripcion3 = form.descripcion3.data
+        factura.descripcion4 = form.descripcion4.data
+        factura.descripcion5 = form.descripcion5.data
+        factura.descripcion6 = form.descripcion6.data
+        factura.descripcion7 = form.descripcion7.data
+        factura.descripcion8 = form.descripcion8.data
+
+        factura.metros1 = form.metros1.data
+        factura.metros2 = form.metros2.data
+        factura.metros3 = form.metros3.data
+        factura.metros4 = form.metros4.data
+        factura.metros5 = form.metros5.data
+        factura.metros6 = form.metros6.data
+        factura.metros7 = form.metros7.data
+        factura.metros8 = form.metros8.data
+
+        factura.faldas1 = form.faldas1.data
+        factura.faldas2 = form.faldas2.data
+        factura.faldas3 = form.faldas3.data
+        factura.faldas4 = form.faldas4.data
+        factura.faldas5 = form.faldas5.data
+        factura.faldas6 = form.faldas6.data
+        factura.faldas7 = form.faldas7.data
+        factura.faldas8 = form.faldas8.data
+
+        factura.importe1 = form.importe1.data
+        factura.importe2 = form.importe2.data
+        factura.importe3 = form.importe3.data
+        factura.importe4 = form.importe4.data
+        factura.importe5 = form.importe5.data
+        factura.importe6 = form.importe6.data
+        factura.importe7 = form.importe7.data
+        factura.importe8 = form.importe8.data
+
+        factura.sub_total_sin_iva = form.sub_total_sin_iva.data
+        factura.total_con_iva = form.total_con_iva.data
+        factura.precio_metro = form.precio_metro.data
+        factura.notas = form.notas.data
+
+        db.session.commit()
+    factura = Facturas.query.filter_by(num=num).first()
+    cliente = Clientes.query.filter_by(nif=factura.nif).first()
+    return render_template('ver_factura.html', factura=factura,cliente = cliente,form=form)
 if __name__ == '__main__':
     app.run(debug=True)
     
