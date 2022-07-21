@@ -1,0 +1,16 @@
+*****  Crear pagina para editar las facturas-- tener en cuenta los datos que vienen del cliente --
+****** Crear pagina para ver las facturas en los clientes y que se puedan imprimir
+****** Crear pagina para ver todas las facturas y sus filtros "Fecha importe etc"
+****** Cambiar en página de clientes, la lista de clientes --> en vez de tabla --> ponerlo en "panel" 
+
+## crear_factura.html ##
+
+En crear_factura revisar los eventos para hacer los cálculos no solo cuando se sale del campo
+También intentar que cambie de campo a campo con la tecla intro
+Intentar porner filtros a la lista de facturas para elegir "fecha, importe etc.."
+#######
+
+## ver_cliente.html
+
+Poner la fecha con formato europeo ... y mirar para ver que mas hacer xD
+#########

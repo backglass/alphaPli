@@ -214,64 +214,64 @@ hr {
                     
                     <div class="text-95 text-secondary-d3">
                         <div class="row mb-2 mb-sm-0 py-25">
-                            <div class="d-none d-sm-block col-1"> {{ form.precio1 (class_="form-control none",value_=factura.precio1, onchange="sumar1(this.value);")}}</div>
-                            <div class="col-9 col-sm-5">{{ form.descripcion1 (class_="form-control none",value =factura.descripcion1)}}</div>
-                            <div class="d-none d-sm-block col-2">{{ form.metros1 (class_="form-control none",value_=factura.metros1,  onchange="sumar1(this.value);")}}</div>
-                            <div class="d-none d-sm-block col-2 text-95">{{ form.faldas1 (class_="form-control none",value_=factura.faldas1,  onchange="sumar1(this.value);")}}</div>
-                            <div class="col-2 text-secondary-d2">{{ form.importe1 (class_="form-control none",value_=factura.importe1, )}}</div>
+                            <div class="d-none d-sm-block col-1"> {{ form.precio1 (class_="form-control",value_=factura.precio1, onchange="sumar1(this.value);")}}</div>
+                            <div class="col-9 col-sm-5">{{ form.descripcion1 (class_="form-control",value =factura.descripcion1)}}</div>
+                            <div class="d-none d-sm-block col-2">{{ form.metros1 (class_="form-control",value_=factura.metros1,  onchange="sumar1(this.value);")}}</div>
+                            <div class="d-none d-sm-block col-2 text-95">{{ form.faldas1 (class_="form-control",value_=factura.faldas1,  onchange="sumar1(this.value);")}}</div>
+                            <div class="col-2 text-secondary-d2">{{ form.importe1 (class_="form-control",value_=factura.importe1, )}}</div>
                         </div>
 
                         <div class="row mb-2 mb-sm-0 py-25 bgc-default-l4">
-                            <div class="d-none d-sm-block col-1"> {{ form.precio2 (class_="form-control bgc-default-l4 none ",value_=factura.precio2,opacity = 0.6,  onchange="sumar2(this.value);")}}</div>
-                            <div class="col-9 col-sm-5">{{ form.descripcion2 (class_="form-control bgc-default-l4 none ",value =factura.descripcion2)}}</div>
-                            <div class="d-none d-sm-block col-2">{{ form.metros2 (class_="form-control bgc-default-l4 none",value_=factura.metros2,  onchange="sumar2(this.value);")}}</div>
-                            <div class="d-none d-sm-block col-2 text-95">{{ form.faldas2 (class_="form-control bgc-default-l4 none",value_=factura.faldas2,  onchange="sumar2(this.value);")}}</div>
-                            <div class="col-2 text-secondary-d2">{{ form.importe2 (class_="form-control bgc-default-l4 none",value_=factura.importe2, )}}</div>
-                        </div>
-
-                        <div class="row mb-2 mb-sm-0 py-25">
-                            <div class="d-none d-sm-block col-1"> {{ form.precio3 (class_="form-control none",value_=factura.precio3 , onchange="sumar3(this.value);")}}</div>
-                            <div class="col-9 col-sm-5">{{ form.descripcion3 (class_="form-control none",value = factura.descripcion3)}}</div>
-                            <div class="d-none d-sm-block col-2">{{ form.metros3 (class_="form-control none",value_=factura.metros3, onchange="sumar3(this.value);")}}</div>
-                            <div class="d-none d-sm-block col-2 text-95">{{ form.faldas3 (class_="form-control none",value_=factura.faldas3,  onchange="sumar3(this.value);")}}</div>
-                            <div class="col-2 text-secondary-d2">{{ form.importe3 (class_="form-control none",value_=factura.importe3 )}}</div>
-                        </div>
-
-                        <div class="row mb-2 mb-sm-0 py-25 bgc-default-l4">
-                            <div class="d-none d-sm-block col-1"> {{ form.precio4 (class_="form-control bgc-default-l4 none",value_=factura.precio4,  onchange="sumar4(this.value);")}}</div>
-                            <div class="col-9 col-sm-5">{{ form.descripcion4 (class_="form-control bgc-default-l4 none",value =factura.descripcion4)}}</div>
-                            <div class="d-none d-sm-block col-2">{{ form.metros4 (class_="form-control bgc-default-l4 none",value_=factura.metros4, onchange="sumar4(this.value);")}}</div>
-                            <div class="d-none d-sm-block col-2 text-95">{{ form.faldas4 (class_="form-control bgc-default-l4 none", onchange="sumar4(this.value);")}}</div>
-                            <div class="col-2 text-secondary-d2">{{ form.importe4 (class_="form-control bgc-default-l4 none",value_=factura.importe4 )}}</div>
+                            <div class="d-none d-sm-block col-1"> {{ form.precio2 (class_="form-control bgc-default-l4 ",value_=factura.precio2,opacity = 0.6,  onchange="sumar2(this.value);")}}</div>
+                            <div class="col-9 col-sm-5">{{ form.descripcion2 (class_="form-control ",value =factura.descripcion2)}}</div>
+                            <div class="d-none d-sm-block col-2">{{ form.metros2 (class_="form-control",value_=factura.metros2,  onchange="sumar2(this.value);")}}</div>
+                            <div class="d-none d-sm-block col-2 text-95">{{ form.faldas2 (class_="form-control",value_=factura.faldas2,  onchange="sumar2(this.value);")}}</div>
+                            <div class="col-2 text-secondary-d2">{{ form.importe2 (class_="form-control",value_=factura.importe2, )}}</div>
                         </div>
 
                         <div class="row mb-2 mb-sm-0 py-25">
-                            <div class="d-none d-sm-block col-1"> {{ form.precio5 (class_="form-control none",value_=factura.precio5, onchange="sumar5(this.value);")}}</div>
-                            <div class="col-9 col-sm-5">{{ form.descripcion5 (class_="form-control none",value =factura.descripcion5)}}</div>
-                            <div class="d-none d-sm-block col-2">{{ form.metros5 (class_="form-control none",value_=factura.metros5, onchange="sumar5(this.value);")}}</div>
-                            <div class="d-none d-sm-block col-2 text-95">{{ form.faldas5 (class_="form-control none",value_=factura.faldas5, onchange="sumar5(this.value);")}}</div>
-                            <div class="col-2 text-secondary-d2">{{ form.importe5 (class_="form-control none",value_=factura.importe5)}}</div>
+                            <div class="d-none d-sm-block col-1"> {{ form.precio3 (class_="form-control",value_=factura.precio3 , onchange="sumar3(this.value);")}}</div>
+                            <div class="col-9 col-sm-5">{{ form.descripcion3 (class_="form-control",value = factura.descripcion3)}}</div>
+                            <div class="d-none d-sm-block col-2">{{ form.metros3 (class_="form-control",value_=factura.metros3, onchange="sumar3(this.value);")}}</div>
+                            <div class="d-none d-sm-block col-2 text-95">{{ form.faldas3 (class_="form-control",value_=factura.faldas3,  onchange="sumar3(this.value);")}}</div>
+                            <div class="col-2 text-secondary-d2">{{ form.importe3 (class_="form-control",value_=factura.importe3 )}}</div>
+                        </div>
+
+                        <div class="row mb-2 mb-sm-0 py-25 bgc-default-l4">
+                            <div class="d-none d-sm-block col-1"> {{ form.precio4 (class_="form-control",value_=factura.precio4,  onchange="sumar4(this.value);")}}</div>
+                            <div class="col-9 col-sm-5">{{ form.descripcion4 (class_="form-control",value =factura.descripcion4)}}</div>
+                            <div class="d-none d-sm-block col-2">{{ form.metros4 (class_="form-control",value_=factura.metros4, onchange="sumar4(this.value);")}}</div>
+                            <div class="d-none d-sm-block col-2 text-95">{{ form.faldas4 (class_="form-control", onchange="sumar4(this.value);")}}</div>
+                            <div class="col-2 text-secondary-d2">{{ form.importe4 (class_="form-control",value_=factura.importe4 )}}</div>
+                        </div>
+
+                        <div class="row mb-2 mb-sm-0 py-25">
+                            <div class="d-none d-sm-block col-1"> {{ form.precio5 (class_="form-control",value_=factura.precio5, onchange="sumar5(this.value);")}}</div>
+                            <div class="col-9 col-sm-5">{{ form.descripcion5 (class_="form-control",value =factura.descripcion5)}}</div>
+                            <div class="d-none d-sm-block col-2">{{ form.metros5 (class_="form-control",value_=factura.metros5, onchange="sumar5(this.value);")}}</div>
+                            <div class="d-none d-sm-block col-2 text-95">{{ form.faldas5 (class_="form-control",value_=factura.faldas5, onchange="sumar5(this.value);")}}</div>
+                            <div class="col-2 text-secondary-d2">{{ form.importe5 (class_="form-control",value_=factura.importe5)}}</div>
                         </div>
                         <div class="row mb-2 mb-sm-0 py-25 bgc-default-l4">
-                            <div class="d-none d-sm-block col-1"> {{ form.precio6 (class_="form-control bgc-default-l4 none",value_=factura.precio6, onchange="sumar6(this.value);")}}</div>
-                            <div class="col-9 col-sm-5">{{ form.descripcion6 (class_="form-control bgc-default-l4 none",value =factura.descripcion6)}}</div>
-                            <div class="d-none d-sm-block col-2">{{ form.metros6 (class_="form-control bgc-default-l4 none",value_=factura.metros6, onchange="sumar6(this.value);")}}</div>
-                            <div class="d-none d-sm-block col-2 text-95">{{ form.faldas6 (class_="form-control bgc-default-l4 none",value_=factura.faldas6, onchange="sumar6(this.value);")}}</div>
-                            <div class="col-2 text-secondary-d2">{{ form.importe6 (class_="form-control bgc-default-l4 none",value_=factura.importe6)}}</div>
+                            <div class="d-none d-sm-block col-1"> {{ form.precio6 (class_="form-control",value_=factura.precio6, onchange="sumar6(this.value);")}}</div>
+                            <div class="col-9 col-sm-5">{{ form.descripcion6 (class_="form-control",value =factura.descripcion6)}}</div>
+                            <div class="d-none d-sm-block col-2">{{ form.metros6 (class_="form-control",value_=factura.metros6, onchange="sumar6(this.value);")}}</div>
+                            <div class="d-none d-sm-block col-2 text-95">{{ form.faldas6 (class_="form-control",value_=factura.faldas6, onchange="sumar6(this.value);")}}</div>
+                            <div class="col-2 text-secondary-d2">{{ form.importe6 (class_="form-control",value_=factura.importe6)}}</div>
                         </div>
                         <div class="row mb-2 mb-sm-0 py-25">
-                            <div class="d-none d-sm-block col-1"> {{ form.precio7 (class_="form-control none",value_=factura.importe7, onchange="sumar7(this.value);")}}</div>
-                            <div class="col-9 col-sm-5">{{ form.descripcion7 (class_="form-control none",value =factura.descripcion7)}}</div>
-                            <div class="d-none d-sm-block col-2">{{ form.metros7 (class_="form-control none",value_=factura.metros7, onchange="sumar7(this.value);")}}</div>
-                            <div class="d-none d-sm-block col-2 text-95">{{ form.faldas7 (class_="form-control none",value_=factura.faldas7, onchange="sumar7(this.value);")}}</div>
-                            <div class="col-2 text-secondary-d2">{{ form.importe7 (class_="form-control none",value_=factura.importe7)}}</div>
+                            <div class="d-none d-sm-block col-1"> {{ form.precio7 (class_="form-control",value_=factura.importe7, onchange="sumar7(this.value);")}}</div>
+                            <div class="col-9 col-sm-5">{{ form.descripcion7 (class_="form-control",value =factura.descripcion7)}}</div>
+                            <div class="d-none d-sm-block col-2">{{ form.metros7 (class_="form-control",value_=factura.metros7, onchange="sumar7(this.value);")}}</div>
+                            <div class="d-none d-sm-block col-2 text-95">{{ form.faldas7 (class_="form-control",value_=factura.faldas7, onchange="sumar7(this.value);")}}</div>
+                            <div class="col-2 text-secondary-d2">{{ form.importe7 (class_="form-control",value_=factura.importe7)}}</div>
                         </div>
                         <div class="row mb-2 mb-sm-0 py-25 bgc-default-l4">
-                            <div class="d-none d-sm-block col-1"> {{ form.precio8 (class_="form-control bgc-default-l4 none",value_=factura.importe8, onchange="sumar8(this.value);")}}</div>
-                            <div class="col-9 col-sm-5">{{ form.descripcion8 (class_="form-control bgc-default-l4 none", value =factura.descripcion8)}}</div>
-                            <div class="d-none d-sm-block col-2">{{ form.metros8 (class_="form-control bgc-default-l4 none",value_=factura.metros8, onchange="sumar8(this.value);")}}</div>
-                            <div class="d-none d-sm-block col-2 text-95">{{ form.faldas8 (class_="form-control bgc-default-l4 none",value_=factura.faldas8, onchange="sumar8(this.value);")}}</div>
-                            <div class="col-2 text-secondary-d2">{{ form.importe8 (class_="form-control bgc-default-l4 none",value_=factura.importe8)}}</div>
+                            <div class="d-none d-sm-block col-1"> {{ form.precio8 (class_="form-control",value_=factura.importe8, onchange="sumar8(this.value);")}}</div>
+                            <div class="col-9 col-sm-5">{{ form.descripcion8 (class_="form-control", value =factura.descripcion8)}}</div>
+                            <div class="d-none d-sm-block col-2">{{ form.metros8 (class_="form-control",value_=factura.metros8, onchange="sumar8(this.value);")}}</div>
+                            <div class="d-none d-sm-block col-2 text-95">{{ form.faldas8 (class_="form-control",value_=factura.faldas8, onchange="sumar8(this.value);")}}</div>
+                            <div class="col-2 text-secondary-d2">{{ form.importe8 (class_="form-control",value_=factura.importe8)}}</div>
                         </div>
                     </div>
                  
