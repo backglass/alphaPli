@@ -19,7 +19,7 @@
         {% for factura in facturas %}
       <tr>
         <th scope="row">{{ factura.nif }}</th>
-        <td>{{ factura.fecha }}</td>
+        <td>{{ factura.cliente.nombre }}</td>
 
       </tr>
         {% endfor %}
