@@ -97,6 +97,7 @@ class Clientes(db.Model):
     direccion = db.Column(db.String(100), nullable=False)
     precio_metro = db.Column(db.String(10))
     notas = db.Column(db.String(10000))
+    pubs = db.relationship('Facturas', backref='cliente', lazy='dynamic')
 
     def __init__(self, nif, nombre, telefono, teledono_movil, email, direccion,precio_metro, notas):
         self.nif = nif
@@ -107,6 +108,7 @@ class Clientes(db.Model):
         self.direccion = direccion
         self.precio_metro = precio_metro
         self.notas = notas
+
             
     def __repr__(self):
         return f"Cliente('{self.nif}', '{self.nombre}', '{self.telefono}', '{self.teledono_movil}', '{self.email}', '{self.direccion}','{self.precio_metro} '{self.notas}')"
@@ -233,6 +235,10 @@ class Facturas(db.Model): # Clase Facturas hereda de db.Model, servira para crea
         self.total = total
         self.precio_metro = precio_metro
         self.notas = notas
+
+    @staticmethod
+    def get_by_post_id(post_id):
+        return Clientes.query.filter_by(nif=num).all()
         
 
 
@@ -348,8 +354,14 @@ def eliminar_cliente(nif):
 
 @app.route("/facturas") # Ruta para ver la lista de todas las facturas
 def facturas():
-    facturas1=Facturas.query.all()# Busca todas las facturas en la base de datos
-    print (facturas1[1].nif)
+
+    cliente = Facturas.query.all() # Busca todos los clientes en la base de datos
+      # Busca todas las facturas de los clientes en la base de datos
+    factura = Facturas.query.all()
+    for p in factura:
+        print(p.num,p.cliente.nombre) ### Esto es importante!!!!!!! porque p.cliente.nombre es el nombre del cliente el cual es el nif en la tabla facturas
+    # facturas1=Facturas.query.all()# Busca todas las facturas en la base de datos
+    # print (facturas1[1].nif)
     return render_template('facturas.html', facturas = Facturas.query.all()) # Muestra todas las facturas en la base de datos
 
 
@@ -377,11 +389,12 @@ def facturas():
 #     return render_template('nueva_factura.html', form=form, cliente=cliente) #cliente se usa para enviar algunos datos del cliente al formulario de crear factura(nif,nombre, etc)
     
 
-@app.route("/ver_factura/<nif>", methods = ["GET","POST"]) # Ruta para la pagina de ver factura
-def ver_factura(nif):
-    factura = Facturas.query.filter_by(nif=nif).first()
-    cliente = Clientes.query.filter_by(nif=nif).first()
-    return render_template('ver_factura.html', factura=factura, cliente=cliente)
+# @app.route("/ver_factura/<nif>", methods = ["GET","POST"]) # Ruta para la pagina de ver factura
+# def ver_factura(nif):
+#     factura = Facturas.query.filter_by(nif=nif).first()
+#     cliente = Clientes.query.filter_by(nif=nif).first()
+    
+#     return render_template('ver_factura.html', factura=factura, cliente=cliente)
 
 
 
@@ -532,8 +545,11 @@ def editar_factura(num):
         return redirect(url_for('clientes'))
 
     return render_template('editar_factura.html', form = form,factura=factura,cliente = cliente) 
+
+
+
 @app.route("/facturas/ver/<num>", methods=["GET", "POST"])  
-def vista_factura(num):
+def ver_factura(num):
 
     factura = Facturas.query.filter_by(num=num).first()
     cliente = Clientes.query.filter_by(nif=factura.nif).first()
@@ -593,8 +609,9 @@ def vista_factura(num):
         factura.notas = form.notas.data
 
         db.session.commit()
-    factura = Facturas.query.filter_by(num=num).first()
-    cliente = Clientes.query.filter_by(nif=factura.nif).first()
+    # factura = Facturas.query.filter_by(num=num).first()
+    # cliente = Clientes.query.filter_by(nif=factura.nif).first()
+
     return render_template('ver_factura.html', factura=factura,cliente = cliente,form=form)
 if __name__ == '__main__':
     app.run(debug=True)
