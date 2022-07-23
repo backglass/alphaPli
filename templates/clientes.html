@@ -44,20 +44,21 @@
   <div class="">
     <div class="accordion" id="myAccordion">
       {% for cliente in clientes %}
-        <div class="accordion-item">
+        <div class="accordion-item my-1 shadow ">
             <h2 class="accordion-header" id="numero{{ cliente.nif }}">
                 <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#colapse{{ cliente.nif }}"><h1 class="display-6">{{ cliente.nombre }}</h1></button>									
             </h2>
             <div id="colapse{{ cliente.nif }}" class="accordion-collapse collapse" data-bs-parent="#myAccordion">
                 <div class="card-body">
                     <p>Nif: {{ cliente.nif}}. </p>
-                    <p>Teléfono: {{ cliente.telefono}} </p>
-                    <p>Dirección: {{ cliente.direccion}} </p>
-                    <p>Email: {{ cliente.email}} </p>
-                    <p>Precio: {{ cliente.precio}} </p>
-                    <a href="{{ url_for ('ver_cliente', ver_cliente = cliente.nif)  }}"><button type="button" class="btn btn-success">Ver</button></a>
-                    <a href="{{ url_for ('editar_cliente', nif = cliente.nif)  }}"><button type="button" class="btn btn-info">Editar</button></a>
-                    <a href="{{ url_for ('crear_factura', nif = cliente.nif) }}"><button type="button" class="btn btn-primary">Nueva factura</button></a>
+                    <p>Teléfono: {{ cliente.telefono }} </p>
+                    <p>Dirección: {{ cliente.direccion }} </p>
+                    <p>Email: {{ cliente.email }} </p>
+                    <p>Precio: {{ cliente.precio }} </p>
+                    <a href="{{ url_for ('ver_cliente', ver_cliente = cliente.nif)  }}"><button type="button" class="btn btn-success">Ver cliente</button></a>
+                    <a href="{{ url_for ('editar_cliente', nif = cliente.nif)  }}"><button type="button" class="btn btn-info">Editar cliente</button></a>
+                    <a href="{{ url_for ('crear_factura', nif = cliente.nif)  }}"><button type="button" class="btn btn-info">Crear factura</button></a>
+                   
                  </div>
             </div>
         </div>
@@ -69,6 +70,7 @@
 
 
 </div>
+
 
    {% endblock %}
    
