@@ -288,7 +288,7 @@ def clientes():
 
 
 
-@app.route('/clientes/<ver_cliente>') # Ruta para la pagina de ver un cliente es dinamica porque se le pasa el nif del cliente 
+@app.route('/clientes/ver/<ver_cliente>') # Ruta para la pagina de ver un cliente es dinamica porque se le pasa el nif del cliente 
 def ver_cliente(ver_cliente):
     cliente = Clientes.query.filter_by(nif=ver_cliente).first() # Busca el cliente en la base de datos
     factura = Facturas.query.filter_by(nif=ver_cliente).all() # Busca las facturas del cliente en la base de datos
