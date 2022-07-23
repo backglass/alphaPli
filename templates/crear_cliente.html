@@ -10,7 +10,10 @@
         <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
     </div>
     <div> -->
-<div class="container">
+    <h1>Crear cliente</h1>
+    <div class="container">
+    <div class="card text-dark bg-light mb-3 shadow " >
+        <div class="container">
         <form method="post">
         {{ form.hidden_tag() }}
         {{ form.nif.label (class_="form-label") }} {{ form.nif (class_="form-control" )}}
@@ -26,6 +29,9 @@
             <button type="submit" class="btn btn-primary">Guardar</button>
         </div>
         </form>
+       </div>
+    </div>
     </div>
 </div>
+
 {% endblock %}
