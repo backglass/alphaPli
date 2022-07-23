@@ -1,38 +1,76 @@
 {% extends "base.html" %}
 
 {% block content %}
+
+<style>
+  .iconoverde {
+    filter: invert(60%) sepia(9%) saturate(2949%) hue-rotate(71deg) brightness(107%) contrast(76%);
+  }
+
+  .iconorojo {
+    filter: invert(34%) sepia(43%) saturate(4873%) hue-rotate(346deg) brightness(100%) contrast(91%);
+  }
+  .iconoazul {
+    filter: invert(46%) sepia(29%) saturate(1757%) hue-rotate(175deg) brightness(101%) contrast(92%);
+  }
+  .icononaranja {
+    filter: invert(71%) sepia(68%) saturate(1692%) hue-rotate(346deg) brightness(96%) contrast(92%);
+
+
+  }
+</style>
+
 <div class="container-md">
+  <h1>Cliente</h1>
 <br>
-  <div class="card text-dark bg-light mb-3" >
+  <div class="card text-dark bg-light mb-3 shadow " >
+    <h5>
     <div class="card-header"><h5><strong>{{ cliente.nombre }}</strong></h5></div>
     <div class="card-body">
-      <p class="card-text"><b>Nif: </b>{{ cliente.nif }} </p>
-      <p class="card-text"><b>nombre: </b>{{ cliente.nombre }}</p>
+      <p class="card-text"><b>Nif: </b><span class="lead">{{ cliente.nif }} </span></p>
+      <p class="card-text"><b>nombre: </b><span class="lead">{{ cliente.nombre }}</span></p>
       <p class="card-text"><b>Teléfono: </b>{{ cliente.telefono}}</p>
       <p class="card-text"><b>Teléfono 2: </b>{{ cliente.telefono_movil }}</p>
       <p class="card-text"><b>Email: </b>{{ cliente.email }}</p>
       <p class="card-text"><b>Direccíon: </b>{{ cliente.direccion }}</p>
-      <p class="card-text"><b>Precio m: </b>{{ cliente.precio_metro }}</p>
+      <p class="card-text"><b>Precio metro: </b>{{ cliente.precio_metro }}</p>
       <p class="card-text"><b>Notas: </b>{{ cliente.notas }}</p>
     </div>
   </div>
+  </h5>
   <br>
-
-<table class="table table-primary table-striped">
+  
+<table class="table shadow-sm table-striped bg-light ">
   <thead>
     <tr>
       <th scope="col">Fecha</th>
-      <th scope="col">Concepto</th>
+      <th scope="col">Importe</th>
     </tr>
   </thead>
   <tbody>
     {% for factura in facturas %}
     <tr>
-      <th scope="row">{{ factura.fecha }}</th>
-      <td>{{ factura.concepto }}</td>
-    </tr>
-    
-    {% endfor %}
+      <th scope="row"><h5>{{ factura.fecha.strftime('%d-%m-%Y') }}</h5></th>
+      <td><h5>{{ factura.total }}€</h5></td>
+      <td><a href="{{ url_for ('ver_factura', num = factura.num)  }}"><img class ="iconoazul" src ="/static/icons/print.svg"></a></td>
+      <td><a href="{{ url_for ('editar_factura', num = factura.num)  }}"><img class ="icononaranja" src ="/static/icons/visibility.svg"></a></a></td>
+      {% if factura.pagada %}
+      <td><img class ="iconoverde" src ="/static/icons/check.svg"/></td>
+      {% else %}
+      <td><img class ="iconorojo" src ="/static/icons/check.svg"></td>
+      {% endif %}
+      
+      
 
+    </tr>
+
+
+  </tbody>
+
+</div>
+<!-- <a href="{{ url_for ('editar_factura', num = factura.num)  }}"><button type="button" class="btn btn-success">Editar factura</button></a>
+<a href="{{ url_for ('ver_factura', num = factura.num)  }}"><button type="button" class="btn btn-success">Imprimir</button></a> -->
+    {% endfor %}
+</table>
 
 {% endblock %}
