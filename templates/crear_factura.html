@@ -189,7 +189,7 @@ hr {
                             </div>
                             <form method="post">
                             {{ form.hidden_tag() }}
-                            <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">Número</span>{{ form.numero (class_="form-control", value_= num ,style_="border:none") }} </div>
+                            <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">Número</span>{{ form.numero (class_="form-control", value_= numero ,style_="border:none") }} </div>
 
                             <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">Fecha</span> {{ form.fecha (class_="form-control", value_= fecha ,style_="border:none") }}</div>
 
@@ -326,7 +326,7 @@ hr {
                                 </div>
                                 
                                 <div class="col-5">
-                                    <span class="text-110 text-secondary-d1" id = "iva_text"><input class="form-control" id="iva_input" style="border:none" type="text"></span>
+                                    <span class="text-110 text-secondary-d1" id = "iva_text"><input class="form-control" id="iva_input" style="border:none" ></span>
                                 </div>
                             </div>
 
@@ -578,6 +578,7 @@ function sumar_total(){
 
  
 }
+sumar_total();
 </script>
 </body>
 </html>
