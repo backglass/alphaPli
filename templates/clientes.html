@@ -54,7 +54,7 @@
                     <p>Teléfono: {{ cliente.telefono }} </p>
                     <p>Dirección: {{ cliente.direccion }} </p>
                     <p>Email: {{ cliente.email }} </p>
-                    <p>Precio: {{ cliente.precio }} </p>
+                    <p>Precio: {{ cliente.precio_metro }} </p>
                     <a href="{{ url_for ('ver_cliente', ver_cliente = cliente.nif)  }}"><button type="button" class="btn btn-success">Ver cliente</button></a>
                     <a href="{{ url_for ('editar_cliente', nif = cliente.nif)  }}"><button type="button" class="btn btn-info">Editar cliente</button></a>
                     <a href="{{ url_for ('crear_factura', nif = cliente.nif)  }}"><button type="button" class="btn btn-info">Crear factura</button></a>
