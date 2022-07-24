@@ -307,7 +307,7 @@ hr {
                 
                     <div class="row mt-3">
                         <div class="col-12 col-sm-7 text-grey-d2 text-95 mt-2 mt-lg-0">
-                            {{ form.notas (class_="form-control", value_=factura.notas, style_="border:none") }}
+                            {{ form.notas (class_="form-control", style_="border:none") }}
                         </div>
 
                         <div class="col-12 col-sm-5 text-grey text-90 order-first order-sm-last">
@@ -318,7 +318,7 @@ hr {
                                 </div>
                                 
                                 <div class="col-5">
-                                    <span class="text-120 text-secondary-d1" id="subtotal_text">{{ form.sub_total_sin_iva (class_="text-80 text-success-d3 opacity-2",value_=factura.sub_total_sin_iva, style_="border:none") }}</span>
+                                    <span class="text-120 text-secondary-d1" id="subtotal_text">{{ form.sub_total_sin_iva (class_="text-80 text-success-d3 opacity-2",value_=factura.subtotal, style_="border:none") }}</span>
                                 </div>
                             
                             </div>
@@ -339,7 +339,7 @@ hr {
                                     Precio final <span class="text-100 text-success-d3 opacity-2">€</span>
                                 </div>
                                 <div class="col-5">
-                                    <span class="text-150 text-success-d3 opacity-2" id ="total_factura_text">{{ form.total_con_iva (class_="text-100 text-success-d3 opacity-2", style_= "border:none") }}</span>
+                                    <span class="text-150 text-success-d3 opacity-2" id ="total_factura_text">{{ form.total_con_iva (class_="text-100 text-success-d3 opacity-2",value _= factura.total, style_= "border:none") }}</span>
                                 </div>
                             </div>
                         </div>
@@ -579,7 +579,7 @@ function sumar_total(){
     document.getElementById("total_con_iva").value = total + iva ;
 
 
-
+    document.getElementById("notas").innerText = "{{ factura.notas }}"
  
 }
 sumar_total();  //En editar se llama a sumar_total para que nada mas entrar en la página, se sumen los valores de los inputs. y de los totales
