@@ -3,6 +3,9 @@
 {% block content %}
 
 <style>
+  .intro_textarea {
+    white-space: pre-line;
+  }
   .iconoverde {
     filter: invert(60%) sepia(9%) saturate(2949%) hue-rotate(71deg) brightness(107%) contrast(76%);
   }
@@ -28,18 +31,21 @@
     <div class="card-header"><h5><strong>{{ cliente.nombre }}</strong></h5></div>
     <div class="card-body">
       <p class="card-text"><b>Nif: </b><span class="lead">{{ cliente.nif }} </span></p>
-      <p class="card-text"><b>nombre: </b><span class="lead">{{ cliente.nombre }}</span></p>
+      
       <p class="card-text"><b>Teléfono: </b>{{ cliente.telefono}}</p>
-      <p class="card-text"><b>Teléfono 2: </b>{{ cliente.telefono_movil }}</p>
+      <p class="card-text"><b>Teléfono 2: </b>{{ cliente.teledono_movil }}</p>
       <p class="card-text"><b>Email: </b>{{ cliente.email }}</p>
       <p class="card-text"><b>Direccíon: </b>{{ cliente.direccion }}</p>
       <p class="card-text"><b>Precio metro: </b>{{ cliente.precio_metro }}</p>
-      <p class="card-text"><b>Notas: </b>{{ cliente.notas }}</p>
+      
+      <p class="card-text"><b>Notas: <span id ="notas" class="intro_textarea"><br>{{ cliente.notas }}</span>   </b></p>
+      
     </div>
   </div>
   </h5>
   <br>
-  
+  <a href="{{ url_for ('crear_factura', nif = cliente.nif)  }}"><button type="button" class="btn btn-primary ">Crear factura</button></a>
+  <br>
 <table class="table shadow-sm table-striped bg-light ">
   <thead>
     <tr>
@@ -67,10 +73,17 @@
 
   </tbody>
 
-</div>
+
 <!-- <a href="{{ url_for ('editar_factura', num = factura.num)  }}"><button type="button" class="btn btn-success">Editar factura</button></a>
 <a href="{{ url_for ('ver_factura', num = factura.num)  }}"><button type="button" class="btn btn-success">Imprimir</button></a> -->
     {% endfor %}
 </table>
+</div>
+{% endblock %}
 
+{% block scripts %}
+<!-- <script>
+
+  document.getElementById('notas').innerText = "{{ cliente.notas }}";
+</script> -->
 {% endblock %}
