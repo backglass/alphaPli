@@ -2,7 +2,7 @@ from datetime import datetime
 import time
 from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import Date, DateTime, Integer, String, Column, ForeignKey
+from sqlalchemy import Date, DateTime, Integer, String, Column, ForeignKey, func
 from wtforms import Form, StringField, TextAreaField, PasswordField, validators
 from flask_wtf import FlaskForm
 app = Flask(__name__)
@@ -406,9 +406,9 @@ def crear_factura(nif):
     form = Nueva_factura()                # Crea una instancia del formulario de crear factura
     cliente = Clientes.query.filter_by(nif=nif).first()
 
-    num = Facturas.query.count()          # Cuenta el numero de facturas que hay en la base de datos para poner el numero de factura correcto en el formulario
-    num = num + 1                        # Aumenta el numero de factura en 1, para así ser el numero de la ultima factura que se crea
-    
+    num  = db.session.query(func.max(Facturas.num)).scalar()       # Cuenta el numero de facturas que hay en la base de datos para poner el numero de factura correcto en el formulario
+    numero = num + 1   # Obtiene el numero de factura que hay en la base de datos y le suma 1 para que sea el numero de factura correcto
+    print(numero)
     if form.validate_on_submit():
                                
         factura = Facturas( cliente.nif, time.strftime("%d/%m/%y"),
@@ -473,7 +473,7 @@ def crear_factura(nif):
             print("Error al crear la factura ", e)
             return redirect(url_for('clientes'))
     
-    return render_template('crear_factura.html', form = form, cliente = cliente,fecha=fecha,num=num)
+    return render_template('crear_factura.html', form = form, cliente = cliente,fecha=fecha,numero=numero)
 
 
 @app.route("/facturas/editar/<num>", methods=["GET", "POST"]) # Ruta para la pagina de editar factura
@@ -535,14 +535,22 @@ def editar_factura(num):
         factura.importe7 = form.importe7.data
         factura.importe8 = form.importe8.data
 
-        factura.sub_total_sin_iva = form.sub_total_sin_iva.data
-        factura.total_con_iva = form.total_con_iva.data
-        factura.precio_metro = form.precio_metro.data
+        factura.subtotal = form.sub_total_sin_iva.data
+        factura.total = form.total_con_iva.data
+        factura.precio_metro = cliente.precio_metro
         factura.notas = form.notas.data
 
-        db.session.commit()
-        flash("Factura actualizada correctamente")
-        return redirect(url_for('clientes'))
+        
+        
+        try:
+            db.session.commit()
+            print(factura.total_con_iva)
+            flash("Factura actualizada correctamente")
+            return redirect(url_for('clientes'))
+        except Exception as e:
+            print("Error al actualizar la factura ", e)
+            return redirect(url_for('clientes'))
+        
 
     return render_template('editar_factura.html', form = form,factura=factura,cliente = cliente) 
 
@@ -603,16 +611,17 @@ def ver_factura(num):
         factura.importe7 = form.importe7.data
         factura.importe8 = form.importe8.data
 
-        factura.sub_total_sin_iva = form.sub_total_sin_iva.data
-        factura.total_con_iva = form.total_con_iva.data
+        factura.subtotal = form.sub_total_sin_iva.data
+        factura.total = form.total_con_iva.data
         factura.precio_metro = form.precio_metro.data
         factura.notas = form.notas.data
 
         db.session.commit()
+        return redirect(url_for('clientes'))
     # factura = Facturas.query.filter_by(num=num).first()
     # cliente = Clientes.query.filter_by(nif=factura.nif).first()
 
-    return render_template('ver_factura.html', factura=factura,cliente = cliente,form=form)
+    return render_template('ver_factura.html',form=form, factura=factura,cliente = cliente)
 if __name__ == '__main__':
     app.run(debug=True)
     
