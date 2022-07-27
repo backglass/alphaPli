@@ -1,11 +1,28 @@
+
 {% extends "base.html" %}
 
 {% block content %}
 
+<!-- Este template se usará para los datos de un cliente
+     y también para ver una lista de sus fácturas.
+    Dentro de la lista de facturas, se pueden imprimir, editar y pagar.(Los iconitos)
+    Para pagar y hacer el efecto del icono verde y icono rojo, se usan los estilos de esta página.
+    Para pagar se crea un bucle que recogerá los datos de la factura.
+    Se crea el HTML , hay un blucle que recorre todos los elementos de la lista de facturas(que retorna el servidor)
+    Para cada factura, se crea una fila con los datos de la factura.
+    Se crea una columna con el icono de imprimir, el icono de editar y el icono de pagar.
+    Y el icono tiene asociados el id como num de factura, y nombre = si_pagado o no_pagado.
+    Al hacer click en el iconito de pagar se llama a la función que se encarga de pagar la factura.
+    Ese Script verificara si la factura esta pagada. Si esta pagada se pondra iconito verde y si no iconito rojo.
+    Al hacer click en el iconito de editar se llama a la función que se encarga de editar la factura.
+    Al hacer click en el iconito de imprimir se llama a la función que se encarga de imprimir la factura.
+
+  -->
+
+  <!-- Estilos para el color de los iconos, los iconos los traje desde google icons -->
+  
 <style>
-  .intro_textarea {
-    white-space: pre-line;
-  }
+
   .iconoverde {
     filter: invert(60%) sepia(9%) saturate(2949%) hue-rotate(71deg) brightness(107%) contrast(76%);
   }
@@ -26,6 +43,8 @@
 <div class="container-md">
   <h1>Cliente</h1>
 <br>
+  <!-- Aqui se muestra una targeta de boostrap con los datos del cliente 
+       son recogidos de la variable  cliente que retorna el servidor -->
   <div class="card text-dark bg-light mb-3 shadow " >
     <h5>
     <div class="card-header"><h5><strong>{{ cliente.nombre }}</strong></h5></div>
@@ -44,8 +63,13 @@
   </div>
   </h5>
   <br>
+  
+  <!-- Se usa un boton para crear factura al cliente, hace ruta dinámica a crear_factura-->
   <a href="{{ url_for ('crear_factura', nif = cliente.nif)  }}"><button type="button" class="btn btn-primary ">Crear factura</button></a>
   <br>
+
+  <!-- Aqui se muestra una tabla con las facturas del cliente 
+       son recogidos de la variable  facturas que retorna el servidor -->
 <table class="table shadow-sm table-striped bg-light ">
   <thead>
     <tr>
@@ -54,18 +78,24 @@
     </tr>
   </thead>
   <tbody>
+    
+    <form method="post" id="estado"> <!-- Formulario para guardar el estado de la factúra, esta oculto porque es un pequeño truco -->
+    {{ form_estado.hidden_tag() }}
     {% for factura in facturas %}
     <tr>
       <th scope="row"><h5>{{ factura.fecha.strftime('%d-%m-%Y') }}</h5></th>
       <td><h5>{{ factura.total }}€</h5></td>
-      <td><a href="{{ url_for ('ver_factura', num = factura.num)  }}"><img class ="iconoazul" src ="/static/icons/print.svg"></a></td>
+      <td><a href="{{ url_for ('ver_factura', num = factura.num)  }}"><img class ="iconoazul", src ="/static/icons/print.svg"></a></td>
       <td><a href="{{ url_for ('editar_factura', num = factura.num)  }}"><img class ="icononaranja" src ="/static/icons/visibility.svg"></a></a></td>
-      {% if factura.pagada %}
-      <td><img class ="iconoverde" src ="/static/icons/check.svg"/></td>
-      {% else %}
-      <td><img class ="iconorojo" src ="/static/icons/check.svg"></td>
-      {% endif %}
       
+      <!-- Si factura.pagada es true, se pone iconito verde, si no iconito rojo, y pone nombre "si_pagada para el verde y "no_pagada para el rojo -->
+      {% if factura.pagada %}
+      
+      <td><img class ="iconoverde" id = "{{ factura.num }}" name="si_pagada" src ="/static/icons/check.svg"  onclick="foo.call(this)"></td> <!-- Cuando se hace click en el icono
+                                                                                                                                                  lanza foo(cambiara el estado de la factura)-->
+      {% else %}
+      <td><img class ="iconorojo" id = "{{ factura.num }}" name="no_pagada" src ="/static/icons/check.svg"  onclick="foo.call(this)"> </td> <!-- Lo mismo-->
+      {% endif %}
       
 
     </tr>
@@ -77,13 +107,47 @@
 <!-- <a href="{{ url_for ('editar_factura', num = factura.num)  }}"><button type="button" class="btn btn-success">Editar factura</button></a>
 <a href="{{ url_for ('ver_factura', num = factura.num)  }}"><button type="button" class="btn btn-success">Imprimir</button></a> -->
     {% endfor %}
+    
+<div style="display:none;"> <!-- Escondemos el formulario auxiliar-->
+      {{ form_estado.numero (class_="text-100 text-success-d3 opacity-2",id="numero") }}
+    {{ form_estado.pagada (class_="text-100 text-success-d3 opacity-2", id ="pagada")  }}
+    <button type="submit" class="btn btn-info btn-bold px-4 float-right mt-3 mt-lg-0">Guardar</button>
+
+</form></div>
+
 </table>
 </div>
+<script>
+
+  // Al hacer click en el icono, se cambia el estado de la factura. si el nombre que recoge es "si_pagada", se cambia a "no_pagada" y viceversa.
+  // Se guarda el estado en la base de datos.
+  // funciona a modo switch, si el nombre es "si_pagada" a false para enviar false, al servidor, da la ilusión que al pulsar en la verde cambiar a rojo
+  var foo = function()
+  
+  {
+
+    if (this.name == "no_pagada"){
+      document.getElementById("numero").value = this.id;
+      document.getElementById("pagada").checked = true;
+      document.getElementById("estado").submit();
+   //   alert(document.getElementById("pagada").value);
+      
+    } 
+    if (this.name == "si_pagada"){
+      
+      document.getElementById("numero").value = this.id;
+      document.getElementById("pagada").checked = false;
+      document.getElementById("estado").submit();
+      
+    }
+
+    
+    
+  }; 
+</script>
+
 {% endblock %}
 
-{% block scripts %}
-<!-- <script>
 
-  document.getElementById('notas').innerText = "{{ cliente.notas }}";
-</script> -->
-{% endblock %}
+
+
