@@ -3,7 +3,7 @@ import time
 from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Date, DateTime, Integer, String, Column, ForeignKey, func
-from wtforms import Form, StringField, TextAreaField, PasswordField, validators
+from wtforms import Form, StringField, TextAreaField, BooleanField, validators
 from flask_wtf import FlaskForm
 app = Flask(__name__)
 app.config ["SECRET_KEY"] = "mysecretkey"
@@ -78,6 +78,7 @@ class Nueva_factura(FlaskForm):
     importe7 = StringField("Importe7")
     importe8 = StringField("Importe8")
 
+    pagada = BooleanField(default=False)
     precio_metro = StringField("Precio Metro")
     sub_total_sin_iva  = StringField("Subtotal")
     total_con_iva = StringField("Total")
@@ -167,9 +168,9 @@ class Facturas(db.Model): # Clase Facturas hereda de db.Model, servira para crea
     importe5 = db.Column(db.String(10))
     importe6 = db.Column(db.String(10))
     importe7 = db.Column(db.String(10))
-    importe8 = db.Column(db.String())
+    importe8 = db.Column(db.String(10))
 
-    pagada = db.Column(db.Boolean())
+    pagada = db.Column(db.Boolean)
     subtotal  = db.Column(db.String(10))
     total = db.Column(db.String(10))
     precio_metro = db.Column(db.Float())
@@ -236,45 +237,15 @@ class Facturas(db.Model): # Clase Facturas hereda de db.Model, servira para crea
         self.precio_metro = precio_metro
         self.notas = notas
 
-    @staticmethod
-    def get_by_post_id(post_id):
-        return Clientes.query.filter_by(nif=num).all()
-        
-
-
-
-class Borrar(db.Model):
-
-    __tablename__ = "borrar"
-
-    id = db.Column(db.Integer, primary_key=True)
-    numero = db.Column(db.Integer)
-    date = db.Column(db.DateTime(timezone = True) )
-    nombre = db.Column(db.String(100))
-
-
-    def __init__(self,numero,date,nombre):
-        
-        self.numero = numero
-        self.date = date
-        self.nombre = nombre
-    
-    
     def __repr__(self):
-        return f"Cliente('{self.nif}', '{self.nombre}')"
+        return '<Factura %r>' % self.id
+
+
 
 
 db.create_all()  # Crea la tabla en la base de datos
 
-@app.route('/borrar', methods=['GET', 'POST'])
-def borrar():
-    p1 = Borrar(2,time.strftime("%d/%m/%y"), "Juan")
-    db.session.add(p1)
-    db.session.commit()
-    p2 = Borrar.query.filter_by(id=1).first()
-    fec = datetime.date(p2.date)    ## Recupera la fecha de la base de datos esta en formato estados unidos
-    print(fec.strftime("%d/%m/%y")) ## La formatea en formato europeo
-    return redirect(url_for('index'))
+
 
 @app.route('/')  # Ruta raiz
 def index():
@@ -288,11 +259,26 @@ def clientes():
 
 
 
-@app.route('/clientes/ver/<ver_cliente>') # Ruta para la pagina de ver un cliente es dinamica porque se le pasa el nif del cliente 
+@app.route('/clientes/ver/<ver_cliente>',methods=["GET", "POST"]) # Ruta para la pagina de ver un cliente es dinamica porque se le pasa el nif del cliente 
 def ver_cliente(ver_cliente):
     cliente = Clientes.query.filter_by(nif=ver_cliente).first() # Busca el cliente en la base de datos
     factura = Facturas.query.filter_by(nif=ver_cliente).all() # Busca las facturas del cliente en la base de datos
-    return render_template('ver_cliente.html',cliente=cliente, facturas=factura) # Devuelve la variable cliente con los datos del nif pasado por parametro
+   
+    form_estado = Nueva_factura()
+    if form_estado.validate_on_submit():
+        
+        num = form_estado.numero.data
+        pagada = form_estado.pagada.data
+        print(pagada)
+        nueva_factura = Facturas.query.filter_by(num=num).first()
+        print(num,pagada)
+        print(pagada)
+        nueva_factura.pagada = pagada
+     
+        print(nueva_factura.pagada)
+        db.session.commit()
+        return redirect(url_for('ver_cliente', ver_cliente=ver_cliente))
+    return render_template('ver_cliente.html',cliente=cliente, facturas=factura, form_estado = form_estado) # Devuelve la variable cliente con los datos del nif pasado por parametro
 
 
 
@@ -405,10 +391,12 @@ def crear_factura(nif):
     fecha = time.strftime("%d/%m/%y")     # Obtiene la fecha actual y la guarda en la variable fecha que se le pasa al template para que se muestre en el formulario
     form = Nueva_factura()                # Crea una instancia del formulario de crear factura
     cliente = Clientes.query.filter_by(nif=nif).first()
-
-    num  = db.session.query(func.max(Facturas.num)).scalar()       # Cuenta el numero de facturas que hay en la base de datos para poner el numero de factura correcto en el formulario
-    numero = num + 1   # Obtiene el numero de factura que hay en la base de datos y le suma 1 para que sea el numero de factura correcto
-    print(numero)
+    try:
+        num  = db.session.query(func.max(Facturas.num)).scalar()       # Cuenta el numero de facturas que hay en la base de datos para poner el numero de factura correcto en el formulario
+       # Obtiene el numero de factura que hay en la base de datos y le suma 1 para que sea el numero de factura correcto
+        numero = num + 1
+    except Exception as e:
+        numero = num = 1
     if form.validate_on_submit():
                                
         factura = Facturas( cliente.nif, time.strftime("%d/%m/%y"),
@@ -486,6 +474,90 @@ def editar_factura(num):
     form = Nueva_factura()                           # Crea una instancia del formulario de cr
 
 
+  
+
+
+    if form.validate_on_submit():
+
+        factura.precio1 = form.precio1.data
+        factura.precio2 = form.precio2.data
+        factura.precio3 = form.precio3.data
+        factura.precio4 = form.precio4.data
+        factura.precio5 = form.precio5.data
+        factura.precio6 = form.precio6.data
+        factura.precio7 = form.precio7.data
+        factura.precio8 = form.precio8.data
+
+        factura.descripcion1 = form.descripcion1.data
+        factura.descripcion2 = form.descripcion2.data
+        factura.descripcion3 = form.descripcion3.data
+        factura.descripcion4 = form.descripcion4.data
+        factura.descripcion5 = form.descripcion5.data
+        factura.descripcion6 = form.descripcion6.data
+        factura.descripcion7 = form.descripcion7.data
+        factura.descripcion8 = form.descripcion8.data
+
+        factura.metros1 = form.metros1.data
+        factura.metros2 = form.metros2.data
+        factura.metros3 = form.metros3.data
+        factura.metros4 = form.metros4.data
+        factura.metros5 = form.metros5.data
+        factura.metros6 = form.metros6.data
+        factura.metros7 = form.metros7.data
+        factura.metros8 = form.metros8.data
+
+        factura.faldas1 = form.faldas1.data
+        factura.faldas2 = form.faldas2.data
+        factura.faldas3 = form.faldas3.data
+        factura.faldas4 = form.faldas4.data
+        factura.faldas5 = form.faldas5.data
+        factura.faldas6 = form.faldas6.data
+        factura.faldas7 = form.faldas7.data
+        factura.faldas8 = form.faldas8.data
+
+        factura.importe1 = form.importe1.data
+        factura.importe2 = form.importe2.data
+        factura.importe3 = form.importe3.data
+        factura.importe4 = form.importe4.data
+        factura.importe5 = form.importe5.data
+        factura.importe6 = form.importe6.data
+        factura.importe7 = form.importe7.data
+        factura.importe8 = form.importe8.data
+
+        factura.subtotal = form.sub_total_sin_iva.data
+        factura.total = form.total_con_iva.data
+        factura.precio_metro = cliente.precio_metro
+        factura.notas = form.notas.data
+
+        
+        
+        try:
+            db.session.commit()
+            flash("Factura actualizada correctamente")
+            return redirect(url_for('ver_cliente', ver_cliente=factura.nif)) # Crea la url dinamicamente para redirigir a la pagina de ver cliente con su nif
+
+        except Exception as e:
+            print("Error al actualizar la factura ", e)
+            return redirect(url_for('ver_cliente', ver_cliente=factura.nif))   # Redirige a la pagina de ver cliente con el nif que se le pasa en la ruta
+        
+
+    return render_template('editar_factura.html', form = form,factura=factura,cliente = cliente)
+
+
+
+@app.route("/facturas/ver/<num>", methods=["GET", "POST"])  
+def ver_factura(num):
+    ##cliente = Clientes.query.filter_by(nif=nif).first() # Busca el cliente en la base de datos con el nif que se le pasa en la ruta
+    factura = Facturas.query.filter_by(num=num).first()
+    cliente = Clientes.query.filter_by(nif=factura.nif).first()
+    form = Nueva_factura()                           # Crea una instancia del formulario de cr
+    # factura_notas = factura.notas.strip().split("\n")        # Separa las notas de la factura en una lista
+    # aux = ""
+    # for i in factura_notas:
+    #     aux = aux + i + "<"
+    #     print(aux)
+
+  
 
 
     if form.validate_on_submit():
@@ -552,76 +624,8 @@ def editar_factura(num):
             return redirect(url_for('clientes'))
         
 
-    return render_template('editar_factura.html', form = form,factura=factura,cliente = cliente) 
+    return render_template('ver_factura.html', form = form,factura=factura,cliente = cliente)
 
-
-
-@app.route("/facturas/ver/<num>", methods=["GET", "POST"])  
-def ver_factura(num):
-
-    factura = Facturas.query.filter_by(num=num).first()
-    cliente = Clientes.query.filter_by(nif=factura.nif).first()
-    form = Nueva_factura()   
-   
-
-    if form.validate_on_submit():
-
-        factura.precio1 = form.precio1.data
-        factura.precio2 = form.precio2.data
-        factura.precio3 = form.precio3.data
-        factura.precio4 = form.precio4.data
-        factura.precio5 = form.precio5.data
-        factura.precio6 = form.precio6.data
-        factura.precio7 = form.precio7.data
-        factura.precio8 = form.precio8.data
-
-        factura.descripcion1 = form.descripcion1.data
-        factura.descripcion2 = form.descripcion2.data
-        factura.descripcion3 = form.descripcion3.data
-        factura.descripcion4 = form.descripcion4.data
-        factura.descripcion5 = form.descripcion5.data
-        factura.descripcion6 = form.descripcion6.data
-        factura.descripcion7 = form.descripcion7.data
-        factura.descripcion8 = form.descripcion8.data
-
-        factura.metros1 = form.metros1.data
-        factura.metros2 = form.metros2.data
-        factura.metros3 = form.metros3.data
-        factura.metros4 = form.metros4.data
-        factura.metros5 = form.metros5.data
-        factura.metros6 = form.metros6.data
-        factura.metros7 = form.metros7.data
-        factura.metros8 = form.metros8.data
-
-        factura.faldas1 = form.faldas1.data
-        factura.faldas2 = form.faldas2.data
-        factura.faldas3 = form.faldas3.data
-        factura.faldas4 = form.faldas4.data
-        factura.faldas5 = form.faldas5.data
-        factura.faldas6 = form.faldas6.data
-        factura.faldas7 = form.faldas7.data
-        factura.faldas8 = form.faldas8.data
-
-        factura.importe1 = form.importe1.data
-        factura.importe2 = form.importe2.data
-        factura.importe3 = form.importe3.data
-        factura.importe4 = form.importe4.data
-        factura.importe5 = form.importe5.data
-        factura.importe6 = form.importe6.data
-        factura.importe7 = form.importe7.data
-        factura.importe8 = form.importe8.data
-
-        factura.subtotal = form.sub_total_sin_iva.data
-        factura.total = form.total_con_iva.data
-        factura.precio_metro = form.precio_metro.data
-        factura.notas = form.notas.data
-
-        db.session.commit()
-        return redirect(url_for('clientes'))
-    # factura = Facturas.query.filter_by(num=num).first()
-    # cliente = Clientes.query.filter_by(nif=factura.nif).first()
-
-    return render_template('ver_factura.html',form=form, factura=factura,cliente = cliente)
 if __name__ == '__main__':
     app.run(debug=True)
     
