@@ -10,15 +10,22 @@
         <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
     </div>
     <div> -->
-<div class="container">
+        <div class="container">
+            <h2 class="text-center mt-3">Editar cliente</h2><br>
+        <div class="card text-dark bg-light mb-3 shadow " >
+            <div class="container">
         <form method="post">
         {{ form.hidden_tag() }}
         {{ form.nif.label (class_="form-label") }} {{ form.nif (class_="form-control", value_= cliente.nif )}}
         {{ form.nombre.label (class_="form-label") }} {{ form.nombre (class_="form-control", value_= cliente.nombre )}}
+        {{ form.direccion.label (class_="form-label") }} {{ form.direccion (class_="form-control", value_= cliente.direccion) }}
+        {{ form.ciudad.label (class_="form-label") }} {{ form.direccion (class_="form-control", value_= cliente.ciudad) }}
+        {{ form.provincia.label (class_="form-label") }} {{ form.direccion (class_="form-control", value_= cliente.provincia) }}
+        {{ form.cp.label (class_="form-label") }} {{ form.direccion (class_="form-control", value_= cliente.cp) }}
         {{ form.telefono.label (class_="form-label") }} {{ form.telefono (class_="form-control", value_= cliente.telefono )}}
         {{ form.telefono_movil.label (class_="form-label") }} {{ form.telefono_movil (class_="form-control", value_= cliente.teledono_movil )}}
         {{ form.email.label (class_="form-label") }} {{ form.email (class_="form-control", value_= cliente.email) }}
-        {{ form.direccion.label (class_="form-label") }} {{ form.direccion (class_="form-control", value_= cliente.direccion) }}
+        
         {{ form.precio_metro.label (class_="form-label") }} {{ form.precio_metro (class_="form-control", value_= cliente.precio_metro) }}
         {% autoescape false %}
         {{ form.notas.label (class_="form-label") }} {{ form.notas (class_="form-control",rows="5") }}
@@ -30,6 +37,7 @@
         </form>
     </div>
 </div>
+        </div>
 <script>
 
    // document.getElementById('notas').innerText = "{{ cliente.notas }}";
