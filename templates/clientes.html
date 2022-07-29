@@ -2,8 +2,49 @@
 
 {% block content %}
 <div class="container">
+  <div class="container" id ="alerta">
+  
+    {% for category, message in get_flashed_messages(with_categories=true) %}
+         {% if category == "info" %}   <!-- Factura pagada correctamente -->
+         <div class="alert alert-success alert-dismissible d-flex align-items-center fade show">
+           <i class="bi-check-circle-fill"></i>
+           <strong class="mx-2">Hecho!</strong> {{ message }}.
+           <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+       </div>
 
-<h1>Lista de clientes</h1>
+         {% elif category == "danger" %} <!-- Factura no pagada todavía -->
+         
+           <div class="alert alert-danger alert-dismissible d-flex align-items-center fade show">
+             <i class="bi-check-circle-fill"></i>
+             <strong class="mx-2">Hecho!</strong> {{ message}}.
+             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+         </div>
+
+       {% elif category =="success" %} <!-- Factura creada correctamente -->
+
+       <div class="alert alert-info alert-dismissible d-flex align-items-center fade show">
+         <i class="bi-info-circle-fill"></i>
+         <strong class="mx-2">Info!</strong> {{ message }}.
+         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+     </div>
+     {% endif %}
+      {% endfor %}
+     
+
+
+</div>
+           
+       </div>
+
+
+       <div class="container">
+        <h2 class="text-center mt-3">Listado de clientes</h2><br>
+    
+        <div class="container">
+
+
+
+
 
 </div>
 <div class="container">
@@ -50,14 +91,14 @@
             </h2>
             <div id="colapse{{ cliente.nif }}" class="accordion-collapse collapse" data-bs-parent="#myAccordion">
                 <div class="card-body">
-                    <p>Nif: {{ cliente.nif}}. </p>
-                    <p>Teléfono: {{ cliente.telefono }} </p>
-                    <p>Dirección: {{ cliente.direccion }} </p>
-                    <p>Email: {{ cliente.email }} </p>
-                    <p>Precio: {{ cliente.precio_metro }} </p>
+                    <p><strong>Nif:</strong>{{ cliente.nif}}. </p>
+                    <p><strong>Teléfono:</strong> {{ cliente.telefono }} </p>
+                    <p><strong>Dirección:</strong> {{ cliente.direccion }} </p>
+                    <p><strong>Email:</strong> {{ cliente.email }} </p>
+                    <p><strong>Precio:</strong> {{ cliente.precio_metro }}€ </p>
                     <a href="{{ url_for ('ver_cliente', ver_cliente = cliente.nif)  }}"><button type="button" class="btn btn-success">Ver cliente</button></a>
                     <a href="{{ url_for ('editar_cliente', nif = cliente.nif)  }}"><button type="button" class="btn btn-info">Editar cliente</button></a>
-                    <a href="{{ url_for ('crear_factura', nif = cliente.nif)  }}"><button type="button" class="btn btn-info">Crear factura</button></a>
+                    <!-- <a href="{{ url_for ('crear_factura', nif = cliente.nif)  }}"><button type="button" class="btn btn-info">Crear factura</button></a> -->
                    
                  </div>
             </div>
@@ -70,13 +111,14 @@
 
 
 </div>
-
-
-   {% endblock %}
+<script>
+window.setTimeout("document.getElementById('alerta').style.display='none';", 3500); // Pequeño truco para que se cierre(oculte) el "div alerta" despues de un tiempo
+</script>
+{% endblock %}
    
     
 
 
 
 
-</div>
+
