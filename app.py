@@ -20,16 +20,19 @@ db = SQLAlchemy(app)
 class Insertar_cliente(FlaskForm):
     nif = StringField("NIF", validators=[validators.DataRequired()])
     nombre = StringField("Nombre", validators=[validators.DataRequired()])
-    telefono = StringField("Telefono", validators=[validators.DataRequired()])
-    telefono_movil = StringField("Telefono Movil")
+    telefono = StringField("Teléfono", validators=[validators.DataRequired()])
+    telefono_movil = StringField("Teléfono Movil")
     email = StringField("Email")
-    direccion = StringField("Direccion")
-    precio_metro = StringField("Precio Metro", validators=[validators.DataRequired()])
+    direccion = StringField("Dirección", validators=[validators.DataRequired()])
+    ciudad = StringField("Ciudad")
+    provincia = StringField("Provincia")
+    cp = StringField("CP")
+    precio_metro = StringField("Precio Metro")
     notas = TextAreaField("Notas")
 
 # Clase para crear formulario facturas 
 class Nueva_factura(FlaskForm):
-    numero = StringField("Numero")
+    numero = StringField("Número")
     nif = StringField("NIF")
     fecha = StringField("Fecha")
 
@@ -95,17 +98,24 @@ class Clientes(db.Model):
     telefono = db.Column(db.String(100))
     teledono_movil = db.Column(db.String(100))
     email = db.Column(db.String(100))
-    direccion = db.Column(db.String(100), nullable=False)
+    direccion = db.Column(db.String(100))
+    ciudad = db.Column(db.String(100))
+    provincia = db.Column(db.String(100))
+    cp = db.Column(db.String(10))
     precio_metro = db.Column(db.String(10))
     notas = db.Column(db.String(10000))
     pubs = db.relationship('Facturas', backref='cliente', lazy='dynamic')
 
-    def __init__(self, nif, nombre, telefono, teledono_movil, email, direccion,precio_metro, notas):
+    def __init__(self, nif, nombre, telefono, teledono_movil, email, direccion,ciudad,provincia,cp,precio_metro, notas):
         self.nif = nif
         self.nombre = nombre
         self.telefono = telefono
         self.teledono_movil = teledono_movil
         self.email = email
+        self.direccion = direccion
+        self.ciudad = ciudad
+        self.provincia = provincia
+        self.cp = cp
         self.direccion = direccion
         self.precio_metro = precio_metro
         self.notas = notas
@@ -262,8 +272,28 @@ def clientes():
 @app.route('/clientes/ver/<ver_cliente>',methods=["GET", "POST"]) # Ruta para la pagina de ver un cliente es dinamica porque se le pasa el nif del cliente 
 def ver_cliente(ver_cliente):
     cliente = Clientes.query.filter_by(nif=ver_cliente).first() # Busca el cliente en la base de datos
-    factura = Facturas.query.filter_by(nif=ver_cliente).all() # Busca las facturas del cliente en la base de datos
-   
+    factura = Facturas.query.filter_by(nif=ver_cliente).order_by(Facturas.num.desc()).all() # Busca las facturas del cliente(su nif) y las ordena de mayor a menor
+    numero_facturas = Facturas.query.filter_by(nif = ver_cliente).count()
+
+    # for i in factura_ordenada:
+    #     print(i.num)
+
+     #num  = db.session.query(func.max(Facturas.num)).scalar() 
+    #factura_totales = Facturas.query.filter_by(nif=ver_cliente).filter_by(pagada=False).all() # Busca las facturas del cliente en la base de datos
+    
+    ### Calcula el total de las facturas pagadas y el de las no pagadas, para mostrarlo en la pagina de ver_cliente
+    iva_total_pagada = 0
+    suma_pagada = 0
+    suma_no_pagada = 0
+    for i in factura:
+        if i.pagada == False:
+            suma_no_pagada = suma_no_pagada + float(i.total)
+        else:
+            suma_pagada = suma_pagada + float(i.total)
+    iva_total_pagada = round(suma_pagada- suma_pagada / 1.21,2)
+    suma_pagada = round(suma_pagada,2)
+    suma_no_pagada = round(suma_no_pagada,2)
+    ## Formulario que se usara para cambiar el valor de factura es un swith para cambiar el valor de la factura ture false
     form_estado = Nueva_factura()
     if form_estado.validate_on_submit():
         
@@ -271,14 +301,23 @@ def ver_cliente(ver_cliente):
         pagada = form_estado.pagada.data
         print(pagada)
         nueva_factura = Facturas.query.filter_by(num=num).first()
-        print(num,pagada)
-        print(pagada)
         nueva_factura.pagada = pagada
-     
-        print(nueva_factura.pagada)
+        try:
+            db.session.commit()
+            if pagada == True:
+                flash('Factura pagada','info')
+            if pagada == False:
+                flash('Factura no pagada',"danger")
+        
+            return redirect(url_for('ver_cliente', ver_cliente=ver_cliente))
+        except Exception as e:
+            flash('Error al actualizar la factura','danger')
+            return redirect(url_for('ver_cliente', ver_cliente=ver_cliente))
+        
+
         db.session.commit()
         return redirect(url_for('ver_cliente', ver_cliente=ver_cliente))
-    return render_template('ver_cliente.html',cliente=cliente, facturas=factura, form_estado = form_estado) # Devuelve la variable cliente con los datos del nif pasado por parametro
+    return render_template('ver_cliente.html',cliente=cliente, facturas=factura, form_estado = form_estado,suma_no_pagada=suma_no_pagada,suma_pagada=suma_pagada,iva_total_pagada=iva_total_pagada,numero_facturas=numero_facturas) # Devuelve la variable cliente con los datos del nif pasado por parametro
 
 
 
@@ -289,16 +328,16 @@ def crear_cliente():
     if form.validate_on_submit(): # Si el formulario es validado
         
         # Crea un nuevo cliente con los datos del formulario 
-        cliente = Clientes(form.nif.data, form.nombre.data, form.telefono.data, form.telefono_movil.data, form.email.data, form.direccion.data,form.precio_metro.data, form.notas.data)
+        cliente = Clientes(form.nif.data, form.nombre.data, form.telefono.data, form.telefono_movil.data, form.email.data, form.direccion.data,form.ciudad.data,form.provincia.data,form.cp.data,form.precio_metro.data, form.notas.data)
         db.session.add(cliente)
         
         try:                                      # Intenta guardar los datos en la base de datos
             db.session.commit()                   # Guarda los datos en la base de datos
-            flash("Cliente creado correctamente") # Muestra un mensaje de que el cliente se ha creado correctamente
+            flash("Cliente creado correctamente","info") # Muestra un mensaje de que el cliente se ha creado correctamente
             return redirect(url_for('clientes'))  # Redirige a la pagina de lista de clientes
         
         except:                                   # Si no se puede guardar en la base de datos 
-            flash("Error al crear el cliente")
+            flash("Error al crear el cliente, parece que el cliente ya existe","danger") # Muestra un mensaje de error
             return redirect(url_for('clientes'))
         
     return render_template('crear_cliente.html',form=form)
@@ -323,7 +362,7 @@ def editar_cliente(nif):
         
         db.session.commit()
         flash("Cliente editado correctamente")
-        return redirect(url_for('clientes'))
+        return redirect(url_for('clientes',"info"))
         
     return render_template('editar_cliente.html', form=form, cliente=cliente) # manda form y cliente a la pagina de editar cliente
 
@@ -455,7 +494,8 @@ def crear_factura(nif):
         db.session.add(factura)
         try:
             db.session.commit()
-            flash("Factura creada correctamente")
+            flash("Factura creada correctamente","success")
+            return redirect(url_for('ver_cliente', ver_cliente=nif))
             return redirect(url_for('clientes'))
         except Exception as e:
             print("Error al crear la factura ", e)
@@ -533,7 +573,7 @@ def editar_factura(num):
         
         try:
             db.session.commit()
-            flash("Factura actualizada correctamente")
+            flash("Factura actualizada correctamente","success")
             return redirect(url_for('ver_cliente', ver_cliente=factura.nif)) # Crea la url dinamicamente para redirigir a la pagina de ver cliente con su nif
 
         except Exception as e:
@@ -627,5 +667,6 @@ def ver_factura(num):
     return render_template('ver_factura.html', form = form,factura=factura,cliente = cliente)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+   # app.run(host='192.168.100.5')
+   app.run(debug=True)
     
