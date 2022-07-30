@@ -11,7 +11,7 @@ app.config ["SECRET_KEY"] = "mysecretkey"
 
 ## Base Database Config
 
-app.config ["SQLALCHEMY_DATABASE_URI"] = "postgresql://postgres:plisados123@localhost:5432/plisafor"
+app.config ["SQLALCHEMY_DATABASE_URI"] = "postgresql://iuoucpornonoep:eb8fe9df3993d4e6a006e57e7b85c3e73e281e4f5e45d26153f5312fc8a45267@ec2-54-170-90-26.eu-west-1.compute.amazonaws.com:5432/dbidv2cn6i6jba"
 app.config ["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
@@ -82,9 +82,9 @@ class Nueva_factura(FlaskForm):
     importe8 = StringField("Importe8")
 
     pagada = BooleanField(default=False)
-    precio_metro = StringField("Precio Metro")
-    sub_total_sin_iva  = StringField("Subtotal")
-    total_con_iva = StringField("Total")
+    precio_metro = StringField("Precio Metro")        # Estos campos tienen un nombre un poco confuso para mí.
+    sub_total_sin_iva  = StringField("Subtotal")      # Estos campos tienen un nombre un poco confuso para mí.
+    total_con_iva = StringField("Total")              # Estos campos tienen un nombre un poco confuso para mí.
     notas = TextAreaField("Notas")
 
 
@@ -265,7 +265,8 @@ def index():
 
 @app.route('/clientes')  # Ruta para la pagina de lista de clientes 
 def clientes():
-    return render_template('clientes.html', clientes=Clientes.query.all()) # Muestra todos los clientes en la base de datos
+    clientes = Clientes.query.order_by(Clientes.nombre.asc()).all() # Muestra todos los clientes en la base de datos por orden alfabetico.
+    return render_template('clientes.html', clientes=clientes) 
 
 
 
@@ -361,8 +362,8 @@ def editar_cliente(nif):
         cliente.notas = form.notas.data
         
         db.session.commit()
-        flash("Cliente editado correctamente")
-        return redirect(url_for('clientes',"info"))
+        flash("Cliente editado correctamente","info")
+        return redirect(url_for('clientes'))
         
     return render_template('editar_cliente.html', form=form, cliente=cliente) # manda form y cliente a la pagina de editar cliente
 
@@ -591,15 +592,9 @@ def ver_factura(num):
     factura = Facturas.query.filter_by(num=num).first()
     cliente = Clientes.query.filter_by(nif=factura.nif).first()
     form = Nueva_factura()                           # Crea una instancia del formulario de cr
-    # factura_notas = factura.notas.strip().split("\n")        # Separa las notas de la factura en una lista
-    # aux = ""
-    # for i in factura_notas:
-    #     aux = aux + i + "<"
-    #     print(aux)
-
-  
 
 
+ 
     if form.validate_on_submit():
 
         factura.precio1 = form.precio1.data
@@ -656,17 +651,16 @@ def ver_factura(num):
         
         try:
             db.session.commit()
-            print(factura.total_con_iva)
-            flash("Factura actualizada correctamente")
-            return redirect(url_for('clientes'))
+            flash("Factura Imprimida correctamente","info")
+            return redirect(url_for('ver_factura',num=factura.num)) # Crea la url dinamicamente para redirigir a la pagina de ver cliente con su nif
         except Exception as e:
-            print("Error al actualizar la factura ", e)
-            return redirect(url_for('clientes'))
+            flash("Error al imprimir la factura", "danger")
+            return redirect(url_for('ver_factura',num=factura.num))   # Redirige a la pagina de ver cliente con el nif que se le pasa en la ruta
         
 
     return render_template('ver_factura.html', form = form,factura=factura,cliente = cliente)
 
 if __name__ == '__main__':
-   # app.run(host='192.168.100.5')
+#    app.run(host='192.168.100.5')
    app.run(debug=True)
     
