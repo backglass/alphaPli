@@ -11,7 +11,7 @@ app.config ["SECRET_KEY"] = "mysecretkey"
 
 ## Base Database Config
 
-app.config ["SQLALCHEMY_DATABASE_URI"] = "postgresql://iuoucpornonoep:eb8fe9df3993d4e6a006e57e7b85c3e73e281e4f5e45d26153f5312fc8a45267@ec2-54-170-90-26.eu-west-1.compute.amazonaws.com:5432/dbidv2cn6i6jba"
+app.config ["SQLALCHEMY_DATABASE_URI"] = "postgresql:"
 app.config ["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
