@@ -661,6 +661,6 @@ def ver_factura(num):
     return render_template('ver_factura.html', form = form,factura=factura,cliente = cliente)
 
 if __name__ == '__main__':
-#    app.run(host='192.168.100.5')
-   app.run(debug=True)
+   app.run()
+   #app.run(debug=True)
     
