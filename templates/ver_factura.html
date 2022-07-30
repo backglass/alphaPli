@@ -140,21 +140,25 @@ hr {
 </style>
 
 <body>
+    
 <div class="page-content container">
+    <br>
+    <br>
     <div class="page-header text-blue-d2">
         <h1>
-            Plisafor
+           <p> PLISAFOR S.L.U </p>
             <small class="page-info">
                 <i class="fa fa-angle-double-right text-80"></i>
-                
+                Factura
             </small>
         </h1>
-
+        <br>
         <div class="page-tools">
 
         </div>
     </div>
 
+    <br>
     <div class="container px-0">
         <div class="row mt-4">
             <div class="col-12 col-lg-12">
@@ -171,16 +175,35 @@ hr {
                     <div class="col-sm-6">
                         <div>
                             
-                            <span class="text-600 text-110 text-blue align-middle">{{ cliente.nombre }}</span>
+                            <span class="text-600 text-110 text-blue align-middle"><h3>{{ cliente.nombre }}</h3></span>
                         </div>
                         <div class="text-grey-m2">
                             <div class="my-1">
-                               {{ cliente.direccion }}
+                                <h4>
+                                {{ cliente.nif }}
+                                </h4> 
                             </div>
                             <div class="my-1">
-                               {{ cliente.nif }}
+                                <h4>
+                                {{ cliente.direccion }}
+                                </h4>
                             </div>
-                            <div class="my-1"></div>
+                            <div class="my-1">
+                                <h4>
+                                {{ cliente.ciudad }}
+                                </h4>
+                                
+                            </div>
+                            <div class="my-1">
+                                <h4>
+                                {{ cliente.provincia }}
+                                </h4>
+                            </div>
+                            <div class="my-1">
+                                <h4>
+                                {{ cliente.cp }}
+                                </h4>
+                            </div>
                         </div>
                     </div>
                     <!-- /.col -->
@@ -188,28 +211,27 @@ hr {
                     <div class="text-95 col-sm-6 align-self-start d-sm-flex justify-content-end">
                         <hr class="d-sm-none" />
                         <div class="text-grey-m2">
-                            <div class="mt-1 mb-2 text-secondary-m1 text-600 text-125">
-                                Factura
-                            </div>
+
                             <form method="post">
                             {{ form.hidden_tag() }}
-                            <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">Número</span>{{ form.numero (class_="form-control", value_= factura.num  ,style_="border:none") }} </div>
-
-                            <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">Fecha</span> {{ form.fecha (class_="form-control", value_= factura.fecha.strftime('%d-%m-%Y') ,style_="border:none") }}</div> 
-
+                            <h4>
+                            <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">Número:</span>{{ form.numero (class_="form-control-lg", value_= factura.num  ,style_="border:none") }} </div>
+                            
+                            <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">Fecha:</span> {{ form.fecha (class_="form-control-lg", value_= factura.fecha.strftime('%d-%m-%Y') ,style_="border:none") }}</div> 
+                            </h4>
                             <div class="my-2"><i></i></div>
                         </div>
                     </div>
                     <!-- /.col -->
                 </div>
-
+                <br>
                 <div class="mt-4">
                     <div class="row text-600 text-black bgc-default-tp1 py-25">
-                        <div class="d-none d-sm-block col-1">Precio</div>
-                        <div class="col-9 col-sm-5">Descripción</div>
-                        <div class="d-none d-sm-block col-4 col-sm-2">Metros</div>
-                        <div class="d-none d-sm-block col-sm-2">Faldas</div>
-                        <div class="col-2">Total</div>
+                        <div class="d-none d-sm-block col-1"><h5>Precio</h5></div>
+                        <div class="col-9 col-sm-5"><h5>Descripción</h5></div>
+                        <div class="d-none d-sm-block col-4 col-sm-2"><h5>Metros</h5></div>
+                        <div class="d-none d-sm-block col-sm-2"><h5>Faldas</h5></div>
+                        <div class="col-2"><h5>Total</h5></div>
                     </div>
                     
                     <div class="text-95 text-secondary-d3">
@@ -222,7 +244,7 @@ hr {
                         </div>
 
                         <div class="row mb-2 mb-sm-0 py-25 bgc-default-l4">
-                            <div class="d-none d-sm-block col-1"> {{ form.precio2 (class_="form-control bgc-default-l4 none ",value_=factura.precio2,opacity = 0.6,  onchange="sumar2(this.value);")}}</div>
+                            <div class="d-none d-sm-block col-1"> {{ form.precio2 (class_="form-control bgc-default-l4 none ",value_=factura.precio2,  onchange="sumar2(this.value);")}}</div>
                             <div class="col-9 col-sm-5">{{ form.descripcion2 (class_="form-control bgc-default-l4 none ",value =factura.descripcion2)}}</div>
                             <div class="d-none d-sm-block col-2">{{ form.metros2 (class_="form-control bgc-default-l4 none",value_=factura.metros2,  onchange="sumar2(this.value);")}}</div>
                             <div class="d-none d-sm-block col-2 text-95">{{ form.faldas2 (class_="form-control bgc-default-l4 none",value_=factura.faldas2,  onchange="sumar2(this.value);")}}</div>
@@ -352,7 +374,7 @@ hr {
 
                     <div>
                                                                         
-                        <button type="submit" class="btn btn-info btn-bold px-4 float-right mt-3 mt-lg-0">Guardar</button>
+                        <button type="submit" class="btn btn-success btn-bold px-4 float-right mt-3 mt-lg-0  d-print-none" onclick="printHTML()">Imprimir</button>
                         </form>
                         <br>
                     </div>
@@ -360,6 +382,14 @@ hr {
             </div>
         </div>
     </div>
+    <br>
+    <br>
+    <h6 class="text-center mt-3 fw-light"><small>PLISAFOR S.L.U B30442685</small></h6>
+    <h6 class="text-center mt-3 fw-light"><small>Avenida Narciso Yepes n7</small></h6>
+    <h6 class="text-center mt-3 fw-light"><small>Fortuna (Murcia) 30620</small></h6>
+    <h6 class="text-center mt-3 fw-light"><small>Para obtener más ayuda, póngase en contacto :</small></h6>
+    <h6 class="text-center mt-3 fw-light"><small>Tel: 968685475</small></h6>
+   
 </div>
 <script>
     
@@ -583,7 +613,22 @@ function sumar_total(){
 
  
 }
+   //Cambiar tecla tabulador por la tecla intro, para pasar de un campo a otro en el formulario de la factura.
+   document.addEventListener('keydown', function (event) {
+    if (event.keyCode === 13 && event.target.nodeName === 'INPUT') {
+         var form = event.target.form;
+         var index = Array.prototype.indexOf.call(form, event.target);
+         form.elements[index + 1].focus();
+         event.preventDefault();
+    }
+});
+
 sumar_total();  //En editar se llama a sumar_total para que nada mas entrar en la página, se sumen los valores de los inputs. y de los totales
+function printHTML() { 
+    if (window.print) { 
+      window.print(); 
+    } 
+  }
 </script>
 </body>
 </html>
