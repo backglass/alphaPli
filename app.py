@@ -11,7 +11,7 @@ app.config ["SECRET_KEY"] = "mysecretkey"
 
 ## Base Database Config
 
-app.config ["SQLALCHEMY_DATABASE_URI"] = "postgresql://iuoucpornonoep:eb8fe9df3993d4e6a006e57e7b85c3e73e281e4f5e45d26153f5312fc8a45267@ec2-54-170-90-26.eu-west-1.compute.amazonaws.com:5432/dbidv2cn6i6jba"
+app.config ["SQLALCHEMY_DATABASE_URI"] = "postgresql://postgres:plisados123@localhost:5432/plisafor"
 app.config ["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
@@ -27,7 +27,7 @@ class Insertar_cliente(FlaskForm):
     ciudad = StringField("Ciudad")
     provincia = StringField("Provincia")
     cp = StringField("CP")
-    precio_metro = StringField("Precio Metro")
+    precio_metro = StringField("Precio Metro",validators=[validators.DataRequired()])
     notas = TextAreaField("Notas")
 
 # Clase para crear formulario facturas 
@@ -428,7 +428,7 @@ def facturas():
 def crear_factura(nif):
     print(nif)
 
-    fecha = time.strftime("%d/%m/%y")     # Obtiene la fecha actual y la guarda en la variable fecha que se le pasa al template para que se muestre en el formulario
+    #fecha = time.strftime("%d/%m/%y")     # Obtiene la fecha actual y la guarda en la variable fecha que se le pasa al template para que se muestre en el formulario
     form = Nueva_factura()                # Crea una instancia del formulario de crear factura
     cliente = Clientes.query.filter_by(nif=nif).first()
     try:
@@ -438,8 +438,8 @@ def crear_factura(nif):
     except Exception as e:
         numero = num = 1
     if form.validate_on_submit():
-                               
-        factura = Facturas( cliente.nif, time.strftime("%d/%m/%y"),
+        now = datetime.now()  ## Obtiene la fecha actual para que me funciones en heroku postgresql              
+        factura = Facturas( cliente.nif,now),
                             form.precio1.data,
                             form.precio2.data,
                             form.precio3.data,
@@ -497,7 +497,7 @@ def crear_factura(nif):
             db.session.commit()
             flash("Factura creada correctamente","success")
             return redirect(url_for('ver_cliente', ver_cliente=nif))
-            return redirect(url_for('clientes'))
+            
         except Exception as e:
             print("Error al crear la factura ", e)
             return redirect(url_for('clientes'))
