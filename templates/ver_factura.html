@@ -594,20 +594,19 @@ function sumar_total(){
     /* Este código primero sumara todos los valores de la columna "total".
        Tambien pondra la suma en el input del texto "total", el valor para el input de iva y el total con el valor de iva.*/arguments
 
-    total1 = Number(document.getElementById("importe1").value);
-    total2 = Number(document.getElementById("importe2").value);
-    total3 = Number(document.getElementById("importe3").value);
-    total4 = Number(document.getElementById("importe4").value);
-    total5 = Number(document.getElementById("importe5").value);
-    total6 = Number(document.getElementById("importe6").value);
-    total7 = Number(document.getElementById("importe7").value);
-    total8 = Number(document.getElementById("importe8").value);
-
+       total1 = Number(document.getElementById("importe1").value).toFixed(2);
+       total2 = Number(document.getElementById("importe2").value).toFixed(2);
+       total3 = Number(document.getElementById("importe3").value).toFixed(2);
+       total4 = Number(document.getElementById("importe4").value).toFixed(2);
+       total5 = Number(document.getElementById("importe5").value).toFixed(2);
+       total6 = Number(document.getElementById("importe6").value).toFixed(2);
+       total7 = Number(document.getElementById("importe7").value).toFixed(2);
+       total8 = Number(document.getElementById("importe8").value).toFixed(2);
     total = parseFloat(total1) + parseFloat(total2) + parseFloat(total3) + parseFloat(total4) + parseFloat(total5) + parseFloat(total6) + parseFloat(total7) + parseFloat(total8);
     document.getElementById('sub_total_sin_iva').value = total.toFixed(2);    // Añadido limete 2 de numeros decimales para que no se vuelva loco a la hora de hacer los cálculos
-    document.getElementById("iva_input").value=  total * 0.21;                  
-    iva = total * 0.21;
-    document.getElementById("total_con_iva").value = total + iva ;
+    document.getElementById("iva_input").value=  (total * 0.21)                  
+    iva = (total * 0.21); 
+    document.getElementById("total_con_iva").value = (total + iva).toFixed(2) ;
 
 
 
