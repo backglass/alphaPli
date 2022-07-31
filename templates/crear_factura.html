@@ -587,11 +587,11 @@ function sumar_total(){
        total7 = Number(document.getElementById("importe7").value).toFixed(2);
        total8 = Number(document.getElementById("importe8").value).toFixed(2);
 
-    total = parseFloat(total1) + parseFloat(total2) + parseFloat(total3) + parseFloat(total4) + parseFloat(total5) + parseFloat(total6) + parseFloat(total7) + parseFloat(total8);
+    total = parseFloat(total1) + parseFloat(total2) + parseFloat(total3) + parseFloat(total4) + parseFloat(total5) + parseFloat(total6) + parseFloat(total7) + parseFloat(total8)
     document.getElementById('sub_total_sin_iva').value = total.toFixed(2);    // Añadido limete 2 de numeros decimales para que no se vuelva loco a la hora de hacer los cálculos
     document.getElementById("iva_input").value=  (total * 0.21).toFixed(2); // Añadido limete 2 de numeros decimales para que no se vuelva loco a la hora de hacer los cálculos
-    iva = total * 0.21;
-    document.getElementById("total_con_iva").value = (total + iva).toFixed(2); ; 
+    iva = (total * 0.21).toFixed(2);
+    document.getElementById("total_con_iva").value = (total + iva); 
 
 
 }
