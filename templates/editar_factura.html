@@ -588,7 +588,7 @@ function sumar1 (valor) {
 
                         function sumar_total(){
                             /* Este código primero sumara todos los valores de la columna "total".
-                               Tambien pondra la suma en el input del texto "total", el valor para el input de iva y el total con el valor de iva.*/arguments
+                               Tambien pondra la suma en el input del texto "total", el valor para el input de iva y el total con el valor de iva.*/
                         
                                total1 = Number(document.getElementById("importe1").value).toFixed(2);
                                total2 = Number(document.getElementById("importe2").value).toFixed(2);
@@ -600,7 +600,7 @@ function sumar1 (valor) {
                                total8 = Number(document.getElementById("importe8").value).toFixed(2);
                             total = parseFloat(total1) + parseFloat(total2) + parseFloat(total3) + parseFloat(total4) + parseFloat(total5) + parseFloat(total6) + parseFloat(total7) + parseFloat(total8);
                             document.getElementById('sub_total_sin_iva').value = total.toFixed(2);    // Añadido limete 2 de numeros decimales para que no se vuelva loco a la hora de hacer los cálculos
-                            document.getElementById("iva_input").value=  total * 0.21;                  
+                            document.getElementById("iva_input").value=  (total * 0.21).toFixed(2); ;                  
                             iva = total * 0.21;
                             document.getElementById("total_con_iva").value = (total + iva).toFixed(2) ;
                         
