@@ -428,7 +428,7 @@ def facturas():
 def crear_factura(nif):
     print(nif)
 
-    #fecha = time.strftime("%d/%m/%y")     # Obtiene la fecha actual y la guarda en la variable fecha que se le pasa al template para que se muestre en el formulario
+    fecha = time.strftime("%d/%m/%y")     # Obtiene la fecha actual y la guarda en la variable fecha que se le pasa al template para que se muestre en el formulario
     form = Nueva_factura()                # Crea una instancia del formulario de crear factura
     cliente = Clientes.query.filter_by(nif=nif).first()
     try:
@@ -439,7 +439,7 @@ def crear_factura(nif):
         numero = num = 1
     if form.validate_on_submit():
         now = datetime.now()  ## Obtiene la fecha actual para que me funciones en heroku postgresql              
-        factura = Facturas( cliente.nif,now),
+        factura = Facturas( cliente.nif,now,
                             form.precio1.data,
                             form.precio2.data,
                             form.precio3.data,
@@ -661,6 +661,6 @@ def ver_factura(num):
     return render_template('ver_factura.html', form = form,factura=factura,cliente = cliente)
 
 if __name__ == '__main__':
-   app.run()
-   #app.run(debug=True)
+   #app.run()
+   app.run(debug=True)
     
