@@ -11,7 +11,11 @@ app.config ["SECRET_KEY"] = "mysecretkey"
 
 ## Base Database Config
 
+<<<<<<< HEAD
 app.config ["SQLALCHEMY_DATABASE_URI"] = "postgresql://postgres:plisados123@localhost:5432/plisafor"
+=======
+app.config ["SQLALCHEMY_DATABASE_URI"] = "postgresql:"
+>>>>>>> 19db10cc6031c361f4f8dcb85730d308d664d3c2
 app.config ["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
