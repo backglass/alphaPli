@@ -96,8 +96,8 @@ class Nueva_factura(FlaskForm):
 
     pagada = BooleanField(default=False)
     precio_metro = StringField("Precio Metro")        # Estos campos tienen un nombre un poco confuso para mí.
-    sub_total_sin_iva  = StringField("Subtotal",default="0")      # Estos campos tienen un nombre un poco confuso para mí.
-    total_con_iva = StringField("Total",default="0")              # Estos campos tienen un nombre un poco confuso para mí.
+    sub_total_sin_iva  = StringField("Subtotal",default="0")      # Se necesita poner el valor en 0, por si al hacer una factura se queda el valor en blanco daria un error..
+    total_con_iva = StringField("Total",default="0")              # confuso
     notas = TextAreaField("Notas")
 
 
