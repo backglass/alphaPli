@@ -96,8 +96,8 @@ class Nueva_factura(FlaskForm):
 
     pagada = BooleanField(default=False)
     precio_metro = StringField("Precio Metro")        # Estos campos tienen un nombre un poco confuso para mí.
-    sub_total_sin_iva  = StringField("Subtotal")      # Estos campos tienen un nombre un poco confuso para mí.
-    total_con_iva = StringField("Total")              # Estos campos tienen un nombre un poco confuso para mí.
+    sub_total_sin_iva  = StringField("Subtotal",default="0")      # Estos campos tienen un nombre un poco confuso para mí.
+    total_con_iva = StringField("Total",default="0")              # Estos campos tienen un nombre un poco confuso para mí.
     notas = TextAreaField("Notas")
 
 
@@ -320,14 +320,16 @@ def ver_cliente(ver_cliente):
     iva_total_pagada = 0
     suma_pagada = 0
     suma_no_pagada = 0
+
     for i in factura:
         if i.pagada == False:
-            suma_no_pagada = suma_no_pagada + float(i.total)
+         suma_no_pagada = suma_no_pagada + float(i.total)
         else:
             suma_pagada = suma_pagada + float(i.total)
-    iva_total_pagada = round(suma_pagada- suma_pagada / 1.21,2)
-    suma_pagada = round(suma_pagada,2)
-    suma_no_pagada = round(suma_no_pagada,2)
+            iva_total_pagada = round(suma_pagada- suma_pagada / 1.21,2)
+            suma_pagada = round(suma_pagada,2)
+            suma_no_pagada = round(suma_no_pagada,2)
+
     ## Formulario que se usara para cambiar el valor de factura es un swith para cambiar el valor de la factura ture false
     form_estado = Nueva_factura()
     if form_estado.validate_on_submit():
