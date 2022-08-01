@@ -44,6 +44,8 @@ class Nueva_factura(FlaskForm):
     precio6 = StringField("Precio6")
     precio7 = StringField("Precio7")
     precio8 = StringField("Precio8")
+    precio9 = StringField("Precio9")
+    precio10 = StringField("Precio10")
 
     descripcion1 = StringField("Descripcion1")
     descripcion2 = StringField("Descripción2")
@@ -53,6 +55,8 @@ class Nueva_factura(FlaskForm):
     descripcion6 = StringField("Descripción6")
     descripcion7 = StringField("Descripción7")
     descripcion8 = StringField("Descripción8")
+    descripcion9 = StringField("Descripción9")
+    descripcion10 = StringField("Descripción10")
     
     metros1 = StringField("Metros1")
     metros2 = StringField("Metros2")
@@ -62,6 +66,8 @@ class Nueva_factura(FlaskForm):
     metros6 = StringField("Metros6")
     metros7 = StringField("Metros7")
     metros8 = StringField("Metros8")
+    metros9 = StringField("Metros9")
+    metros10 = StringField("Metros10")
 
     faldas1 = StringField("Faldas1")
     faldas2 = StringField("Faldas2")
@@ -71,6 +77,8 @@ class Nueva_factura(FlaskForm):
     faldas6 = StringField("Faldas6")
     faldas7 = StringField("Faldas7")
     faldas8 = StringField("Faldas8")
+    faldas9 = StringField("Faldas9")
+    faldas10 = StringField("Faldas10")
 
     importe1 = StringField("Importe1")
     importe2 = StringField("Importe2")
@@ -80,6 +88,8 @@ class Nueva_factura(FlaskForm):
     importe6 = StringField("Importe6")
     importe7 = StringField("Importe7")
     importe8 = StringField("Importe8")
+    importe9 = StringField("Importe9")
+    importe10 = StringField("Importe10")
 
     pagada = BooleanField(default=False)
     precio_metro = StringField("Precio Metro")        # Estos campos tienen un nombre un poco confuso para mí.
@@ -143,6 +153,8 @@ class Facturas(db.Model): # Clase Facturas hereda de db.Model, servira para crea
     precio6 = db.Column(db.String(10))
     precio7 = db.Column(db.String(10))
     precio8 = db.Column(db.String(10))
+    precio9 = db.Column(db.String(10))
+    precio10 = db.Column(db.String(10))
     
     descripcion1 = db.Column(db.String(100))
     descripcion2 = db.Column(db.String(100))
@@ -152,6 +164,8 @@ class Facturas(db.Model): # Clase Facturas hereda de db.Model, servira para crea
     descripcion6 = db.Column(db.String(100))
     descripcion7 = db.Column(db.String(100))
     descripcion8 = db.Column(db.String(100))
+    descripcion9 = db.Column(db.String(100))
+    descripcion10 = db.Column(db.String(10000))
 
     metros1 = db.Column(db.String(10))
     metros2 = db.Column(db.String(10))
@@ -161,6 +175,8 @@ class Facturas(db.Model): # Clase Facturas hereda de db.Model, servira para crea
     metros6 = db.Column(db.String(10))
     metros7 = db.Column(db.String(10))
     metros8 = db.Column(db.String(10))
+    metros9 = db.Column(db.String(10))
+    metros10 = db.Column(db.String(10))
 
     faldas1 = db.Column(db.String(10))
     faldas2 = db.Column(db.String(10))
@@ -170,6 +186,8 @@ class Facturas(db.Model): # Clase Facturas hereda de db.Model, servira para crea
     faldas6 = db.Column(db.String(10))
     faldas7 = db.Column(db.String(10))
     faldas8 = db.Column(db.String(10))
+    faldas9 = db.Column(db.String(10))
+    faldas10 = db.Column(db.String(10))
 
     importe1 = db.Column(db.String(10))
     importe2 = db.Column(db.String(10))
@@ -179,6 +197,8 @@ class Facturas(db.Model): # Clase Facturas hereda de db.Model, servira para crea
     importe6 = db.Column(db.String(10))
     importe7 = db.Column(db.String(10))
     importe8 = db.Column(db.String(10))
+    importe9 = db.Column(db.String(10))
+    importe10 = db.Column(db.String(10))
 
     pagada = db.Column(db.Boolean)
     subtotal  = db.Column(db.String(10))
@@ -187,11 +207,11 @@ class Facturas(db.Model): # Clase Facturas hereda de db.Model, servira para crea
     notas = db.Column(db.String(1000))
 
     def __init__(self, nif, fecha,
-                 precio1,precio2,precio3,precio4,precio5,precio6,precio7,precio8,
-                 descripcion1,descripcion2,descripcion3,descripcion4,descripcion5,descripcion6,descripcion7,descripcion8,
-                 metros1,metros2,metros3,metros4,metros5,metros6,metros7,metros8,
-                 faldas1,faldas2,faldas3,faldas4,faldas5,faldas6,faldas7,faldas8,
-                 importe1,importe2,importe3,importe4,importe5,importe6,importe7,importe8,
+                 precio1,precio2,precio3,precio4,precio5,precio6,precio7,precio8,precio9,precio10,
+                 descripcion1,descripcion2,descripcion3,descripcion4,descripcion5,descripcion6,descripcion7,descripcion8,descripcion9,descripcion10,
+                 metros1,metros2,metros3,metros4,metros5,metros6,metros7,metros8,metros9,metros10,
+                 faldas1,faldas2,faldas3,faldas4,faldas5,faldas6,faldas7,faldas8,faldas9,faldas10,
+                 importe1,importe2,importe3,importe4,importe5,importe6,importe7,importe8,importe9,importe10,
                  pagada,subtotal,total,precio_metro,notas):
 
         self.nif = nif
@@ -204,6 +224,8 @@ class Facturas(db.Model): # Clase Facturas hereda de db.Model, servira para crea
         self.precio6 = precio6
         self.precio7 = precio7
         self.precio8 = precio8
+        self.precio9 = precio9
+        self.precio10 = precio10
 
         self.descripcion1 = descripcion1
         self.descripcion2 = descripcion2
@@ -213,6 +235,8 @@ class Facturas(db.Model): # Clase Facturas hereda de db.Model, servira para crea
         self.descripcion6 = descripcion6
         self.descripcion7 = descripcion7
         self.descripcion8 = descripcion8
+        self.descripcion9 = descripcion9
+        self.descripcion10 = descripcion10
         
         self.metros1 = metros1
         self.metros2 = metros2
@@ -222,6 +246,8 @@ class Facturas(db.Model): # Clase Facturas hereda de db.Model, servira para crea
         self.metros6 = metros6
         self.metros7 = metros7
         self.metros8 = metros8
+        self.metros9 = metros9
+        self.metros10 = metros10
 
         self.faldas1 = faldas1
         self.faldas2 = faldas2
@@ -231,6 +257,9 @@ class Facturas(db.Model): # Clase Facturas hereda de db.Model, servira para crea
         self.faldas6 = faldas6
         self.faldas7 = faldas7
         self.faldas8 = faldas8
+        self.faldas9 = faldas9
+        self.faldas10 = faldas10
+
         
         self.importe1 = importe1
         self.importe2 = importe2
@@ -240,6 +269,8 @@ class Facturas(db.Model): # Clase Facturas hereda de db.Model, servira para crea
         self.importe6 = importe6
         self.importe7 = importe7
         self.importe8 = importe8
+        self.importe9 = importe9
+        self.importe10 = importe10
         
         self.pagada = pagada
         self.subtotal = subtotal
@@ -448,6 +479,8 @@ def crear_factura(nif):
                             form.precio6.data,
                             form.precio7.data,
                             form.precio8.data,
+                            form.precio9.data,
+                            form.precio10.data,
 
                             form.descripcion1.data,
                             form.descripcion2.data,
@@ -457,6 +490,8 @@ def crear_factura(nif):
                             form.descripcion6.data,
                             form.descripcion7.data,
                             form.descripcion8.data,
+                            form.descripcion9.data,
+                            form.descripcion10.data,
 
                             form.metros1.data,
                             form.metros2.data,
@@ -466,6 +501,8 @@ def crear_factura(nif):
                             form.metros6.data,
                             form.metros7.data,
                             form.metros8.data,
+                            form.metros9.data,
+                            form.metros10.data,
 
                             form.faldas1.data,
                             form.faldas2.data,
@@ -475,6 +512,8 @@ def crear_factura(nif):
                             form.faldas6.data,
                             form.faldas7.data,
                             form.faldas8.data,
+                            form.faldas9.data,
+                            form.faldas10.data,
 
                             form.importe1.data,
                             form.importe2.data,
@@ -484,6 +523,8 @@ def crear_factura(nif):
                             form.importe6.data,
                             form.importe7.data,
                             form.importe8.data,
+                            form.importe9.data,
+                            form.importe10.data,
 
                             False,
                             form.sub_total_sin_iva.data,
@@ -528,6 +569,8 @@ def editar_factura(num):
         factura.precio6 = form.precio6.data
         factura.precio7 = form.precio7.data
         factura.precio8 = form.precio8.data
+        factura.precio9 = form.precio9.data
+        factura.precio10 = form.precio10.data
 
         factura.descripcion1 = form.descripcion1.data
         factura.descripcion2 = form.descripcion2.data
@@ -537,6 +580,8 @@ def editar_factura(num):
         factura.descripcion6 = form.descripcion6.data
         factura.descripcion7 = form.descripcion7.data
         factura.descripcion8 = form.descripcion8.data
+        factura.descripcion9 = form.descripcion9.data
+        factura.descripcion10 = form.descripcion10.data
 
         factura.metros1 = form.metros1.data
         factura.metros2 = form.metros2.data
@@ -546,6 +591,8 @@ def editar_factura(num):
         factura.metros6 = form.metros6.data
         factura.metros7 = form.metros7.data
         factura.metros8 = form.metros8.data
+        factura.metros9 = form.metros9.data
+        factura.metros10 = form.metros10.data
 
         factura.faldas1 = form.faldas1.data
         factura.faldas2 = form.faldas2.data
@@ -555,6 +602,8 @@ def editar_factura(num):
         factura.faldas6 = form.faldas6.data
         factura.faldas7 = form.faldas7.data
         factura.faldas8 = form.faldas8.data
+        factura.faldas9 = form.faldas9.data
+        factura.faldas10 = form.faldas10.data
 
         factura.importe1 = form.importe1.data
         factura.importe2 = form.importe2.data
@@ -564,6 +613,8 @@ def editar_factura(num):
         factura.importe6 = form.importe6.data
         factura.importe7 = form.importe7.data
         factura.importe8 = form.importe8.data
+        factura.importe9 = form.importe9.data
+        factura.importe10 = form.importe10.data
 
         factura.subtotal = form.sub_total_sin_iva.data
         factura.total = form.total_con_iva.data
@@ -605,6 +656,8 @@ def ver_factura(num):
         factura.precio6 = form.precio6.data
         factura.precio7 = form.precio7.data
         factura.precio8 = form.precio8.data
+        factura.precio9 = form.precio9.data
+        factura.precio10 = form.precio10.data
 
         factura.descripcion1 = form.descripcion1.data
         factura.descripcion2 = form.descripcion2.data
@@ -614,6 +667,8 @@ def ver_factura(num):
         factura.descripcion6 = form.descripcion6.data
         factura.descripcion7 = form.descripcion7.data
         factura.descripcion8 = form.descripcion8.data
+        factura.descripcion9 = form.descripcion9.data
+        factura.descripcion10 = form.descripcion10.data
 
         factura.metros1 = form.metros1.data
         factura.metros2 = form.metros2.data
@@ -623,6 +678,8 @@ def ver_factura(num):
         factura.metros6 = form.metros6.data
         factura.metros7 = form.metros7.data
         factura.metros8 = form.metros8.data
+        factura.metros9 = form.metros9.data
+        factura.metros10 = form.metros10.data
 
         factura.faldas1 = form.faldas1.data
         factura.faldas2 = form.faldas2.data
@@ -632,6 +689,8 @@ def ver_factura(num):
         factura.faldas6 = form.faldas6.data
         factura.faldas7 = form.faldas7.data
         factura.faldas8 = form.faldas8.data
+        factura.faldas9 = form.faldas9.data
+        factura.faldas10 = form.faldas10.data
 
         factura.importe1 = form.importe1.data
         factura.importe2 = form.importe2.data
@@ -641,6 +700,8 @@ def ver_factura(num):
         factura.importe6 = form.importe6.data
         factura.importe7 = form.importe7.data
         factura.importe8 = form.importe8.data
+        factura.importe9 = form.importe9.data
+        factura.importe10 = form.importe10.data
 
         factura.subtotal = form.sub_total_sin_iva.data
         factura.total = form.total_con_iva.data
@@ -659,7 +720,11 @@ def ver_factura(num):
         
 
     return render_template('ver_factura.html', form = form,factura=factura,cliente = cliente)
-
+@app.route("/clientes/etiqueta/<nif>", methods=["GET", "POST"])
+def etiqueta(nif):
+    cliente = Clientes.query.filter_by(nif=nif).first()
+    
+    return render_template('etiquetas.html', cliente=cliente)
 if __name__ == '__main__':
    #app.run()
    app.run(debug=True)
