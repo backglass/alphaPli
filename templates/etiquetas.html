@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card text-dark bg-light mb-3 shadow " >
+
+    <div class="card-header"><h5><strong>{{ cliente.nombre }}</strong></h5></div>
+    <div class="card-body">
+    <p class="card-text"><b>Direccíon: </b><span class="text-secondary">{{ cliente.direccion }}</p>
+    <p class="card-text"><b>Ciudad: </b><span class="text-secondary">{{ cliente.ciudad }}</p>
+    <p class="card-text"><b>Provincia: </b><span class="text-secondary">{{ cliente.provincia }}</p>
+    <p class="card-text"><b>CP: </b><span class="text-secondary">{{ cliente.cp }}</p>
+      
+      
+      
+      
+    </div>
+  </div>
+
+
+{% endblock %}
