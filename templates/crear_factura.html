@@ -288,6 +288,20 @@ hr {
                             <div class="d-none d-sm-block col-2 text-95">{{ form.faldas8 (class_="form-control", onchange="sumar8(this.value);")}}</div>
                             <div class="col-2 text-secondary-d2">{{ form.importe8 (class_="form-control")}}</div>
                         </div>
+                        <div class="row mb-2 mb-sm-0 py-25 bgc-default-l4">
+                            <div class="d-none d-sm-block col-1"> {{ form.precio9 (class_="form-control", onchange="sumar9(this.value);")}}</div>
+                            <div class="col-9 col-sm-5">{{ form.descripcion9 (class_="form-control")}}</div>
+                            <div class="d-none d-sm-block col-2">{{ form.metros9 (class_="form-control", onchange="sumar9(this.value);")}}</div>
+                            <div class="d-none d-sm-block col-2 text-95">{{ form.faldas9 (class_="form-control", onchange="sumar9(this.value);")}}</div>
+                            <div class="col-2 text-secondary-d2">{{ form.importe9 (class_="form-control")}}</div>
+                        </div>
+                        <div class="row mb-2 mb-sm-0 py-25 bgc-default-l4">
+                            <div class="d-none d-sm-block col-1"> {{ form.precio10 (class_="form-control", onchange="sumar10(this.value);")}}</div>
+                            <div class="col-9 col-sm-5">{{ form.descripcion10 (class_="form-control")}}</div>
+                            <div class="d-none d-sm-block col-2">{{ form.metros10 (class_="form-control", onchange="sumar10(this.value);")}}</div>
+                            <div class="d-none d-sm-block col-2 text-95">{{ form.faldas10 (class_="form-control", onchange="sumar10(this.value);")}}</div>
+                            <div class="col-2 text-secondary-d2">{{ form.importe10 (class_="form-control")}}</div>
+                        </div>
                     </div>
                  
                     <div class="row border-b-2 brc-default-l2"></div>
@@ -550,6 +564,7 @@ function sumar1 (valor) {
                         sumar_total();  // Llamo a la función para sumar el total de todos los inputs "importe".
                     }
                     
+                    
                     function sumar8 (valor) {
 
                         var total = 0;	    // Variable para acumular el total
@@ -566,18 +581,64 @@ function sumar1 (valor) {
                             else if (faldas8 == 0) {
                                 total = (parseFloat(precio8) * parseFloat(metros8));        // Multiplica el precio por los metros. cuando no hay faldas.
                                 sumar_total()
-                            }else if (metros3 == 0) {
+                            }else if (metros8 == 0) {
                                 total = (parseFloat(precio8) * parseFloat(faldas8));        // Multiplica el precio por las faldas. cuando no hay metros.
                                 sumar_total()
                             }
                             document.getElementById('importe8').value = total;
                             sumar_total();  // Llamo a la función para sumar el total de todos los inputs "importe".
                         }
+                        function sumar9 (valor) {
+
+                            var total = 0;	    // Variable para acumular el total
+                            total = parseFloat(valor); // Se convierte el valor de entrada a float
+                            precio9 = Number(document.getElementById("precio9").value);  // Se obtiene el valor del precio con id precio1
+                            metros9 = Number(document.getElementById("metros9").value);  // Se obtiene el valor del metros con id metros1
+                            faldas9 = Number(document.getElementById("faldas9").value);  // Se obtiene el valor de las faldas con id faldas1
+                            
+                            // Aquí valido si hay un valor previo, si no hay datos, le pongo un cero "0".
+                        
+                                if (faldas9 > 0 && metros9 > 0){      // Verifica si campo faldas y campo metros son mayores que 0,si lo son entonces no realiza los calculos
+                                    console.log("Ambos estan llenos");
+                                }
+                                else if (faldas9 == 0) {
+                                    total = (parseFloat(precio9) * parseFloat(metros9));        // Multiplica el precio por los metros. cuando no hay faldas.
+                                    sumar_total()
+                                }else if (metros9 == 0) {
+                                    total = (parseFloat(precio9) * parseFloat(faldas9));        // Multiplica el precio por las faldas. cuando no hay metros.
+                                    sumar_total()
+                                }
+                                document.getElementById('importe9').value = total;
+                                sumar_total();  // Llamo a la función para sumar el total de todos los inputs "importe".
+                            }
+                            function sumar10 (valor) {
+
+                                var total = 0;	    // Variable para acumular el total
+                                total = parseFloat(valor); // Se convierte el valor de entrada a float
+                                precio10 = Number(document.getElementById("precio10").value);  // Se obtiene el valor del precio con id precio1
+                                metros10 = Number(document.getElementById("metros10").value);  // Se obtiene el valor del metros con id metros1
+                                faldas10 = Number(document.getElementById("faldas10").value);  // Se obtiene el valor de las faldas con id faldas1
+                                
+                                // Aquí valido si hay un valor previo, si no hay datos, le pongo un cero "0".
+                            
+                                    if (faldas10 > 0 && metros10 > 0){      // Verifica si campo faldas y campo metros son mayores que 0,si lo son entonces no realiza los calculos
+                                        console.log("Ambos estan llenos");
+                                    }
+                                    else if (faldas10 == 0) {
+                                        total = (parseFloat(precio10) * parseFloat(metros10));        // Multiplica el precio por los metros. cuando no hay faldas.
+                                        sumar_total()
+                                    }else if (metros10 == 0) {
+                                        total = (parseFloat(precio10) * parseFloat(faldas10));        // Multiplica el precio por las faldas. cuando no hay metros.
+                                        sumar_total()
+                                    }
+                                    document.getElementById('importe10').value = total;
+                                    sumar_total();  // Llamo a la función para sumar el total de todos los inputs "importe".
+                                }
 
 function sumar_total(){
     /* Este código primero sumara todos los valores de la columna "total".
        Tambien pondra la suma en el input del texto "total", el valor para el input de iva y el total con el valor de iva.*/arguments
-
+ 
        total1 = Number(document.getElementById("importe1").value).toFixed(2);
        total2 = Number(document.getElementById("importe2").value).toFixed(2);
        total3 = Number(document.getElementById("importe3").value).toFixed(2);
@@ -586,12 +647,15 @@ function sumar_total(){
        total6 = Number(document.getElementById("importe6").value).toFixed(2);
        total7 = Number(document.getElementById("importe7").value).toFixed(2);
        total8 = Number(document.getElementById("importe8").value).toFixed(2);
+       total9 = Number(document.getElementById("importe9").value).toFixed(2);
+       total10 = Number(document.getElementById("importe10").value).toFixed(2);
 
-    total = parseFloat(total1) + parseFloat(total2) + parseFloat(total3) + parseFloat(total4) + parseFloat(total5) + parseFloat(total6) + parseFloat(total7) + parseFloat(total8)
+    total = parseFloat(total1) + parseFloat(total2) + parseFloat(total3) + parseFloat(total4) + parseFloat(total5) + parseFloat(total6) + parseFloat(total7) + parseFloat(total8) +  parseFloat(total9) + parseFloat(total10);
     document.getElementById('sub_total_sin_iva').value = total.toFixed(2);    // Añadido limete 2 de numeros decimales para que no se vuelva loco a la hora de hacer los cálculos
     document.getElementById("iva_input").value=  (total * 0.21).toFixed(2); // Añadido limete 2 de numeros decimales para que no se vuelva loco a la hora de hacer los cálculos
-    iva = (total * 0.21).toFixed(2);
-    document.getElementById("total_con_iva").value = (total + iva); 
+    iva = total * 0.21;
+    iva.toFixed(2);
+    document.getElementById("total_con_iva").value = (total + iva).toFixed(2); 
 
 
 }
@@ -604,7 +668,7 @@ function sumar_total(){
          event.preventDefault();
     }
 });
-sumar_total();
+
 </script>
 </body>
 </html>
