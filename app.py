@@ -326,7 +326,7 @@ def ver_cliente(ver_cliente):
          suma_no_pagada = suma_no_pagada + float(i.total)
         else:
             suma_pagada = suma_pagada + float(i.total)
-            iva_total_pagada = round(suma_pagada- suma_pagada / 1.21,2)
+            iva_total_pagada = round(suma_pagada * 0.21,2)
             suma_pagada = round(suma_pagada,2)
             suma_no_pagada = round(suma_no_pagada,2)
 
