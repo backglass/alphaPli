@@ -27,14 +27,23 @@ padding: auto;
   background:none;
  
 }
- </style>
-<body>
-<br>
+.etiqueta_hide {
+  display: none;
+}
+.etiqueta_show {
+  display: block;
+}
+</style>
 
+<body>
+<div class="container" >
+<button type="button" class="btn btn-primary" onclick="add_div()">
+</button>
+</div>
   <div class="m-4">
     <div class="row row-cols-1 row-cols-md-2 g-4">
-    <div class="col">
-  <div class="card mb-3 display" style="max-width: 540px;">
+      <div class="col etiqueta_show" id="etiqueta1" >
+   <div class="card mb-3 display" style="max-width: 540px;">
     <div class="row g-0">
       <div class="col-md-4">
         <img class="img-fluid rounded-start color" src="/static/images/etiqueta.svg"  alt="...">
@@ -47,140 +56,176 @@ padding: auto;
           <p class="card-text text_color"><strong><u>Población:</u></strong> {{ cliente.ciudad }}</p>
           <p class="card-text text_color"><strong><u>C.P:</u></strong> {{ cliente.cp }}</p>
           <p class="card-text text_color"><strong><u>Provincia:</u></strong></u> {{ cliente.provincia }}</p>
-          <p class="card-text text_color" ><strong><u>Bultos: </u></strong><input class="input_box" type="text" id="fname" name="fname" > </p>
-          <p class="card-text text_color"><strong><u>Kg:</u></strong> <input class="input_box" type="text" id="fname" name="fname" > </p>
+          <p class="card-text text_color" ><strong><u>Bultos: </u></strong><input class="input_box" type="text" id="bultos" name="fname" > </p>
+          <p class="card-text text_color"><strong><u>Kg:</u></strong> <input class="input_box" type="text" id="kg" name="fname" > </p>
         
         </div>
       </div>
       
     </div>
+    
       
     </div>
   </div>
-  <div class="col">
+  <div class="col etiqueta_hide" id="etiqueta2" >
     <div class="card mb-3 display" style="max-width: 540px;">
-      <div class="row g-0">
-        <div class="col-md-4">
-          <img class="img-fluid rounded-start color" src="/static/images/etiqueta.svg"  alt="...">
-        </div>
-        <div class="col-md-8  gy-1 gx-2 border_color">
-          <div class="card-body " style="max-width: 540px;" >
-            <h5 class="card-title text-center text_color" ><u>DESTINO</u> {{ cliente.ciudad }}</h5>
-       
-            <p class="card-text text_color "><strong><u>Dirección:</u></strong><span class="texto_color"> {{ cliente.direccion }}</span></p>
-            <p class="card-text text_color"><strong><u>Población:</u></strong> {{ cliente.ciudad }}</p>
-            <p class="card-text text_color"><strong><u>C.P:</u></strong> {{ cliente.cp }}</p>
-            <p class="card-text text_color"><strong><u>Provincia:</u></strong></u> {{ cliente.provincia }}</p>
-            <p class="card-text text_color" ><strong><u>Bultos: </u></strong><input class="input_box" type="text" id="fname" name="fname" > </p>
-            <p class="card-text text_color"><strong><u>Kg:</u></strong> <input class="input_box" type="text" id="fname" name="fname" > </p>
-          
-          </div>
-        </div>
-        
-      </div>
-        
-      </div>
-    </div>
-    <div class="col">
-      <div class="card mb-3 display" style="max-width: 540px;">
-        <div class="row g-0">
-          <div class="col-md-4">
-            <img class="img-fluid rounded-start color" src="/static/images/etiqueta.svg"  alt="...">
-          </div>
-          <div class="col-md-8  gy-1 gx-2 border_color">
-            <div class="card-body " style="max-width: 540px;" >
-              <h5 class="card-title text-center text_color" ><u>DESTINO</u> {{ cliente.ciudad }}</h5>
+     <div class="row g-0">
+       <div class="col-md-4">
+         <img class="img-fluid rounded-start color" src="/static/images/etiqueta.svg"  alt="...">
+       </div>
+       <div class="col-md-8  gy-1 gx-2 border_color">
+         <div class="card-body " style="max-width: 540px;" >
+           <h5 class="card-title text-center text_color" ><u>DESTINO</u> {{ cliente.ciudad }}</h5>
+      
+           <p class="card-text text_color "><strong><u>Dirección:</u></strong><span class="texto_color"> {{ cliente.direccion }}</span></p>
+           <p class="card-text text_color"><strong><u>Población:</u></strong> {{ cliente.ciudad }}</p>
+           <p class="card-text text_color"><strong><u>C.P:</u></strong> {{ cliente.cp }}</p>
+           <p class="card-text text_color"><strong><u>Provincia:</u></strong></u> {{ cliente.provincia }}</p>
+           <p class="card-text text_color" ><strong><u>Bultos: </u></strong><input class="input_box" type="text" id="bultos" name="fname" > </p>
+           <p class="card-text text_color"><strong><u>Kg:</u></strong> <input class="input_box" type="text" id="kg" name="fname" > </p>
          
-              <p class="card-text text_color "><strong><u>Dirección:</u></strong><span class="texto_color"> {{ cliente.direccion }}</span></p>
-              <p class="card-text text_color"><strong><u>Población:</u></strong> {{ cliente.ciudad }}</p>
-              <p class="card-text text_color"><strong><u>C.P:</u></strong> {{ cliente.cp }}</p>
-              <p class="card-text text_color"><strong><u>Provincia:</u></strong></u> {{ cliente.provincia }}</p>
-              <p class="card-text text_color" ><strong><u>Bultos: </u></strong><input class="input_box" type="text" id="fname" name="fname" > </p>
-              <p class="card-text text_color"><strong><u>Kg:</u></strong> <input class="input_box" type="text" id="fname" name="fname" > </p>
-            
-            </div>
-          </div>
-          
-        </div>
-          
-        </div>
+         </div>
+       </div>
+       
+     </div>
+     
+       
+     </div>
+   </div>
+   <div class="col etiqueta_hide" id="etiqueta3" >
+    <div class="card mb-3 display" style="max-width: 540px;">
+     <div class="row g-0">
+       <div class="col-md-4">
+         <img class="img-fluid rounded-start color" src="/static/images/etiqueta.svg"  alt="...">
+       </div>
+       <div class="col-md-8  gy-1 gx-2 border_color">
+         <div class="card-body " style="max-width: 540px;" >
+           <h5 class="card-title text-center text_color" ><u>DESTINO</u> {{ cliente.ciudad }}</h5>
+      
+           <p class="card-text text_color "><strong><u>Dirección:</u></strong><span class="texto_color"> {{ cliente.direccion }}</span></p>
+           <p class="card-text text_color"><strong><u>Población:</u></strong> {{ cliente.ciudad }}</p>
+           <p class="card-text text_color"><strong><u>C.P:</u></strong> {{ cliente.cp }}</p>
+           <p class="card-text text_color"><strong><u>Provincia:</u></strong></u> {{ cliente.provincia }}</p>
+           <p class="card-text text_color" ><strong><u>Bultos: </u></strong><input class="input_box" type="text" id="bultos" name="fname" > </p>
+           <p class="card-text text_color"><strong><u>Kg:</u></strong> <input class="input_box" type="text" id="kg" name="fname" > </p>
+         
+         </div>
+       </div>
+       
+     </div>
+     
+       
+     </div>
+   </div>
+   <div class="col etiqueta_hide" id="etiqueta4" >
+    <div class="card mb-3 display" style="max-width: 540px;">
+     <div class="row g-0">
+       <div class="col-md-4">
+         <img class="img-fluid rounded-start color" src="/static/images/etiqueta.svg"  alt="...">
+       </div>
+       <div class="col-md-8  gy-1 gx-2 border_color">
+         <div class="card-body " style="max-width: 540px;" >
+           <h5 class="card-title text-center text_color" ><u>DESTINO</u> {{ cliente.ciudad }}</h5>
+      
+           <p class="card-text text_color "><strong><u>Dirección:</u></strong><span class="texto_color"> {{ cliente.direccion }}</span></p>
+           <p class="card-text text_color"><strong><u>Población:</u></strong> {{ cliente.ciudad }}</p>
+           <p class="card-text text_color"><strong><u>C.P:</u></strong> {{ cliente.cp }}</p>
+           <p class="card-text text_color"><strong><u>Provincia:</u></strong></u> {{ cliente.provincia }}</p>
+           <p class="card-text text_color" ><strong><u>Bultos: </u></strong><input class="input_box" type="text" id="bultos" name="fname" > </p>
+           <p class="card-text text_color"><strong><u>Kg:</u></strong> <input class="input_box" type="text" id="kg" name="fname" > </p>
+         
+         </div>
+       </div>
+       
+     </div>
+     
+       
+     </div>
+   </div>
+   <div class="col etiqueta_hide" id="etiqueta5" >
+    <div class="card mb-3 display" style="max-width: 540px;">
+     <div class="row g-0">
+       <div class="col-md-4">
+         <img class="img-fluid rounded-start color" src="/static/images/etiqueta.svg"  alt="...">
+       </div>
+       <div class="col-md-8  gy-1 gx-2 border_color">
+         <div class="card-body " style="max-width: 540px;" >
+           <h5 class="card-title text-center text_color" ><u>DESTINO</u> {{ cliente.ciudad }}</h5>
+      
+           <p class="card-text text_color "><strong><u>Dirección:</u></strong><span class="texto_color"> {{ cliente.direccion }}</span></p>
+           <p class="card-text text_color"><strong><u>Población:</u></strong> {{ cliente.ciudad }}</p>
+           <p class="card-text text_color"><strong><u>C.P:</u></strong> {{ cliente.cp }}</p>
+           <p class="card-text text_color"><strong><u>Provincia:</u></strong></u> {{ cliente.provincia }}</p>
+           <p class="card-text text_color" ><strong><u>Bultos: </u></strong><input class="input_box" type="text" id="bultos" name="fname" > </p>
+           <p class="card-text text_color"><strong><u>Kg:</u></strong> <input class="input_box" type="text" id="kg" name="fname" > </p>
+         
+         </div>
+       </div>
+       
+     </div>
+     
+       
+     </div>
+   </div>
+   <div class="col etiqueta_hide" id="etiqueta6" >
+    <div class="card mb-3 display" style="max-width: 540px;">
+     <div class="row g-0">
+       <div class="col-md-4">
+         <img class="img-fluid rounded-start color" src="/static/images/etiqueta.svg"  alt="...">
+       </div>
+       <div class="col-md-8  gy-1 gx-2 border_color">
+         <div class="card-body " style="max-width: 540px;" >
+           <h5 class="card-title text-center text_color" ><u>DESTINO</u> {{ cliente.ciudad }}</h5>
+      
+           <p class="card-text text_color "><strong><u>Dirección:</u></strong><span class="texto_color"> {{ cliente.direccion }}</span></p>
+           <p class="card-text text_color"><strong><u>Población:</u></strong> {{ cliente.ciudad }}</p>
+           <p class="card-text text_color"><strong><u>C.P:</u></strong> {{ cliente.cp }}</p>
+           <p class="card-text text_color"><strong><u>Provincia:</u></strong></u> {{ cliente.provincia }}</p>
+           <p class="card-text text_color" ><strong><u>Bultos: </u></strong><input class="input_box" type="text" id="bultos" name="fname" > </p>
+           <p class="card-text text_color"><strong><u>Kg:</u></strong> <input class="input_box" type="text" id="kg" name="fname" > </p>
+         
+         </div>
+       </div>
+       
+     </div>
+     
+       
+     </div>
+   </div>
+
+
+    </div>
+
       </div>
-      <div class="col">
-        <div class="card mb-3 display" style="max-width: 540px;">
-          <div class="row g-0">
-            <div class="col-md-4">
-              <img class="img-fluid rounded-start color" src="/static/images/etiqueta.svg"  alt="...">
-            </div>
-            <div class="col-md-8  gy-1 gx-2 border_color">
-              <div class="card-body " style="max-width: 540px;" >
-                <h5 class="card-title text-center text_color" ><u>DESTINO</u> {{ cliente.ciudad }}</h5>
-           
-                <p class="card-text text_color "><strong><u>Dirección:</u></strong><span class="texto_color"> {{ cliente.direccion }}</span></p>
-                <p class="card-text text_color"><strong><u>Población:</u></strong> {{ cliente.ciudad }}</p>
-                <p class="card-text text_color"><strong><u>C.P:</u></strong> {{ cliente.cp }}</p>
-                <p class="card-text text_color"><strong><u>Provincia:</u></strong></u> {{ cliente.provincia }}</p>
-                <p class="card-text text_color" ><strong><u>Bultos: </u></strong><input class="input_box" type="text" id="fname" name="fname" > </p>
-                <p class="card-text text_color"><strong><u>Kg:</u></strong> <input class="input_box" type="text" id="fname" name="fname" > </p>
-              
-              </div>
-            </div>
-            
-          </div>
-            
-          </div>
-        </div>
-        <div class="col">
-          <div class="card mb-3 display" style="max-width: 540px;">
-            <div class="row g-0">
-              <div class="col-md-4">
-                <img class="img-fluid rounded-start color" src="/static/images/etiqueta.svg"  alt="...">
-              </div>
-              <div class="col-md-8  gy-1 gx-2 border_color">
-                <div class="card-body " style="max-width: 540px;" >
-                  <h5 class="card-title text-center text_color" ><u>DESTINO</u> {{ cliente.ciudad }}</h5>
-             
-                  <p class="card-text text_color "><strong><u>Dirección:</u></strong><span class="texto_color"> {{ cliente.direccion }}</span></p>
-                  <p class="card-text text_color"><strong><u>Población:</u></strong> {{ cliente.ciudad }}</p>
-                  <p class="card-text text_color"><strong><u>C.P:</u></strong> {{ cliente.cp }}</p>
-                  <p class="card-text text_color"><strong><u>Provincia:</u></strong></u> {{ cliente.provincia }}</p>
-                  <p class="card-text text_color" ><strong><u>Bultos: </u></strong><input class="input_box" type="text" id="fname" name="fname" > </p>
-                  <p class="card-text text_color"><strong><u>Kg:</u></strong> <input class="input_box" type="text" id="fname" name="fname" > </p>
-                
-                </div>
-              </div>
-              
-            </div>
-              
-            </div>
-          </div>
-          <div class="col">
-            <div class="card mb-3 display" style="max-width: 540px;">
-              <div class="row g-0">
-                <div class="col-md-4">
-                  <img class="img-fluid rounded-start color" src="/static/images/etiqueta.svg"  alt="...">
-                </div>
-                <div class="col-md-8  gy-1 gx-2 border_color">
-                  <div class="card-body " style="max-width: 540px;" >
-                    <h5 class="card-title text-center text_color" ><u>DESTINO</u> {{ cliente.ciudad }}</h5>
-               
-                    <p class="card-text text_color "><strong><u>Dirección:</u></strong><span class="texto_color"> {{ cliente.direccion }}</span></p>
-                    <p class="card-text text_color"><strong><u>Población:</u></strong> {{ cliente.ciudad }}</p>
-                    <p class="card-text text_color"><strong><u>C.P:</u></strong> {{ cliente.cp }}</p>
-                    <p class="card-text text_color"><strong><u>Provincia:</u></strong></u> {{ cliente.provincia }}</p>
-                    <p class="card-text text_color" ><strong><u>Bultos: </u></strong><input class="input_box" type="text" id="fname" name="fname" > </p>
-                    <p class="card-text text_color"><strong><u>Kg:</u></strong> <input class="input_box" type="text" id="fname" name="fname" > </p>
-                  
-                  </div>
-                </div>
-                
-              </div>
-                
-              </div>
-            </div>
+
+
+
 </div>
 
   </div>
+<script>
+  var count = 0;
+  function add_div() {
 
+    count ++;
+    if (count == 1){
+      document.getElementById("etiqueta2").className = "col etiqueta_show";
+      bultos = document.getElementById("bultos").value;
+      console.log(bultos);
+      document.getElementById("bultos").values = bultos;
+    }else if (count == 2){
+      document.getElementById("etiqueta3").className = "col etiqueta_show";
+    }
+    /*
+  var myDiv = document.getElementById("id_base");
+  var divClone = myDiv.cloneNode(true); // the true is for deep cloning
+  document.body.appendChild(divClone);
+ var original = document.getElementById("id_base");
+var clone = original.cloneNode(true);
+clone.removeAttribute("id");
+document.getElementById("id_base").appendChild(clone);
+  */}
+</script>
 
 {% endblock %}
 </body>
