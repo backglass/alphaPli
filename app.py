@@ -32,7 +32,13 @@ class Insertar_cliente(FlaskForm):
     cp = StringField("CP")
     precio_metro = StringField("Precio Metro",validators=[validators.DataRequired()])
     notas = TextAreaField("Notas")
-
+    
+    def validate_nif(self, nif):
+            
+        if len(nif.data) != 9:
+            raise validators.ValidationError("El NIF debe tener 9 caracteres")
+        if "." in nif.data:
+            raise validators.ValidationError("El NIF no puede contener puntos")
 # Clase para crear formulario facturas 
 class Nueva_factura(FlaskForm):
     numero = StringField("Número")
@@ -132,6 +138,7 @@ class Clientes(db.Model):
         self.direccion = direccion
         self.precio_metro = precio_metro
         self.notas = notas
+
 
             
     def __repr__(self):
@@ -280,6 +287,7 @@ class Facturas(db.Model): # Clase Facturas hereda de db.Model, servira para crea
         self.total = total
         self.precio_metro = precio_metro
         self.notas = notas
+    
 
     def __repr__(self):
         return '<Factura %r>' % self.id
