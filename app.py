@@ -737,6 +737,6 @@ def etiqueta(nif):
     
     return render_template('etiquetas.html', cliente=cliente)
 if __name__ == '__main__':
-   #app.run()
+  # app.run()
    app.run(debug=True)
     
