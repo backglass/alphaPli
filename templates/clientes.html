@@ -2,123 +2,94 @@
 
 {% block content %}
 <div class="container">
-  <div class="container" id ="alerta">
-  
+  <div class="container" id="alerta">
+
     {% for category, message in get_flashed_messages(with_categories=true) %}
-         {% if category == "info" %}   <!-- Factura pagada correctamente -->
-         <div class="alert alert-success alert-dismissible d-flex align-items-center fade show">
-           <i class="bi-check-circle-fill"></i>
-           <strong class="mx-2">Hecho!</strong> {{ message }}.
-           <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-       </div>
-
-         {% elif category == "danger" %} <!-- Factura no pagada todavía -->
-         
-           <div class="alert alert-danger alert-dismissible d-flex align-items-center fade show">
-             <i class="bi-check-circle-fill"></i>
-             <strong class="mx-2">Hecho!</strong> {{ message}}.
-             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-         </div>
-
-       {% elif category =="success" %} <!-- Factura creada correctamente -->
-
-       <div class="alert alert-info alert-dismissible d-flex align-items-center fade show">
-         <i class="bi-info-circle-fill"></i>
-         <strong class="mx-2">Info!</strong> {{ message }}.
-         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-     </div>
-     {% endif %}
-      {% endfor %}
-     
-
-
-</div>
-           
-       </div>
-
-
-       <div class="container">
-        <h2 class="text-center mt-3">Listado de clientes</h2><br>
-    
-        <div class="container">
-
-
-
-
-
-</div>
-<div class="container">
-
-
-<!--
-<table class="table table-primary table-striped">
-    <thead>
-      <tr>
-        <th scope="col">NIF</th>
-        <th scope="col">Nombre</th>
-        
-        <th scope="col"></th>
-      </tr>
-    </thead>
-    <tbody>
-        {% for cliente in clientes %}
-      <tr>
-        <th scope="row">{{ cliente.nif }}</th>
-        <td>{{ cliente.nombre }}</td>
-       
-        <td><a href="{{ url_for ('ver_cliente', ver_cliente = cliente.nif)  }}">
-          <span class="badge bg-success text-dark">Ver</span></a><a href="{{ url_for ('editar_cliente', nif = cliente.nif)  }}">
-           <span class="badge bg-info text-dark">Editar</span></a><a href="{{ url_for ('eliminar_cliente', nif = cliente.nif) }}">
-           <span class="badge bg-danger text-dark">Borrar</span></a>
-           <a href="{{ url_for ('crear_factura', nif = cliente.nif) }}">
-           <span class="badge bg-danger text-dark">Nueva</span></a>
-           <a href="{{ url_for ('ver_factura', num = cliente.nif) }}">
-           <span class="badge bg-danger text-dark">Ver F</span></a>
-
-          </td>
-      </tr>
-
-    </tbody> 
-    {% endfor %}
-  -->
-  </table>
-  <div class="">
-    <div class="accordion" id="myAccordion">
-      {% for cliente in clientes %}
-        <div class="accordion-item my-1 shadow ">
-            <h2 class="accordion-header" id="numero{{ cliente.nif }}">
-                <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#colapse{{ cliente.nif }}"><h1 class="display-6">{{ cliente.nombre }}</h1></button>									
-            </h2>
-            <div id="colapse{{ cliente.nif }}" class="accordion-collapse collapse" data-bs-parent="#myAccordion">
-                <div class="card-body">
-                    <p><strong>Nif:</strong>{{ cliente.nif}}. </p>
-                    <p><strong>Teléfono:</strong> {{ cliente.telefono }} </p>
-                    <p><strong>Dirección:</strong> {{ cliente.direccion }} </p>
-                    <p><strong>Email:</strong> {{ cliente.email }} </p>
-                    <p><strong>Precio:</strong> {{ cliente.precio_metro }}€ </p>
-                    <a href="{{ url_for ('ver_cliente', ver_cliente = cliente.nif)  }}"><button type="button" class="btn btn-success">Ver cliente</button></a>
-                    <a href="{{ url_for ('editar_cliente', nif = cliente.nif)  }}"><button type="button" class="btn btn-info">Editar cliente</button></a>
-                    <!-- <a href="{{ url_for ('crear_factura', nif = cliente.nif)  }}"><button type="button" class="btn btn-info">Crear factura</button></a> -->
-                   
-                 </div>
-            </div>
-        </div>
-      {% endfor %}
-       
-        </div>
+    {% if category == "info" %}
+    <!-- Factura pagada correctamente -->
+    <div class="alert alert-success alert-dismissible d-flex align-items-center fade show">
+      <i class="bi-check-circle-fill"></i>
+      <strong class="mx-2">Hecho!</strong> {{ message }}.
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
     </div>
+
+    {% elif category == "danger" %}
+    <!-- Factura no pagada todavía -->
+
+    <div class="alert alert-danger alert-dismissible d-flex align-items-center fade show">
+      <i class="bi-check-circle-fill"></i>
+      <strong class="mx-2">Hecho!</strong> {{ message}}.
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+
+    {% elif category =="success" %}
+    <!-- Factura creada correctamente -->
+
+    <div class="alert alert-info alert-dismissible d-flex align-items-center fade show">
+      <i class="bi-info-circle-fill"></i>
+      <strong class="mx-2">Info!</strong> {{ message }}.
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    {% endif %}
+    {% endfor %}
+
+
+
+  </div>
+
 </div>
+
+
+<div class="container">
+  <h2 class="text-center mt-3">Listado de clientes</h2><br>
+
+  <div class="container">
+
+
+
+
+
+  </div>
+  <div class="container">
+
+
+
+    </table>
+    <div class="">
+      <div class="accordion" id="myAccordion">
+        {% for cliente in clientes %}
+        <div class="accordion-item my-1 shadow ">
+          <h2 class="accordion-header" id="numero{{ cliente.nif }}">
+            <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse"
+              data-bs-target="#colapse{{ cliente.nif }}">
+              <h1 class="display-6">{{ cliente.nombre }}</h1>
+            </button>
+          </h2>
+          <div id="colapse{{ cliente.nif }}" class="accordion-collapse collapse" data-bs-parent="#myAccordion">
+            <div class="card-body">
+              <p><strong>Nif:</strong>{{ cliente.nif}}. </p>
+              <p><strong>Teléfono:</strong> {{ cliente.telefono }} </p>
+              <p><strong>Dirección:</strong> {{ cliente.direccion }} </p>
+              <p><strong>Email:</strong> {{ cliente.email }} </p>
+              <p><strong>Precio:</strong> {{ cliente.precio_metro }}€ </p>
+              <a href="{{ url_for ('ver_cliente', ver_cliente = cliente.nif)  }}"><button type="button"
+                  class="btn btn-success">Ver cliente</button></a>
+              <a href="{{ url_for ('editar_cliente', nif = cliente.nif)  }}"><button type="button"
+                  class="btn btn-info">Editar cliente</button></a>
+              <!-- <a href="{{ url_for ('crear_factura', nif = cliente.nif)  }}"><button type="button" class="btn btn-info">Crear factura</button></a> -->
+
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+
+      </div>
+    </div>
+  </div>
 
 
 </div>
 <script>
-window.setTimeout("document.getElementById('alerta').style.display='none';", 3500); // Pequeño truco para que se cierre(oculte) el "div alerta" despues de un tiempo
+  window.setTimeout("document.getElementById('alerta').style.display='none';", 3500); // Pequeño truco para que se cierre(oculte) el "div alerta" despues de un tiempo
 </script>
 {% endblock %}
-   
-    
-
-
-
-
-
