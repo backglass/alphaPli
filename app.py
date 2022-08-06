@@ -427,14 +427,14 @@ def eliminar_cliente(nif):
 @app.route("/facturas") # Ruta para ver la lista de todas las facturas
 def facturas():
 
-    cliente = Facturas.query.all() # Busca todos los clientes en la base de datos
+   
       # Busca todas las facturas de los clientes en la base de datos
-    factura = Facturas.query.all()
+    factura = Facturas.query.order_by(Facturas.numero.desc()).all()
     for p in factura:
-        print(p.num,p.cliente.nombre) ### Esto es importante!!!!!!! porque p.cliente.nombre es el nombre del cliente el cual es el nif en la tabla facturas
+        print(p.numero,p.cliente.nombre) ### Esto es importante!!!!!!! porque p.cliente.nombre es el nombre del cliente el cual es el nif en la tabla facturas
     # facturas1=Facturas.query.all()# Busca todas las facturas en la base de datos
     # print (facturas1[1].nif)
-    return render_template('facturas.html', facturas = Facturas.query.all()) # Muestra todas las facturas en la base de datos
+    return render_template('facturas.html', facturas = factura) # Muestra todas las facturas en la base de datos
 
 
 # @app.route("/facturas/nueva/<nif>", methods = ["GET","POST"]) # Ruta para la pagina de crear factura
