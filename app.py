@@ -658,7 +658,7 @@ def ver_factura(num):
     factura = Facturas.query.filter_by(num=num).first()
     cliente = Clientes.query.filter_by(nif=factura.nif).first()
     form = Nueva_factura()                           # Crea una instancia del formulario de cr
-
+    #
 
  
     if form.validate_on_submit():
