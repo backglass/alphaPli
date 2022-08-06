@@ -3,7 +3,7 @@ import time
 from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Date, DateTime, Integer, String, Column, ForeignKey, func
-from wtforms import Form, StringField, TextAreaField, BooleanField, validators
+from wtforms import Form, StringField, TextAreaField, BooleanField, validators,IntegerField
 from flask_wtf import FlaskForm
 app = Flask(__name__)
 app.config ["SECRET_KEY"] = "mysecretkey"
@@ -41,7 +41,7 @@ class Insertar_cliente(FlaskForm):
             raise validators.ValidationError("El NIF no puede contener puntos")
 # Clase para crear formulario facturas 
 class Nueva_factura(FlaskForm):
-    numero = StringField("Número")
+    numero = IntegerField("Número",validators = [validators.DataRequired()])
     nif = StringField("NIF")
     fecha = StringField("Fecha")
 
@@ -152,6 +152,7 @@ class Facturas(db.Model): # Clase Facturas hereda de db.Model, servira para crea
     __tablename__ = "factura"
 
     num = db.Column(db.Integer, primary_key=True)
+    numero = db.Column(db.Integer, nullable=False)
     nif = db.Column(db.String(30), db.ForeignKey("cliente.nif"))
     fecha = db.Column(db.DateTime(timezone = True))
     
@@ -216,7 +217,7 @@ class Facturas(db.Model): # Clase Facturas hereda de db.Model, servira para crea
     precio_metro = db.Column(db.Float())
     notas = db.Column(db.String(1000))
 
-    def __init__(self, nif, fecha,
+    def __init__(self,numero, nif, fecha,
                  precio1,precio2,precio3,precio4,precio5,precio6,precio7,precio8,precio9,precio10,
                  descripcion1,descripcion2,descripcion3,descripcion4,descripcion5,descripcion6,descripcion7,descripcion8,descripcion9,descripcion10,
                  metros1,metros2,metros3,metros4,metros5,metros6,metros7,metros8,metros9,metros10,
@@ -224,6 +225,7 @@ class Facturas(db.Model): # Clase Facturas hereda de db.Model, servira para crea
                  importe1,importe2,importe3,importe4,importe5,importe6,importe7,importe8,importe9,importe10,
                  pagada,subtotal,total,precio_metro,notas):
 
+        self.numero = numero
         self.nif = nif
         self.fecha = fecha
         self.precio1 = precio1
@@ -315,7 +317,7 @@ def clientes():
 @app.route('/clientes/ver/<ver_cliente>',methods=["GET", "POST"]) # Ruta para la pagina de ver un cliente es dinamica porque se le pasa el nif del cliente 
 def ver_cliente(ver_cliente):
     cliente = Clientes.query.filter_by(nif=ver_cliente).first() # Busca el cliente en la base de datos
-    factura = Facturas.query.filter_by(nif=ver_cliente).order_by(Facturas.num.desc()).all() # Busca las facturas del cliente(su nif) y las ordena de mayor a menor
+    factura = Facturas.query.filter_by(nif=ver_cliente).order_by(Facturas.numero.desc()).all() # Busca las facturas del cliente(su nif) y las ordena de mayor a menor
     numero_facturas = Facturas.query.filter_by(nif = ver_cliente).count()
 
     # for i in factura_ordenada:
@@ -475,15 +477,15 @@ def crear_factura(nif):
     fecha = time.strftime("%d/%m/%y")     # Obtiene la fecha actual y la guarda en la variable fecha que se le pasa al template para que se muestre en el formulario
     form = Nueva_factura()                # Crea una instancia del formulario de crear factura
     cliente = Clientes.query.filter_by(nif=nif).first()
-    try:
-        num  = db.session.query(func.max(Facturas.num)).scalar()       # Cuenta el numero de facturas que hay en la base de datos para poner el numero de factura correcto en el formulario
-       # Obtiene el numero de factura que hay en la base de datos y le suma 1 para que sea el numero de factura correcto
-        numero = num + 1
-    except Exception as e:
-        numero = num = 1
+    # try:
+    #     num  = db.session.query(func.max(Facturas.num)).scalar()       # Cuenta el numero de facturas que hay en la base de datos para poner el numero de factura correcto en el formulario
+    #    # Obtiene el numero de factura que hay en la base de datos y le suma 1 para que sea el numero de factura correcto
+    #     numero = num + 1
+    # except Exception as e:
+    #     numero = num = 1
     if form.validate_on_submit():
         now = datetime.now()  ## Obtiene la fecha actual para que me funciones en heroku postgresql              
-        factura = Facturas( cliente.nif,now,
+        factura = Facturas( form.numero.data,cliente.nif,now,
                             form.precio1.data,
                             form.precio2.data,
                             form.precio3.data,
@@ -556,7 +558,7 @@ def crear_factura(nif):
             print("Error al crear la factura ", e)
             return redirect(url_for('clientes'))
     
-    return render_template('crear_factura.html', form = form, cliente = cliente,fecha=fecha,numero=numero)
+    return render_template('crear_factura.html', form = form, cliente = cliente,fecha=fecha)
 
 
 @app.route("/facturas/editar/<num>", methods=["GET", "POST"]) # Ruta para la pagina de editar factura
@@ -573,7 +575,7 @@ def editar_factura(num):
 
 
     if form.validate_on_submit():
-
+        factura.numero = form.numero.data
         factura.precio1 = form.precio1.data
         factura.precio2 = form.precio2.data
         factura.precio3 = form.precio3.data
@@ -660,7 +662,7 @@ def ver_factura(num):
 
  
     if form.validate_on_submit():
-
+        factura.numero = form.numero.data
         factura.precio1 = form.precio1.data
         factura.precio2 = form.precio2.data
         factura.precio3 = form.precio3.data
@@ -723,13 +725,9 @@ def ver_factura(num):
 
         
         
-        try:
-            db.session.commit()
-            flash("Factura Imprimida correctamente","info")
-            return redirect(url_for('ver_factura',num=factura.num)) # Crea la url dinamicamente para redirigir a la pagina de ver cliente con su nif
-        except Exception as e:
-            flash("Error al imprimir la factura", "danger")
-            return redirect(url_for('ver_factura',num=factura.num))   # Redirige a la pagina de ver cliente con el nif que se le pasa en la ruta
+
+        return redirect(url_for('ver_factura',num=factura.num)) # Crea la url dinamicamente para redirigir a la pagina de ver cliente con su nif
+
         
 
     return render_template('ver_factura.html', form = form,factura=factura,cliente = cliente)
