@@ -2,28 +2,139 @@
 
 {% block content %}
 
-<div class="container">
 
 
 
-<table class="table table-primary table-striped">
-    <thead>
-      <tr>
-        <th scope="col">NIF</th>
-        <th scope="col">Nombre</th>
-        
-        <th scope="col"></th>
-      </tr>
-    </thead>
-    <tbody>
-        {% for factura in facturas %}
-      <tr>
-        <th scope="row">{{ factura.nif }}</th>
-        <td>{{ factura.cliente.nombre }}</td>
+<!-- Estilos para el color de los iconos, los iconos los traje desde google icons -->
 
-      </tr>
-        {% endfor %}
-    </tbody> 
+<style>
+  .intro_textarea {
+    white-space: pre-line;
+  }
+
+  .iconoverde {
+    filter: invert(60%) sepia(9%) saturate(2949%) hue-rotate(71deg) brightness(107%) contrast(76%);
+  }
+
+  .iconorojo {
+    filter: invert(34%) sepia(43%) saturate(4873%) hue-rotate(346deg) brightness(100%) contrast(91%);
+  }
+
+  .iconoazul {
+    filter: invert(46%) sepia(29%) saturate(1757%) hue-rotate(175deg) brightness(101%) contrast(92%);
+  }
+
+  .icononaranja {
+    filter: invert(71%) sepia(68%) saturate(1692%) hue-rotate(346deg) brightness(96%) contrast(92%);
+  }
+  .table_link
+{
+    display:block;
+    text-decoration:none;
+}
+
+  #resumen_todas_facturas {
+    padding: 50px;
+    font-size: 32px;
+    font-weight: bold;
+    text-align: center;
+    background: #dbdfe5;
+  }
+  </style>
+  <div class="container-md">
+    <h1>Listado todas las facturas</h1>
+    <br>
+  
+    <!-- Aqui se muestra una targeta de boostrap con los datos del cliente 
+         son recogidos de la variable  cliente que retorna el servidor -->
+    <div class="card text-dark bg-light mb-3 shadow ">
+      <h5>
+
+        <div class="card-body">
+
+          <p class="card-text"><b> 
+            <select class="form-select">
+            <option selected>Ordenar por ....</option>
+            <option value="1">Fecha</option>
+            <option value="2">Nombre</option>
+            <option value="3">Pagado</option>
+            <option value="4">No pagado</option>
+            <option value="3">Importe</option>
+        </select></b>
+  
+
+              
+  
+        </div>
+    </div>
+    </h5>
+
+
+        <table class="table shadow-sm table-striped bg-light table-hover">
+          <thead >
+            <tr>
+              <th scope="col"></th>
+              <th scope="col">Fecha</th>
+              <th scope="col">Nombre</th>
+              <th scope="col">Importe</th>
+              <th scope="col"></th>
+              <th scope="col"></th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+      
+            <form method="post" id="estado">
+              <!-- Formulario para guardar el estado de la factúra, esta oculto porque es un pequeño truco -->
+             
+              {% for factura in facturas %}
+              <tr>
+                <th scope="row">
+                  <h5>{{ factura.numero }}</h5>
+                </th>
+                <th scope="row">
+                  <h5>{{ factura.fecha.strftime('%d-%m-%Y') }}</h5>
+                </th>
+                <td > 
+                
+                <td>
+                  <a href="{{ url_for ('ver_cliente', ver_cliente = factura.cliente.nif) }}" class="table_link link-secondary">
+                      <h5> {{ factura.cliente.nombre }}</a></h5>
+
+                </td>
+              </a>
+                <td>
+                  <h5>{{ factura.total }}€</h5>
+                </td>
+                <td><a href="{{ url_for ('ver_factura', num = factura.num)  }}"><img class="iconoazul" ,
+                      src="/static/icons/print.svg"></a></td>
+                <td><a href="{{ url_for ('editar_factura', num = factura.num)  }}"><img class="icononaranja"
+                      src="/static/icons/visibility.svg"></a></a></td>
+      
+                <!-- Si factura.pagada es true, se pone iconito verde, si no iconito rojo, y pone nombre "si_pagada para el verde y "no_pagada para el rojo -->
+                {% if factura.pagada %}
+      
+                <td><img class="iconoverde" id="{{ factura.num }}" name="si_pagada" src="/static/icons/check.svg"
+                    onclick="foo.call(this)"></td>
+                <!-- Cuando se hace click en el icono
+                                                                                                                                                        lanza foo(cambiara el estado de la factura)-->
+                {% else %}
+                <td><img class="iconorojo" id="{{ factura.num }}" name="no_pagada" src="/static/icons/check.svg"
+                    onclick="foo.call(this)"> </td> <!-- Lo mismo-->
+                {% endif %}
+      
+      
+              </tr>
+      
+      
+      
+          </tbody>
+      
+      
+          <!-- <a href="{{ url_for ('editar_factura', num = factura.num)  }}"><button type="button" class="btn btn-success">Editar factura</button></a>
+      <a href="{{ url_for ('ver_factura', num = factura.num)  }}"><button type="button" class="btn btn-success">Imprimir</button></a> -->
+          {% endfor %}
+          
   
   </table>
 
