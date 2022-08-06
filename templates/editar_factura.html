@@ -219,7 +219,7 @@ hr {
                             <form method="post">
                             {{ form.hidden_tag() }}
                             <h4>
-                            <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">Número:</span>{{ form.numero (class_="form-control-lg", value_= factura.num  ,style_="border:none") }} </div>
+                            <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">Número:</span>{{ form.numero (class_="form-control-lg", value_= factura.numero  ,style_="border:none") }} </div>
                             
                             <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">Fecha:</span> {{ form.fecha (class_="form-control-lg", value_= factura.fecha.strftime('%d-%m-%Y') ,style_="border:none") }}</div> 
                             </h4>
