@@ -9,6 +9,14 @@
             <form method="post">
                 {{ form.hidden_tag() }}
                 {{ form.nif.label (class_="form-label") }} {{ form.nif (class_="form-control" )}}
+                {% for error in form.nif.errors %} <!-- "AQUI" Recorre si el contenedor de errores del wtf en este caso en el campo nif, si no se cumplen las resticciones saltara el error-->
+                <div class="alert alert-danger alert-dismissible d-flex align-items-center fade show">
+                    <i class="bi-check-circle-fill"></i>
+                    &nbsp;&nbsp;{{ error }}
+                    
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                  </div>
+                 {% endfor %} <!--"HASTA AQUI "-->
                 {{ form.nombre.label (class_="form-label") }} {{ form.nombre (class_="form-control")}}
                 {{ form.direccion.label (class_="form-label") }} {{ form.direccion (class_="form-control")}}
                 {{ form.ciudad.label (class_="form-label") }} {{ form.ciudad (class_="form-control")}}
@@ -19,6 +27,7 @@
                 {{ form.email.label (class_="form-label") }} {{ form.email (class_="form-control")}}
                 {{ form.precio_metro.label (class_="form-label") }} {{ form.precio_metro (class_="form-control")}}
                 {{ form.notas.label (class_="form-label") }} {{ form.notas (class_="form-control",rows="5") }}
+
                 <div class="">
                     <br>
                     <button type="submit" class="btn btn-primary">Guardar</button>
