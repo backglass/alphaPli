@@ -3,7 +3,7 @@ import time
 from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Date, DateTime, Integer, String, Column, ForeignKey, func
-from wtforms import Form, StringField, TextAreaField, BooleanField, validators,IntegerField
+from wtforms import Form, StringField, TextAreaField, BooleanField, validators,IntegerField,ValidationError
 from flask_wtf import FlaskForm
 app = Flask(__name__)
 app.config ["SECRET_KEY"] = "mysecretkey"
@@ -34,11 +34,15 @@ class Insertar_cliente(FlaskForm):
     notas = TextAreaField("Notas")
     
     def validate_nif(self, nif):
-            
+
+        #if nif != 9:
+        #    self.nif.errors += (ValidationError("El NIF debe tener 9 caracteres"),)            
         if len(nif.data) != 9:
             raise validators.ValidationError("El NIF debe tener 9 caracteres")
         if "." in nif.data:
             raise validators.ValidationError("El NIF no puede contener puntos")
+
+
 # Clase para crear formulario facturas 
 class Nueva_factura(FlaskForm):
     numero = IntegerField("Número",validators = [validators.DataRequired()])
