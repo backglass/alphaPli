@@ -41,9 +41,10 @@
     background: #dbdfe5;
   }
   </style>
-  <div class="container-md">
-    <h1>Listado todas las facturas</h1>
-    <br>
+  <div class="container">
+    <h2 class="text-center mt-3">Listado todas la facturas</h2><br>
+  
+    <div class="container">
   
     <!-- Aqui se muestra una targeta de boostrap con los datos del cliente 
          son recogidos de la variable  cliente que retorna el servidor -->
@@ -95,32 +96,33 @@
                 <th scope="row">
                   <h5>{{ factura.fecha.strftime('%d-%m-%Y') }}</h5>
                 </th>
-                <td > 
                 
-                <td>
+                  <th scope="row">
+                
                   <a href="{{ url_for ('ver_cliente', ver_cliente = factura.cliente.nif) }}" class="table_link link-secondary">
                       <h5> {{ factura.cliente.nombre }}</a></h5>
-
-                </td>
+                  </th>
+                
+                
               </a>
-                <td>
+                <th scope="row">
                   <h5>{{ factura.total }}€</h5>
-                </td>
-                <td><a href="{{ url_for ('ver_factura', num = factura.num)  }}"><img class="iconoazul" ,
-                      src="/static/icons/print.svg"></a></td>
-                <td><a href="{{ url_for ('editar_factura', num = factura.num)  }}"><img class="icononaranja"
-                      src="/static/icons/visibility.svg"></a></a></td>
+                </th>
+                <th scope="row"><a href="{{ url_for ('ver_factura', num = factura.num)  }}"><img class="iconoazul" ,
+                      src="/static/icons/print.svg"></a></th>
+                <th scope="row"><a href="{{ url_for ('editar_factura', num = factura.num)  }}"><img class="icononaranja"
+                      src="/static/icons/visibility.svg"></a></th>
       
                 <!-- Si factura.pagada es true, se pone iconito verde, si no iconito rojo, y pone nombre "si_pagada para el verde y "no_pagada para el rojo -->
                 {% if factura.pagada %}
       
-                <td><img class="iconoverde" id="{{ factura.num }}" name="si_pagada" src="/static/icons/check.svg"
-                    onclick="foo.call(this)"></td>
+                <th scope="row"><img class="iconoverde" id="{{ factura.num }}" name="si_pagada" src="/static/icons/check.svg"
+                    onclick="foo.call(this)"></th>
                 <!-- Cuando se hace click en el icono
                                                                                                                                                         lanza foo(cambiara el estado de la factura)-->
                 {% else %}
-                <td><img class="iconorojo" id="{{ factura.num }}" name="no_pagada" src="/static/icons/check.svg"
-                    onclick="foo.call(this)"> </td> <!-- Lo mismo-->
+                <th scope="row"><img class="iconorojo" id="{{ factura.num }}" name="no_pagada" src="/static/icons/check.svg"
+                    onclick="foo.call(this)"> </th> <!-- Lo mismo-->
                 {% endif %}
       
       
