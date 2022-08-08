@@ -434,8 +434,11 @@ def facturas():
    
       # Busca todas las facturas de los clientes en la base de datos
     factura = Facturas.query.order_by(Facturas.numero.desc()).all()
-    for p in factura:
-        print(p.numero,p.cliente.nombre) ### Esto es importante!!!!!!! porque p.cliente.nombre es el nombre del cliente el cual es el nif en la tabla facturas
+    factura1 = Facturas.query.order_by(Facturas.fecha.asc()).all()
+    for i in factura1:
+        print(i.fecha)
+    # for p in factura:
+    #     print(p.numero,p.cliente.nombre) ### Esto es importante!!!!!!! porque p.cliente.nombre es el nombre del cliente el cual es el nif en la tabla facturas
     # facturas1=Facturas.query.all()# Busca todas las facturas en la base de datos
     # print (facturas1[1].nif)
     return render_template('facturas.html', facturas = factura) # Muestra todas las facturas en la base de datos
@@ -579,6 +582,7 @@ def editar_factura(num):
 
 
     if form.validate_on_submit():
+        factura.fecha = form.fecha.data
         factura.numero = form.numero.data
         factura.precio1 = form.precio1.data
         factura.precio2 = form.precio2.data
@@ -732,12 +736,15 @@ def ver_factura(num):
 
         return redirect(url_for('ver_factura',num=factura.num)) # Crea la url dinamicamente para redirigir a la pagina de ver cliente con su nif
 
-        
+ 
 
     return render_template('ver_factura.html', form = form,factura=factura,cliente = cliente)
+
+
 @app.route("/clientes/etiqueta/<nif>", methods=["GET", "POST"])
 def etiqueta(nif):
     cliente = Clientes.query.filter_by(nif=nif).first()
+
     
     return render_template('etiquetas.html', cliente=cliente)
 if __name__ == '__main__':
