@@ -2,19 +2,23 @@
 
 {% block content %}
 
+
+</div>
 <div class="container">
   <h2 class="text-center mt-3">Bienvenido</h2><br>
 <div class="card text-dark bg-light mb-3 shadow " >
   <div class="container">
-    <form method="POST">
+    <form method="post">
+      {{ form.hidden_tag() }}
       <div class="mb-3">
-        <label for="usuario" class="form-label" >Nombre de usuario</label>
-        <input type="text" class="form-control" name ="usuario" id="usuario" aria-describedby="emailHelp">
+        {{ form.nombre.label (class_="form-label") }} {{ form.nombre (class_="form-control")}}
+       
+        
        
       </div>
       <div class="mb-3">
-        <label for="password" class="form-label">Password</label>
-        <input type="password" class="form-control" id="password" name="password">
+        {{ form.password.label (class_="form-label") }} {{ form.password  (class_="form-control", type="password")}}
+
       </div>
 
       <button type="submit" class="btn btn-primary">Entrar</button>
@@ -22,4 +26,5 @@
 </div>
 </div>
 </div>
+
 {% endblock %}
