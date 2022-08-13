@@ -323,6 +323,7 @@ db.create_all()  # Crea la tabla en la base de datos
 
 @app.route('/',methods = ['POST','GET'])  # Ruta raiz
 def index():
+
     form = Login()
     # Crea formulario de login y si existe el usuario activa la session y si no lo redirige a la pagina de login(index)
     if form.validate_on_submit():
@@ -340,13 +341,14 @@ def index():
             usuario = Usuarios.query.filter_by(nombre=nombre).first()
             print (usuario.nombre, usuario.password)
         except:
-            flash('El usuario no existe','danger')
+           
             print("usuario no existe")
 
             return render_template('index.html',form=form)
 
         if usuario.nombre == nombre and usuario.password == password: # Si el usuario existe y el password es correcto activa la session y redirige a la pagina de inicio
             session['username'] = nombre
+            print("test")
             return redirect('clientes')
                 
         else:                                                         # Si el usuario no existe o el password es incorrecto redirige a la pagina de login(index)
