@@ -222,11 +222,11 @@
     </div>
     <div class="col">
       <h4 class="text-center mt-3">Sin pagar</h4>
-      <p id="resumen_todas_facturas"><span class="iconorojo">{{ suma_no_pagada }}</span></p>
+      <p id="resumen_todas_facturas"><span class="iconorojo">{{'%0.2f'|format(suma_no_pagada|float)}}</span></p><!-- Usando redondeo 2 decimales con jija motor-->
     </div>
     <div class="col">
       <h4 class="text-center mt-3">Pagado</h4>
-      <p id="resumen_todas_facturas"><span class="iconoverde">{{ suma_pagada }}</span></p>
+      <p id="resumen_todas_facturas"><span class="iconoverde">{{'%0.2f'|format(suma_pagada|float)}}</span></p><!-- Usando redondeo 2 decimales con jija motor-->
     </div>
 
   </div>
