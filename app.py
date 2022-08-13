@@ -111,8 +111,8 @@ class Nueva_factura(FlaskForm):
     notas = TextAreaField("Notas")
 
 class Login(FlaskForm):
-    usuario = StringField("Nombre")
-    password = StringField("Password")
+    nombre = StringField("Nombre",validators=[validators.DataRequired()])
+    password = StringField("Password",validators=[validators.DataRequired()])
 
 # Clase cliente hereda de db.Model, servira para crear la tabla en la base de datos y usar sus datos
 class Clientes(db.Model):
@@ -323,31 +323,35 @@ db.create_all()  # Crea la tabla en la base de datos
 
 @app.route('/',methods = ['POST','GET'])  # Ruta raiz
 def index():
-    
+    form = Login()
     # Crea formulario de login y si existe el usuario activa la session y si no lo redirige a la pagina de login(index)
-    if request.method == 'POST':
+    if form.validate_on_submit():
         
-        nombre = request.form['usuario']                 # Recoge el nombre del usuario desde el formulaio de login
+        # nombre = request.form['usuario']                 # Recoge el nombre del usuario desde el formulaio de login
+        # print (type(nombre),nombre)
+        # password = request.form['password']              # Recoge el password del usuario desde el formulaio de login
+        nombre = form.nombre.data
+        password = form.password.data
         print (type(nombre),nombre)
-        password = request.form['password']              # Recoge el password del usuario desde el formulaio de login
-   
         if nombre == "" or password == "":               # Si el nombre o el password estan vacios redirige a la pagina de login(index)
-            return render_template('index.html',error="Introduce un usuario y contraseña")
+            return render_template('index.html',error="Introduce un usuario y contraseña",form=form)
        
         try:   ### Por si el usuario introducido no existe en la base de datos, se usará el try para que no explote el programa   
             usuario = Usuarios.query.filter_by(nombre=nombre).first()
             print (usuario.nombre, usuario.password)
         except:
+            flash('El usuario no existe','danger')
             print("usuario no existe")
-            return render_template('index.html',error="Usuario no existe")
+
+            return render_template('index.html',form=form)
 
         if usuario.nombre == nombre and usuario.password == password: # Si el usuario existe y el password es correcto activa la session y redirige a la pagina de inicio
             session['username'] = nombre
             return redirect('clientes')
                 
         else:                                                         # Si el usuario no existe o el password es incorrecto redirige a la pagina de login(index)
-            return render_template('index.html')
-    return render_template('index.html') 
+                return render_template('index.html')
+    return render_template('index.html',form=form)
     
 
 
