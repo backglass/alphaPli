@@ -1,6 +1,6 @@
 from datetime import datetime
 import time
-from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
+from flask import Flask, render_template, request, redirect, url_for, flash, jsonify,session
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Date, DateTime, Integer, String, Column, ForeignKey, func
 from wtforms import Form, StringField, TextAreaField, BooleanField, validators,IntegerField,ValidationError
@@ -110,6 +110,9 @@ class Nueva_factura(FlaskForm):
     total_con_iva = StringField("Total",default="0")              # confuso
     notas = TextAreaField("Notas")
 
+class Login(FlaskForm):
+    usuario = StringField("Nombre")
+    password = StringField("Password")
 
 # Clase cliente hereda de db.Model, servira para crear la tabla en la base de datos y usar sus datos
 class Clientes(db.Model):
@@ -297,29 +300,76 @@ class Facturas(db.Model): # Clase Facturas hereda de db.Model, servira para crea
 
     def __repr__(self):
         return '<Factura %r>' % self.id
+    
+class Usuarios(db.Model):
+
+    __tablename__ = "usuario"
+
+    nombre = db.Column(db.String(15), primary_key=True)
+    password = db.Column(db.String(100))
 
 
+    def __init__(self, nombre, password):
+        self.nombre = nombre
+        self.password = password
+    def __repr__(self):
+        return '<Usuario %r>' % self.nombre
+    
 
 
 db.create_all()  # Crea la tabla en la base de datos
 
 
 
-@app.route('/')  # Ruta raiz
+@app.route('/',methods = ['POST','GET'])  # Ruta raiz
 def index():
-    return render_template('index.html')
+    
+    # Crea formulario de login y si existe el usuario activa la session y si no lo redirige a la pagina de login(index)
+    if request.method == 'POST':
+        
+        nombre = request.form['usuario']                 # Recoge el nombre del usuario desde el formulaio de login
+        print (type(nombre),nombre)
+        password = request.form['password']              # Recoge el password del usuario desde el formulaio de login
+   
+        if nombre == "" or password == "":               # Si el nombre o el password estan vacios redirige a la pagina de login(index)
+            return render_template('index.html',error="Introduce un usuario y contraseña")
+       
+        try:   ### Por si el usuario introducido no existe en la base de datos, se usará el try para que no explote el programa   
+            usuario = Usuarios.query.filter_by(nombre=nombre).first()
+            print (usuario.nombre, usuario.password)
+        except:
+            print("usuario no existe")
+            return render_template('index.html',error="Usuario no existe")
+
+        if usuario.nombre == nombre and usuario.password == password: # Si el usuario existe y el password es correcto activa la session y redirige a la pagina de inicio
+            session['username'] = nombre
+            return redirect('clientes')
+                
+        else:                                                         # Si el usuario no existe o el password es incorrecto redirige a la pagina de login(index)
+            return render_template('index.html')
+    return render_template('index.html') 
+    
 
 
 
 @app.route('/clientes')  # Ruta para la pagina de lista de clientes 
 def clientes():
+    if 'username' not in session:  # Si no existe la session redirige a la pagina de login(index)
+        return redirect('/')
     clientes = Clientes.query.order_by(Clientes.nombre.asc()).all() # Muestra todos los clientes en la base de datos por orden alfabetico.
-    return render_template('clientes.html', clientes=clientes) 
+    return render_template('clientes.html',clientes=clientes)
+    
+    
+    return render_template('index.html')
+
 
 
 
 @app.route('/clientes/ver/<ver_cliente>',methods=["GET", "POST"]) # Ruta para la pagina de ver un cliente es dinamica porque se le pasa el nif del cliente 
 def ver_cliente(ver_cliente):
+    if 'username'not in session:  # Si no existe la session redirige a la pagina de login(index)
+        return redirect('/')
+
     cliente = Clientes.query.filter_by(nif=ver_cliente).first() # Busca el cliente en la base de datos
     factura = Facturas.query.filter_by(nif=ver_cliente).order_by(Facturas.numero.desc()).all() # Busca las facturas del cliente(su nif) y las ordena de mayor a menor
     numero_facturas = Facturas.query.filter_by(nif = ver_cliente).count()
@@ -375,6 +425,9 @@ def ver_cliente(ver_cliente):
 @app.route("/clientes/crear", methods=["GET", "POST"]) # Ruta para la pagina de crear cliente 
 def crear_cliente():
     
+    if 'username'not in session:  # Si no existe la session redirige a la pagina de login(index)
+        return redirect('/')
+
     form = Insertar_cliente()     # Crea el formulario de crear cliente objeto form 
     if form.validate_on_submit(): # Si el formulario es validado
         
@@ -396,7 +449,9 @@ def crear_cliente():
 
 @app.route("/clientes/editar/<nif>", methods=["GET", "POST"]) # Ruta para la pagina de editar cliente
 def editar_cliente(nif):
-
+    
+    if 'username'not in session:  # Si no existe la session redirige a la pagina de login(index)
+        return redirect('/')
    
     cliente = Clientes.query.filter_by(nif=nif).first() # Busca el cliente en la base de datos con el nif que se le pasa en la ruta
     form = Insertar_cliente()                           # Crea una instancia del formulario de cr
@@ -420,6 +475,8 @@ def editar_cliente(nif):
 
 @app.route("/clientes/eliminar/<nif>", methods=["GET", "POST"]) # Ruta para la pagina de eliminar cliente
 def eliminar_cliente(nif):
+    if 'username'not in session:  # Si no existe la session redirige a la pagina de login(index)
+        return redirect('/')
     
     cliente = Clientes.query.filter_by(nif=nif).first()   # Busca el cliente en la base de datos con el nif que se le pasa por la ruta
     db.session.delete(cliente)
@@ -430,6 +487,8 @@ def eliminar_cliente(nif):
 
 @app.route("/facturas") # Ruta para ver la lista de todas las facturas
 def facturas():
+    if 'username'not in session:  # Si no existe la session redirige a la pagina de login(index)
+        return redirect('/')
 
    
       # Busca todas las facturas de los clientes en la base de datos
@@ -479,6 +538,10 @@ def facturas():
 
 @app.route("/facturas/crear/<nif>", methods = ["GET","POST"]) # Ruta para la pagina de crear factura
 def crear_factura(nif):
+    
+    if 'username'not in session:  # Si no existe la session redirige a la pagina de login(index)
+        return redirect('/')
+   
     print(nif)
 
     fecha = time.strftime("%d/%m/%y")     # Obtiene la fecha actual y la guarda en la variable fecha que se le pasa al template para que se muestre en el formulario
@@ -570,7 +633,9 @@ def crear_factura(nif):
 
 @app.route("/facturas/editar/<num>", methods=["GET", "POST"]) # Ruta para la pagina de editar factura
 def editar_factura(num):
-
+    
+    if 'username'not in session:  # Si no existe la session redirige a la pagina de login(index)
+        return redirect('/')
    
     ##cliente = Clientes.query.filter_by(nif=nif).first() # Busca el cliente en la base de datos con el nif que se le pasa en la ruta
     factura = Facturas.query.filter_by(num=num).first()
@@ -662,6 +727,10 @@ def editar_factura(num):
 
 @app.route("/facturas/ver/<num>", methods=["GET", "POST"])  
 def ver_factura(num):
+
+    if 'username'not in session:  # Si no existe la session redirige a la pagina de login(index)
+        return redirect('/')
+
     ##cliente = Clientes.query.filter_by(nif=nif).first() # Busca el cliente en la base de datos con el nif que se le pasa en la ruta
     factura = Facturas.query.filter_by(num=num).first()
     cliente = Clientes.query.filter_by(nif=factura.nif).first()
@@ -743,10 +812,14 @@ def ver_factura(num):
 
 @app.route("/clientes/etiqueta/<nif>", methods=["GET", "POST"])
 def etiqueta(nif):
-    cliente = Clientes.query.filter_by(nif=nif).first()
-
     
+    if 'username'not in session:  # Si no existe la session redirige a la pagina de login(index)
+        return redirect('/')
+    cliente = Clientes.query.filter_by(nif=nif).first()
+  
     return render_template('etiquetas.html', cliente=cliente)
+
+
 if __name__ == '__main__':
   # app.run()
    app.run(debug=True)
