@@ -41,6 +41,7 @@
 </style>
 
 <body>
+  <!--- Aqui se muestra una targeta de boostrap con los datos de la etiqueta, es el "template de las etiquetas" -->
   <div class="container">
     <button type="button" class="btn btn-primary d-print-none"  onclick="add_div()">+</button>
     <button type="submit" class="btn btn-success btn-bold px-4 float-right mt-3 mt-lg-0  d-print-none" onclick="printHTML()">Imprimir</button>
@@ -233,11 +234,13 @@
 
   </div>
   <script>
+    /*Códogo para añadir etiquetas a la página cada vez que se pulse en el icono mas, hara una copia de la primera etiqueta"*/
+    /*Los divs de las etiquetas estan ocultos, se mostraran en función de la variable count */
     count = 1;
 
     function add_div() {
 
-
+ 
       bultos = document.getElementById("bultos").value;
       kg = document.getElementById("kg").value;
       console.log(bultos);
