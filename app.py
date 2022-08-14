@@ -21,6 +21,7 @@ db = SQLAlchemy(app)
 
 # Clase para el formulario de crear clientes
 class Insertar_cliente(FlaskForm):
+    
     nif = StringField("NIF", validators=[validators.DataRequired()])
     nombre = StringField("Nombre", validators=[validators.DataRequired()])
     telefono = StringField("Teléfono", validators=[validators.DataRequired()])
@@ -34,10 +35,12 @@ class Insertar_cliente(FlaskForm):
     notas = TextAreaField("Notas")
     
     def validate_nif(self, nif):
-
-        #if nif != 9:
-        #    self.nif.errors += (ValidationError("El NIF debe tener 9 caracteres"),)            
-        if len(nif.data) != 9:
+          
+        """
+        Función para validar el NIF del cliente, usada dentro del la propia clase
+        para comporbar si el nif tiene nueve caracteres y si no tiene un punto
+        """
+        if len(nif.data) != 9:  
             raise validators.ValidationError("El NIF debe tener 9 caracteres")
         if "." in nif.data:
             raise validators.ValidationError("El NIF no puede contener puntos")
@@ -45,6 +48,7 @@ class Insertar_cliente(FlaskForm):
 
 # Clase para crear formulario facturas 
 class Nueva_factura(FlaskForm):
+    
     numero = IntegerField("Número",validators = [validators.DataRequired()])
     nif = StringField("NIF")
     fecha = StringField("Fecha")
@@ -105,16 +109,17 @@ class Nueva_factura(FlaskForm):
     importe10 = StringField("Importe10")
 
     pagada = BooleanField(default=False)
-    precio_metro = StringField("Precio Metro")        # Estos campos tienen un nombre un poco confuso para mí.
+    precio_metro = StringField("Precio Metro")                    # Estos campos tienen un nombre un poco confuso para mí.
     sub_total_sin_iva  = StringField("Subtotal",default="0")      # Se necesita poner el valor en 0, por si al hacer una factura se queda el valor en blanco daria un error..
     total_con_iva = StringField("Total",default="0")              # confuso
     notas = TextAreaField("Notas")
 
+#Formulario para crear login
 class Login(FlaskForm):
     nombre = StringField("Nombre",validators=[validators.DataRequired()])
     password = StringField("Password",validators=[validators.DataRequired()])
 
-# Clase cliente hereda de db.Model, servira para crear la tabla en la base de datos y usar sus datos
+# Clase cliente hereda de db.Model, servira para crear la tabla en la base de datos y usar sus propiedades
 class Clientes(db.Model):
 
     __tablename__ = "cliente"
@@ -154,7 +159,8 @@ class Clientes(db.Model):
 
 
     
-class Facturas(db.Model): # Clase Facturas hereda de db.Model, servira para crear la tabla en la base de datos y usar sus datos
+class Facturas(db.Model): # Clase Facturas hereda de db.Model, servira para crear la tabla en la base de datos y usar sus propiedades
+                          # Esta clase es así por que el usuario no tiene "productos especificos", casi siempre son facturas totalmente independientes de productos.
 
     __tablename__ = "factura"
 
@@ -301,6 +307,7 @@ class Facturas(db.Model): # Clase Facturas hereda de db.Model, servira para crea
     def __repr__(self):
         return '<Factura %r>' % self.id
     
+#Clase para la tabla de clientes y sus propiedades
 class Usuarios(db.Model):
 
     __tablename__ = "usuario"
@@ -320,17 +327,17 @@ class Usuarios(db.Model):
 db.create_all()  # Crea la tabla en la base de datos
 
 
-
 @app.route('/',methods = ['POST','GET'])  # Ruta raiz
 def index():
-
-    form = Login()
-    # Crea formulario de login y si existe el usuario activa la session y si no lo redirige a la pagina de login(index)
+    """
+    Ruta raiz de la aplicacion. En ella se muestra el formulario de login y el formulario de registro.
+    Es una ruta que se encargara de activar la session y redirigir al la rura "clientes"
+    """
+    form = Login() #Insancia del formulario de login.
+    
+    # Valida los datos que vienen del formulario "form" y si existe el usuario activa la session y si no lo redirige a la pagina de login(index)
     if form.validate_on_submit():
         
-        # nombre = request.form['usuario']                 # Recoge el nombre del usuario desde el formulaio de login
-        # print (type(nombre),nombre)
-        # password = request.form['password']              # Recoge el password del usuario desde el formulaio de login
         nombre = form.nombre.data
         password = form.password.data
         print (type(nombre),nombre)
@@ -346,7 +353,7 @@ def index():
 
             return render_template('index.html',form=form)
 
-        if usuario.nombre == nombre and usuario.password == password: # Si el usuario existe y el password es correcto activa la session y redirige a la pagina de inicio
+        if usuario.nombre == nombre and usuario.password == password: # Si el usuario existe y el password es correcto activa la session y redirige "a clientes"
             session['username'] = nombre
             print("test")
             return redirect('clientes')
@@ -360,37 +367,46 @@ def index():
 
 @app.route('/clientes')  # Ruta para la pagina de lista de clientes 
 def clientes():
+    
+    """
+    Esta ruta se encargara de mostrar la lista de todos los clientes de la base de datos.
+    Comprueba si la session esta activa y renderiza la web con todos los datos, de la tabla clientes en la base de datos.
+    """
+
     if 'username' not in session:  # Si no existe la session redirige a la pagina de login(index)
         return redirect('/')
     clientes = Clientes.query.order_by(Clientes.nombre.asc()).all() # Muestra todos los clientes en la base de datos por orden alfabetico.
     return render_template('clientes.html',clientes=clientes)
     
-    
-    return render_template('index.html')
-
-
-
 
 @app.route('/clientes/ver/<ver_cliente>',methods=["GET", "POST"]) # Ruta para la pagina de ver un cliente es dinamica porque se le pasa el nif del cliente 
 def ver_cliente(ver_cliente):
+   
+    """
+    Aquí se mostrará la información de un cliente en concreto.Sea el nif que entra por parámetro
+    También se encargara de calcular los valores del cliente en todas sus facturas, como la suma del iva, la suma
+    de las facturas sin pagar y la suma de las facturas pagadas.
+    En el html que asocia a esta ruta hay un formulario oculto, que según se pinche en los iconos de pagado o no pagado,cambiara true o false a la columna pagada 
+    de la tabla facturas en la BBDD.
+
+    """
+
     if 'username'not in session:  # Si no existe la session redirige a la pagina de login(index)
         return redirect('/')
 
-    cliente = Clientes.query.filter_by(nif=ver_cliente).first() # Busca el cliente en la base de datos
+    cliente = Clientes.query.filter_by(nif=ver_cliente).first()                                # Busca el cliente en la base de datos
     factura = Facturas.query.filter_by(nif=ver_cliente).order_by(Facturas.numero.desc()).all() # Busca las facturas del cliente(su nif) y las ordena de mayor a menor
-    numero_facturas = Facturas.query.filter_by(nif = ver_cliente).count()
-
-    # for i in factura_ordenada:
-    #     print(i.num)
-
-     #num  = db.session.query(func.max(Facturas.num)).scalar() 
-    #factura_totales = Facturas.query.filter_by(nif=ver_cliente).filter_by(pagada=False).all() # Busca las facturas del cliente en la base de datos
+    numero_facturas = Facturas.query.filter_by(nif = ver_cliente).count()                      # Cuenta el numero de facturas del cliente, para mostrarlo en el html	
     
-    ### Calcula el total de las facturas pagadas y el de las no pagadas, para mostrarlo en la pagina de ver_cliente
+    ### Calcula el total de las facturas pagadas y el de las no pagadas, para mostrarlo en la pagina html
     iva_total_pagada = 0
     suma_pagada = 0
     suma_no_pagada = 0
 
+    #Recorre factura y si el valor de la columna pagada es false lo suma el valor de la columna total y lo mete en la variable "suma_no_pagada"
+    #Así sabe cuanto ha de pagar el cliente
+    #Por el contrario si el valor de la columna pagada es true lo suma el valor de la columna total y lo mete en la variable "suma_pagada"
+    # y también calculara el iva de las facturas pagadas y lo mete en la variable "iva_total_pagada"
     for i in factura:
         if i.pagada == False:
          suma_no_pagada = suma_no_pagada + float(i.total)
@@ -404,14 +420,15 @@ def ver_cliente(ver_cliente):
     form_estado = Nueva_factura()
     if form_estado.validate_on_submit():
         
-        num = form_estado.numero.data
-        pagada = form_estado.pagada.data
-        print(pagada)
-        nueva_factura = Facturas.query.filter_by(num=num).first()
-        nueva_factura.pagada = pagada
+        num = form_estado.numero.data    # Recoge el numero de la factura al pinchar en el icono(verde o rojo)
+        pagada = form_estado.pagada.data # Recoge el valor de la columna pagada(true o false)
+        
+        nueva_factura = Facturas.query.filter_by(num=num).first()  # 
+        nueva_factura.pagada = pagada #Asigna el valor false o true, que viene de pinchar en el icono.
         try:
-            db.session.commit()
-            if pagada == True:
+            db.session.commit() # Guarda los cambios en la base de datos con el nuevo valor de la columna pagada(true o false)
+            #Comprobar el valor "pagada" para mostrar los mensajes flash
+            if pagada == True:  
                 flash('Factura pagada','info')
             if pagada == False:
                 flash('Factura no pagada',"danger")
@@ -421,15 +438,18 @@ def ver_cliente(ver_cliente):
             flash('Error al actualizar la factura','danger')
             return redirect(url_for('ver_cliente', ver_cliente=ver_cliente))
         
-
-        db.session.commit()
-        return redirect(url_for('ver_cliente', ver_cliente=ver_cliente))
     return render_template('ver_cliente.html',cliente=cliente, facturas=factura, form_estado = form_estado,suma_no_pagada=suma_no_pagada,suma_pagada=suma_pagada,iva_total_pagada=iva_total_pagada,numero_facturas=numero_facturas) # Devuelve la variable cliente con los datos del nif pasado por parametro
 
 
 
 @app.route("/clientes/crear", methods=["GET", "POST"]) # Ruta para la pagina de crear cliente 
 def crear_cliente():
+    
+    """
+    Esta ruta se encargara de crear un cliente en la base de datos.
+    Se creará una instancia de formulario "Insertar_cliente" que manejará los datos del cliente que vienen del formulario html.
+    Creará un objeto de la clase Clientes y lo guardará los datos del formulario en la base de datos.
+    """
     
     if 'username'not in session:  # Si no existe la session redirige a la pagina de login(index)
         return redirect('/')
@@ -455,6 +475,12 @@ def crear_cliente():
 
 @app.route("/clientes/editar/<nif>", methods=["GET", "POST"]) # Ruta para la pagina de editar cliente
 def editar_cliente(nif):
+    
+    """
+    Esta ruta sirve para editar los datos de un cliente.
+    Se creara una instancia de formulario "Editar_cliente" que manejará los datos del cliente que vienen del formulario html.
+    Buscará el cliente con el nif pasado por parametro  y cambiará los datos del cliente con los datos del formulario.
+    """
     
     if 'username'not in session:  # Si no existe la session redirige a la pagina de login(index)
         return redirect('/')
@@ -493,6 +519,10 @@ def eliminar_cliente(nif):
 
 @app.route("/facturas") # Ruta para ver la lista de todas las facturas
 def facturas():
+    """
+    Esta ruta se encargara de mostrar la lista de todas la facturas de la base de datos.
+    """
+    
     if 'username'not in session:  # Si no existe la session redirige a la pagina de login(index)
         return redirect('/')
 
@@ -544,23 +574,23 @@ def facturas():
 
 @app.route("/facturas/crear/<nif>", methods = ["GET","POST"]) # Ruta para la pagina de crear factura
 def crear_factura(nif):
+    """
+    Esta ruta se encargara de crear una factura para un cliente.
+    """
     
-    if 'username'not in session:  # Si no existe la session redirige a la pagina de login(index)
+    if 'username'not in session:  
         return redirect('/')
-   
-    print(nif)
-
+ 
     fecha = time.strftime("%d/%m/%y")     # Obtiene la fecha actual y la guarda en la variable fecha que se le pasa al template para que se muestre en el formulario
     form = Nueva_factura()                # Crea una instancia del formulario de crear factura
-    cliente = Clientes.query.filter_by(nif=nif).first()
-    # try:
-    #     num  = db.session.query(func.max(Facturas.num)).scalar()       # Cuenta el numero de facturas que hay en la base de datos para poner el numero de factura correcto en el formulario
-    #    # Obtiene el numero de factura que hay en la base de datos y le suma 1 para que sea el numero de factura correcto
-    #     numero = num + 1
-    # except Exception as e:
-    #     numero = num = 1
+    cliente = Clientes.query.filter_by(nif=nif).first() # Busca el cliente en la base de datos con el nif que se le pasa por la ruta
+    
     if form.validate_on_submit():
+
         now = datetime.now()  ## Obtiene la fecha actual para que me funciones en heroku postgresql              
+        # Inserta todos los datos de la factura en un registro nuevo de la base de datos. 
+        # Todos los datos se obtienen del form.
+
         factura = Facturas( form.numero.data,cliente.nif,now,
                             form.precio1.data,
                             form.precio2.data,
@@ -639,18 +669,18 @@ def crear_factura(nif):
 
 @app.route("/facturas/editar/<num>", methods=["GET", "POST"]) # Ruta para la pagina de editar factura
 def editar_factura(num):
-    
-    if 'username'not in session:  # Si no existe la session redirige a la pagina de login(index)
+    """
+     Ruta para editar una factura., se diferencia de la ruta "crear_factura" porque de inicio recibe los valores de la factura en la base de datos
+     El proceso de actualizar una factura con datos nuevos se hace en el mismo que en "crear_factura"
+    """
+
+    if 'username'not in session:  
         return redirect('/')
    
     ##cliente = Clientes.query.filter_by(nif=nif).first() # Busca el cliente en la base de datos con el nif que se le pasa en la ruta
     factura = Facturas.query.filter_by(num=num).first()
     cliente = Clientes.query.filter_by(nif=factura.nif).first()
-    form = Nueva_factura()                           # Crea una instancia del formulario de cr
-
-
-  
-
+    form = Nueva_factura()                           # Crea una instancia del formulario
 
     if form.validate_on_submit():
         factura.fecha = form.fecha.data
@@ -714,8 +744,6 @@ def editar_factura(num):
         factura.total = form.total_con_iva.data
         factura.precio_metro = cliente.precio_metro
         factura.notas = form.notas.data
-
-        
         
         try:
             db.session.commit()
@@ -726,13 +754,16 @@ def editar_factura(num):
             print("Error al actualizar la factura ", e)
             return redirect(url_for('ver_cliente', ver_cliente=factura.nif))   # Redirige a la pagina de ver cliente con el nif que se le pasa en la ruta
         
-
     return render_template('editar_factura.html', form = form,factura=factura,cliente = cliente)
 
 
 
 @app.route("/facturas/ver/<num>", methods=["GET", "POST"])  
 def ver_factura(num):
+    """
+    Esta ruta es igual a la ruta "editar_factura" 
+    El cambio aquí esta mas en el template html, que quita bordes y cositas para que se imprima la factura con un formato decente.
+    """
 
     if 'username'not in session:  # Si no existe la session redirige a la pagina de login(index)
         return redirect('/')
@@ -740,10 +771,8 @@ def ver_factura(num):
     ##cliente = Clientes.query.filter_by(nif=nif).first() # Busca el cliente en la base de datos con el nif que se le pasa en la ruta
     factura = Facturas.query.filter_by(num=num).first()
     cliente = Clientes.query.filter_by(nif=factura.nif).first()
-    form = Nueva_factura()                           # Crea una instancia del formulario de cr
-    #
-
- 
+    form = Nueva_factura()                           # Crea una instancia del formulario 
+     
     if form.validate_on_submit():
         factura.numero = form.numero.data
         factura.precio1 = form.precio1.data
@@ -806,19 +835,18 @@ def ver_factura(num):
         factura.precio_metro = cliente.precio_metro
         factura.notas = form.notas.data
 
-        
-        
-
         return redirect(url_for('ver_factura',num=factura.num)) # Crea la url dinamicamente para redirigir a la pagina de ver cliente con su nif
-
- 
 
     return render_template('ver_factura.html', form = form,factura=factura,cliente = cliente)
 
 
 @app.route("/clientes/etiqueta/<nif>", methods=["GET", "POST"])
 def etiqueta(nif):
-    
+    """
+    Ruta para crear etiquetas de clientes
+    se mandan los datos del cliente y el html genera las etiquetas con los datos del cliente
+    """    
+
     if 'username'not in session:  # Si no existe la session redirige a la pagina de login(index)
         return redirect('/')
     cliente = Clientes.query.filter_by(nif=nif).first()
