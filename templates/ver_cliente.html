@@ -51,14 +51,6 @@
 
 </style>
 
-
-
-
-
-
-
-
-
 </div>
 <div class="container">
   <h2 class="text-center mt-3">Información de clientes</h2><br>
@@ -141,7 +133,7 @@
           <th scope="row"><img class="iconoverde" id="{{ factura.num }}" name="si_pagada" src="/static/icons/check.svg"
               onclick="foo.call(this)"></th>
           <!-- Cuando se hace click en el icono
-                                                                                                                                                  lanza foo(cambiara el estado de la factura)-->
+            lanza foo(cambiara el estado de la factura)-->
           {% else %}
           <th scope="row"><img class="iconorojo" id="{{ factura.num }}" name="no_pagada" src="/static/icons/check.svg"
               onclick="foo.call(this)"> </th> <!-- Lo mismo-->
@@ -155,12 +147,10 @@
     </tbody>
 
 
-    <!-- <a href="{{ url_for ('editar_factura', num = factura.num)  }}"><button type="button" class="btn btn-success">Editar factura</button></a>
-<a href="{{ url_for ('ver_factura', num = factura.num)  }}"><button type="button" class="btn btn-success">Imprimir</button></a> -->
     {% endfor %}
 
     <div style="display:none;">
-      <!-- Escondemos el formulario auxiliar-->
+      <!-- Escondemos el formulario auxiliar oculto donde se pondra pagada o no pagada, que se envia al servidor y el actualiza en la BBDD la columna "pagada" a false o true-->
       {{ form_estado.numero (class_="text-100 text-success-d3 opacity-2",id="numero") }}
       {{ form_estado.pagada (class_="text-100 text-success-d3 opacity-2", id ="pagada") }}
       <button type="submit" class="btn btn-info btn-bold px-4 float-right mt-3 mt-lg-0">Guardar</button>
@@ -197,7 +187,7 @@
 <script>
 
 
-  // Al hacer click en el icono, se cambia el estado de la factura. si el nombre que recoge es "si_pagada", se cambia a "no_pagada" y viceversa.
+  // Al hacer click en el icono, se cambia el estado de la factura. si el nombre que recoje es "si_pagada", se cambia a "no_pagada" y viceversa.
   // Se guarda el estado en la base de datos.
   // funciona a modo switch, si el nombre es "si_pagada" a false para enviar false, al servidor, da la ilusión que al pulsar en la verde cambiar a rojo
   var foo = function () {
