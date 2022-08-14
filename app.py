@@ -507,6 +507,9 @@ def editar_cliente(nif):
 
 @app.route("/clientes/eliminar/<nif>", methods=["GET", "POST"]) # Ruta para la pagina de eliminar cliente
 def eliminar_cliente(nif):
+    """
+    Eliminar cliente de la base de datos.
+    """
     if 'username'not in session:  # Si no existe la session redirige a la pagina de login(index)
         return redirect('/')
     
@@ -526,50 +529,10 @@ def facturas():
     if 'username'not in session:  # Si no existe la session redirige a la pagina de login(index)
         return redirect('/')
 
-   
-      # Busca todas las facturas de los clientes en la base de datos
+    # Busca todas las facturas de los clientes en la base de datos ordenadas con fecha mas actual
     factura = Facturas.query.order_by(Facturas.numero.desc()).all()
-    factura1 = Facturas.query.order_by(Facturas.fecha.asc()).all()
-    for i in factura1:
-        print(i.fecha)
-    # for p in factura:
-    #     print(p.numero,p.cliente.nombre) ### Esto es importante!!!!!!! porque p.cliente.nombre es el nombre del cliente el cual es el nif en la tabla facturas
-    # facturas1=Facturas.query.all()# Busca todas las facturas en la base de datos
-    # print (facturas1[1].nif)
+
     return render_template('facturas.html', facturas = factura) # Muestra todas las facturas en la base de datos
-
-
-# @app.route("/facturas/nueva/<nif>", methods = ["GET","POST"]) # Ruta para la pagina de crear factura
-
-
-# def nueva_factura(nif): # Funcion para crear una nueva factura
-    
-#     cliente = Clientes.query.filter_by(nif=nif).first()      # Usaos el nif que se le pasa por la ruta para buscar el cliente en la base de datos
-#     form = Nueva_factura()                                   # Crea una instancia del formulario de crear factura
-
-#     if form.validate_on_submit():
-        
-#         factura = Facturas(nif, form.fecha.data, form.precio.data, form.concepto.data, form.metros.data, form.faldas.data, form.importe.data, form.notas.data)
-#         db.session.add(factura)
-        
-#         try:
-#             db.session.commit()
-#             flash("Factura creada correctamente")
-#             return redirect(url_for('clientes'))
-#         except Exception as e:
-#             print("Error al crear la factura ", e)
-#             return redirect(url_for('clientes'))
-
-#     return render_template('nueva_factura.html', form=form, cliente=cliente) #cliente se usa para enviar algunos datos del cliente al formulario de crear factura(nif,nombre, etc)
-    
-
-# @app.route("/ver_factura/<nif>", methods = ["GET","POST"]) # Ruta para la pagina de ver factura
-# def ver_factura(nif):
-#     factura = Facturas.query.filter_by(nif=nif).first()
-#     cliente = Clientes.query.filter_by(nif=nif).first()
-    
-#     return render_template('ver_factura.html', factura=factura, cliente=cliente)
-
 
 
 @app.route("/facturas/crear/<nif>", methods = ["GET","POST"]) # Ruta para la pagina de crear factura
