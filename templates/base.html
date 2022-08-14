@@ -8,6 +8,16 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet"> 
     <title>{% block title %} Plisados Plisafor Gestión {% endblock %}</title>
+
+  <style>
+
+    /* Custom style to set icon size para los mensajes flash*/
+  .alert i[class^="bi-"] {
+    font-size: 1.5em;
+    line-height: 1;
+  }
+  </style> 
+
 </head>
 <body>
   
@@ -38,9 +48,49 @@
         </div>
       </nav>
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-
+      <div class="container" id="alerta">
+        <!--Revisa los mensajes flash y si existen los muestra segun su categoria que tipo de mensaje sea,succes,danger etc-->
+      
+        {% for category, message in get_flashed_messages(with_categories=true) %}
+        {% if category == "info" %}
+        <!-- Factura pagada correctamente -->
+        <div class="alert alert-success alert-dismissible d-flex align-items-center fade show">
+          <i class="bi-check-circle-fill"></i>
+          <strong class="mx-2">Hecho!</strong> {{ message }}.
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+      
+        {% elif category == "danger" %}
+        <!-- Factura no pagada todavía -->
+      
+        <div class="alert alert-danger alert-dismissible d-flex align-items-center fade show">
+          <i class="bi-check-circle-fill"></i>
+          <strong class="mx-2">Hecho!</strong> {{ message}}.
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+      
+        {% elif category =="success" %}
+        <!-- Factura creada correctamente -->
+      
+        <div class="alert alert-info alert-dismissible d-flex align-items-center fade show">
+          <i class="bi-info-circle-fill"></i>
+          <strong class="mx-2">Info!</strong> {{ message }}.
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+      
+      
+      </div>
+      
+      </div>
+      {% endif %}
+      
+      {% endfor %}
+    </div>
     {% block content %} 
     
     {% endblock %}
+    <script>
+    window.setTimeout("document.getElementById('alerta').style.display='none';", 3500); // Pequeño truco para que se cierre(oculte) el "div alerta(mensajes flash)" despues de un tiempo
+  </script>
 </body>
 </html>
