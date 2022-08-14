@@ -8,9 +8,10 @@
   <h2 class="text-center mt-3">Bienvenido</h2><br>
 <div class="card text-dark bg-light mb-3 shadow " >
   <div class="container">
-    <form method="post">
+    <form method="post"> <!-- Formulario para hacer login con wtform-->
       {{ form.hidden_tag() }}
       <div class="mb-3">
+        
         {{ form.nombre.label (class_="form-label") }} {{ form.nombre (class_="form-control")}}
        
         
