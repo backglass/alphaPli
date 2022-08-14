@@ -1,43 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container">
-  <div class="container" id="alerta">
 
-    {% for category, message in get_flashed_messages(with_categories=true) %}
-    {% if category == "info" %}
-    <!-- Factura pagada correctamente -->
-    <div class="alert alert-success alert-dismissible d-flex align-items-center fade show">
-      <i class="bi-check-circle-fill"></i>
-      <strong class="mx-2">Hecho!</strong> {{ message }}.
-      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-    </div>
-
-    {% elif category == "danger" %}
-    <!-- Factura no pagada todavía -->
-
-    <div class="alert alert-danger alert-dismissible d-flex align-items-center fade show">
-      <i class="bi-check-circle-fill"></i>
-      <strong class="mx-2">Hecho!</strong> {{ message}}.
-      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-    </div>
-
-    {% elif category =="success" %}
-    <!-- Factura creada correctamente -->
-
-    <div class="alert alert-info alert-dismissible d-flex align-items-center fade show">
-      <i class="bi-info-circle-fill"></i>
-      <strong class="mx-2">Info!</strong> {{ message }}.
-      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-    </div>
-    {% endif %}
-    {% endfor %}
-
-
-
-  </div>
-
-</div>
 
 
 <div class="container">
@@ -89,7 +53,5 @@
 
 
 </div>
-<script>
-  window.setTimeout("document.getElementById('alerta').style.display='none';", 3500); // Pequeño truco para que se cierre(oculte) el "div alerta" despues de un tiempo
-</script>
+
 {% endblock %}
