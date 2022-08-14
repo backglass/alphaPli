@@ -341,7 +341,7 @@ def index():
             usuario = Usuarios.query.filter_by(nombre=nombre).first()
             print (usuario.nombre, usuario.password)
         except:
-           
+            flash('Usuario no existe','danger')
             print("usuario no existe")
 
             return render_template('index.html',form=form)
