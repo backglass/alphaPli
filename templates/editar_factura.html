@@ -153,7 +153,7 @@ hr {
             Plisafor editar factura
             <small class="page-info">
                 <i class="fa fa-angle-double-right text-80"></i>
-                
+                <a href="{{ url_for ('eliminar_factura', num = factura.num)  }}" class="btn btn-danger" tabindex="-1"  role="button" aria-disabled="true">Borrar</a>
             </small>
         </h1>
 
