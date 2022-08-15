@@ -802,7 +802,30 @@ def ver_factura(num):
 
     return render_template('ver_factura.html', form = form,factura=factura,cliente = cliente)
 
+@app.route("/facturas/eliminar/<num>", methods=["GET", "POST"])
+def eliminar_factura(num):
+    """
+    Ruta para eliminar una factura en la sección de editar factura
+    """
+    if 'username'not in session:
+        return redirect('/')
 
+    
+        
+    factura = Facturas.query.filter_by(num=num).first()
+    nif = factura.nif                                    # Guarda el nif del cliente en una variable para poder usarlo para regresar a la pagina de ver cliente
+    db.session.delete(factura)
+    
+    try:
+        db.session.commit()
+        flash('Factura eliminada correctamente','info')
+    except Exception as e:
+        flash('Error al eliminar la factura','danger')
+        db.session.rollback()
+    
+    return redirect(url_for('ver_cliente', ver_cliente=nif)) # Redirige a la pagina de ver cliente con el nif que se le pasa en la ruta
+    
+    
 @app.route("/clientes/etiqueta/<nif>", methods=["GET", "POST"])
 def etiqueta(nif):
     """
