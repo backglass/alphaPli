@@ -130,12 +130,12 @@
           <!-- Si factura.pagada es true, se pone iconito verde, si no iconito rojo, y pone nombre "si_pagada para el verde y "no_pagada para el rojo -->
           {% if factura.pagada %}
 
-          <th scope="row"><img class="iconoverde" id="{{ factura.num }}" name="si_pagada" src="/static/icons/check.svg"
+          <th scope="row"><img class="iconoverde" id="{{ factura.num }}" name="si_pagada" style = "cursor:pointer;" src="/static/icons/check.svg"
               onclick="foo.call(this)"></th>
           <!-- Cuando se hace click en el icono
             lanza foo(cambiara el estado de la factura)-->
           {% else %}
-          <th scope="row"><img class="iconorojo" id="{{ factura.num }}" name="no_pagada" src="/static/icons/check.svg"
+          <th scope="row"><img class="iconorojo" id="{{ factura.num }}" style = "cursor:pointer;" name="no_pagada" src="/static/icons/check.svg"
               onclick="foo.call(this)"> </th> <!-- Lo mismo-->
           {% endif %}
 
