@@ -2,7 +2,10 @@
 <html>
     <meta charset="UTF-8"/>
 <head>
-<link href="/static/bootstrap.min.css" rel="stylesheet" />
+<link href="/static/bootstrap.css" rel="stylesheet" />
+<script type="text/javascript" src="/static/bootstrap.min.js">
+</script>
+
 </head>
 
 <style>
@@ -147,13 +150,34 @@ hr {
 </style>
 
 <body>
+    <div class="m-4">
+    <div id="myModal" class="modal fade" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Atención !!!!</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p><strong>¿Estás seguro de borrar esta factiru?</strong></p>
+                  
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <a href="{{ url_for ('eliminar_factura', num = factura.num)  }}" class="btn btn-danger" tabindex="-1"  role="button" aria-disabled="true">Borrar</a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="page-content container">
     <div class="page-header text-blue-d2">
         <h1>
             Plisafor editar factura
             <small class="page-info">
                 <i class="fa fa-angle-double-right text-80"></i>
-                <a href="{{ url_for ('eliminar_factura', num = factura.num)  }}" class="btn btn-danger" tabindex="-1"  role="button" aria-disabled="true">Borrar</a>
+                <a href="#" onclick="ver_modal()" class="btn btn-danger" tabindex="-1"  role="button" aria-disabled="true">Borrar</a>
             </small>
         </h1>
 
@@ -659,6 +683,10 @@ hr {
     
 
 sumar_total();  //En editar se llama a sumar_total para que nada mas entrar en la página, se sumen los valores de los inputs. y de los totales
+function ver_modal(){
+var myModal = new bootstrap.Modal(document.getElementById('myModal'));
+myModal.show();
+}
 </script>
 </body>
 </html>
