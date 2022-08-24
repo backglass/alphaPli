@@ -27,9 +27,9 @@
         {{ form.email.label (class_="form-label") }} {{ form.email (class_="form-control", value_= cliente.email) }}
         
         {{ form.precio_metro.label (class_="form-label") }} {{ form.precio_metro (class_="form-control", value_= cliente.precio_metro) }}
-        {% autoescape false %}
-        {{ form.notas.label (class_="form-label") }} {{ form.notas (class_="form-control",rows="5") }}
-        {% endautoescape %}
+        <label class="form-label" for="notas">Notas</label> <textarea class="form-control" id="notas" name="notas" rows="5">{{ cliente.notas }}</textarea>
+      
+        
         <div class="">
             <br>
             <button type="submit" class="btn btn-primary">Guardar</button>
