@@ -640,9 +640,14 @@ def editar_factura(num):
     if 'username'not in session:  
         return redirect('/')
    
-    ##cliente = Clientes.query.filter_by(nif=nif).first() # Busca el cliente en la base de datos con el nif que se le pasa en la ruta
-    factura = Facturas.query.filter_by(num=num).first()
-    cliente = Clientes.query.filter_by(nif=factura.nif).first()
+    try:
+        factura = Facturas.query.filter_by(num=num).first()
+        cliente = Clientes.query.filter_by(nif=factura.nif).first()
+              
+    except Exception as e:
+        print("Error al buscar la factura ", e)
+        return redirect(url_for('clientes'))
+        
     form = Nueva_factura()                           # Crea una instancia del formulario
 
     if form.validate_on_submit():
