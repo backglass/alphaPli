@@ -268,7 +268,7 @@ hr {
                             <div class="d-none d-sm-block col-1"> {{ form.precio4 (class_="form-control bgc-default-l4 none",value_=factura.precio4,  onchange="sumar4(this.value);")}}</div>
                             <div class="col-9 col-sm-5">{{ form.descripcion4 (class_="form-control bgc-default-l4 none",value =factura.descripcion4)}}</div>
                             <div class="d-none d-sm-block col-2">{{ form.metros4 (class_="form-control bgc-default-l4 none",value_=factura.metros4, onchange="sumar4(this.value);")}}</div>
-                            <div class="d-none d-sm-block col-2 text-95">{{ form.faldas4 (class_="form-control bgc-default-l4 none", onchange="sumar4(this.value);")}}</div>
+                            <div class="d-none d-sm-block col-2 text-95">{{ form.faldas4 (class_="form-control bgc-default-l4 none",factura.faldas4 onchange="sumar4(this.value);")}}</div>
                             <div class="col-2 text-secondary-d2">{{ form.importe4 (class_="form-control bgc-default-l4 none",value_=factura.importe4 )}}</div>
                         </div>
 
