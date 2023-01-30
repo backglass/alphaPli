@@ -5,6 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Date, DateTime, Integer, String, Column, ForeignKey, func
 from wtforms import Form, StringField, TextAreaField, BooleanField, validators,IntegerField,ValidationError
 from flask_wtf import FlaskForm
+import psycopg2
 app = Flask(__name__)
 app.config ["SECRET_KEY"] = "mysecretkey"
 
@@ -18,6 +19,8 @@ app.config ["SQLALCHEMY_DATABASE_URI"] = "postgresql://postgres:plisados123@loca
 app.config ["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
+
+
 
 # Clase para el formulario de crear clientes
 class Insertar_cliente(FlaskForm):
@@ -324,7 +327,8 @@ class Usuarios(db.Model):
     
 
 
-db.create_all()  # Crea la tabla en la base de datos
+with app.app_context(): ##! Inicializa la base de datos en flask 3 usando un contexto de aplicacion
+    db.create_all()
 
 
 @app.route('/',methods = ['POST','GET'])  # Ruta raiz
