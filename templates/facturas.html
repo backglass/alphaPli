@@ -1,3 +1,5 @@
+
+
 {% extends "base.html" %}
 
 {% block content %}
@@ -54,14 +56,14 @@
         <div class="card-body">
 
           <p class="card-text"><b> 
-            <select class="form-select">
-            <option selected>Ordenar por ....</option>
-            <option value="1">Fecha</option>
-            <option value="2">Nombre</option>
-            <option value="3">Pagado</option>
-            <option value="4">No pagado</option>
-            <option value="3">Importe</option>
-        </select></b>
+            <form method= "POST" >
+           
+            {{ form.hidden_tag () }}
+            <label for="selection">Ordenar por:</label>
+            {{ form.selection(class_="form-control", placehorder_="aa") }}
+            {{ form.submit(class_="btn btn-primary")}}
+
+            </form>
   
 
               
@@ -127,7 +129,7 @@
       
       
               </tr>
-      
+            
       
       
           </tbody>
