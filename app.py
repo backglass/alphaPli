@@ -2,8 +2,8 @@ from datetime import datetime
 import time
 from flask import Flask, render_template, request, redirect, url_for, flash, jsonify,session
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import Date, DateTime, Integer, String, Column, ForeignKey, func
-from wtforms import Form, StringField, TextAreaField, BooleanField, validators,IntegerField,ValidationError
+from sqlalchemy import Date, DateTime, Integer, String, Column, ForeignKey, func,cast,Float
+from wtforms import Form, StringField, TextAreaField, BooleanField, validators,IntegerField,ValidationError,SelectField,SubmitField
 from flask_wtf import FlaskForm
 import psycopg2
 app = Flask(__name__)
@@ -116,6 +116,11 @@ class Nueva_factura(FlaskForm):
     sub_total_sin_iva  = StringField("Subtotal",default="0")      # Se necesita poner el valor en 0, por si al hacer una factura se queda el valor en blanco daria un error..
     total_con_iva = StringField("Total",default="0")              # confuso
     notas = TextAreaField("Notas")
+    
+    
+class Listado_facturas(FlaskForm):
+    selection = SelectField('Ordenar por', choices=[('numero_factura', 'Numero factura'),("fecha","Fecha"), ('importe', 'Importe')], default = "Numero factura")
+    submit = SubmitField('Buscar')        
 
 #Formulario para crear login
 class Login(FlaskForm):
@@ -523,8 +528,8 @@ def eliminar_cliente(nif):
     flash("Cliente eliminado correctamente")
     return redirect(url_for('clientes'))
 
-
-@app.route("/facturas") # Ruta para ver la lista de todas las facturas
+####! RUTAS PARA LAS FACTURAS !#### seguir con las rutas de las facturas
+@app.route("/facturas",methods = ["GET","POST"]) # Ruta para ver la lista de todas las facturas
 def facturas():
     """
     Esta ruta se encargara de mostrar la lista de todas la facturas de la base de datos.
@@ -532,11 +537,43 @@ def facturas():
     
     if 'username'not in session:  # Si no existe la session redirige a la pagina de login(index)
         return redirect('/')
-
+    
+    factura = Facturas.query.order_by(Facturas.num.desc()).all()
+    #factura = Facturas.query.order_by(cast(Facturas.total, Float).desc()).all()    
+    form = Listado_facturas()
+    
+    
+    if form.validate_on_submit():
+        # Obtener la selección del usuario desde el formulario list selection.
+        selection = form.selection.data
+        
+        # Si la selección es "importe" ordena las facturas por importe
+        if selection == "importe":
+            factura = Facturas.query.order_by(cast(Facturas.total, Float).desc()).all()
+            print(selection)
+            return render_template('facturas.html', facturas = factura,form=form)
+        
+        # Si la selección es "fecha" ordena las facturas por fecha
+        if selection == "numero_factura":
+            factura = Facturas.query.order_by(Facturas.num.desc()).all()
+            print(selection)
+            return render_template('facturas.html', facturas = factura,form=form)
+        
+        if selection == "fecha":
+            factura = Facturas.query.order_by(Facturas.fecha.desc()).all()
+            print(selection)
+            return render_template('facturas.html', facturas = factura,form=form)
+            
+            
+        
+        # procesamiento de la selección aquí
+        print ( 'Seleccionado: {}'.format(selection))
+        return render_template('facturas.html', factura = factura,form=form)
+    
     # Busca todas las facturas de los clientes en la base de datos ordenadas con fecha mas actual
-    factura = Facturas.query.order_by(Facturas.numero.desc()).all()
+    
 
-    return render_template('facturas.html', facturas = factura) # Muestra todas las facturas en la base de datos
+    return render_template('facturas.html', facturas = factura,form=form) # Muestra todas las facturas en la base de datos
 
 
 @app.route("/facturas/crear/<nif>", methods = ["GET","POST"]) # Ruta para la pagina de crear factura
